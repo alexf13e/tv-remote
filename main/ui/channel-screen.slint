@@ -1,0 +1,107 @@
+
+import { Button, HorizontalBox, VerticalBox } from "std-widgets.slint";
+import { Logic, RemoteButton, NavPanel, VolumePanel } from "common.slint";
+import { RemoteButtonData, ChannelButtonData } from "component-data.slint";
+import { RemoteScreenID } from "remote-screens-index.slint";
+import { Symbols } from "symbols.slint";
+
+
+component ChannelPanel { //panel with grid of channel buttons
+    in property <int> num_cols; //how many rows and columns of buttons to fit within a sub screen
+    in property <int> num_rows;
+    in property <length> button_width; //how big the buttons should be
+    in property <length> button_height;
+    
+    out property <int> numSubScreens: ceil(cbd.data.length / (num_cols * num_rows)); //how many sub screens of buttons
+    
+    //determine the range of button indices to display based on sub screen
+    in-out property <int> currentSubScreen: 0;
+    in-out property <int> iMin: currentSubScreen * num_cols * num_rows;
+    in-out property <int> iMax: min(iMin + num_cols * num_rows, cbd.data.length);
+    
+    //calculate spacing between buttons manually, cannot use grid with for loop
+    property <length> horizontal_spacing: (self.width - num_cols * button_width) / (num_cols - 1);
+    property <length> vertical_spacing: (self.height - num_rows * button_height) / (num_rows - 1);
+
+    callback setSubScreen(int);
+    setSubScreen(subScreen) => {
+        currentSubScreen = subScreen;
+        iMin = currentSubScreen * num_cols * num_rows;
+        iMax = min(iMin + num_cols * num_rows, cbd.data.length);
+    }
+
+    //load the list of channel button data (icons, actio macro names)
+    cbd := ChannelButtonData {}
+
+    //display buttons for this sub screen
+    for i in (iMax - iMin):
+    RemoteButton {
+        x: floor(i / num_rows) * (button_width + horizontal_spacing);
+        y: mod(i, num_rows) * (button_height + vertical_spacing);
+        width: button_width;
+        height: button_height;
+
+        icon: cbd.data[i + iMin].icon;
+        actionListID: cbd.data[i + iMin].actionListID;
+    }
+}
+
+export component ChannelScreen { //whole screen for the tv channel selection    
+    VerticalLayout { //container for whole screen
+        spacing: 50px;
+        padding: 10px;
+
+        HorizontalLayout { //container for channel panel, chanel page switch, volume buttons
+            spacing: 10px;
+            VerticalLayout { //container for channel panel and chanel page switcher
+                cp := ChannelPanel { //display the grid of channels
+                    num_cols: 4;
+                    num_rows: 5;
+                    button_width : 80px;
+                    button_height : 60px;
+                }
+
+                HorizontalLayout { //navigation buttons between sub screens
+                    padding-top: 10px;
+                    if cp.numSubScreens > 1:
+                    Button {
+                        icon: Symbols.arrow-left;
+                        clicked => {
+                            if cp.currentSubScreen > 0 {
+                                cp.setSubScreen(cp.currentSubScreen - 1);
+                            }
+                        }
+                    }
+        
+                    Text {
+                        text: cp.currentSubScreen + 1 + "/" + cp.numSubScreens;
+                        vertical-alignment: center;
+                        horizontal-alignment: center;
+                    }
+        
+                    if cp.numSubScreens > 1:
+                    Button {
+                        icon: Symbols.arrow-right;
+                        clicked => {
+                            if cp.currentSubScreen < cp.numSubScreens - 1 {
+                                cp.setSubScreen(cp.currentSubScreen + 1);
+                            }
+                        }
+                    }
+                }
+            }
+            
+            VolumePanel { //display vertical column with volume and channel controls
+                max-width: 80px;
+            }
+        }
+
+        VerticalLayout {
+            NavPanel { //show a set of buttons at the bottom of the screen (e.g. directional, ok/back, home)
+                height: 300px;
+            }
+        }
+    }
+
+    
+}

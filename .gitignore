@@ -1,0 +1,5 @@
+.cache/
+.vscode/
+build/
+managed_components/
+main/ui/icons/channels/

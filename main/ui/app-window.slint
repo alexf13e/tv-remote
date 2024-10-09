@@ -1,0 +1,24 @@
+
+import { HomeScreen } from "home-screen.slint";
+import { ChannelScreen } from "channel-screen.slint";
+import { RemoteButtonData } from "component-data.slint";
+import { RemoteScreenID } from "remote-screens-index.slint";
+
+export { Logic } from "common.slint";
+
+export component AppWindow inherits Window {
+    in property <RemoteScreenID> currentScreenID;
+
+    VerticalLayout { //container rectangle for padding around edge for all screens
+        padding: 10px;
+
+        if currentScreenID == RemoteScreenID.TV_CHANNELS: ChannelScreen {}
+        if currentScreenID == RemoteScreenID.HOME: HomeScreen {}
+
+
+
+    }
+
+
+
+}

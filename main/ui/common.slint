@@ -1,0 +1,140 @@
+
+import { HorizontalBox, Button, VerticalBox } from "std-widgets.slint";
+import { RemoteScreenID } from "remote-screens-index.slint";
+import { Symbols } from "symbols.slint";
+
+export global Logic {
+    pure callback remote_btn_clicked(string, RemoteScreenID);
+}
+
+export component RemoteButton { //custom button for sending remote signals and navigating the ui
+    in property <image> icon;                                   //image to show on button
+    in property <string> text;                                  //text to show on button
+    in property <length> font-size;
+    in property <string> actionListID: "";                      //name of the "macro" to play when button is pressed
+    in property <RemoteScreenID> screenID: RemoteScreenID.SAME; //the id of the screen which will be shown when this button is clicked
+
+    Rectangle { //rectangle for the whole button shape
+        background: white;
+
+        Image { //image to display button icon
+            width: root.width;
+            height: root.height;
+            image-fit: contain;
+            source: icon;
+        }
+
+        Text {
+            text: text;
+            font-size: root.font-size;
+        }
+
+        if touch.pressed: Rectangle { //when the button is pressed, shade it darker for visual feedback
+            background: #0000007f;
+        }
+        
+        touch := TouchArea { //toucharea to detec when the button is being pressed
+            clicked => { Logic.remote_btn_clicked(root.actionListID, root.screenID) }
+        }
+    }
+}
+
+export component NavPanel { //panel with bottom navigation buttons to replicate pronto layout
+    VerticalLayout {
+        spacing: 10px;
+
+        HorizontalLayout {
+            spacing: parent.spacing;
+            max-height: 50px;
+
+            RemoteButton {
+                text: "btn1";
+            }
+    
+            RemoteButton {
+                text: "btn2";
+            }
+    
+            RemoteButton {
+                text: "btn3";
+            }
+    
+            RemoteButton {
+                text: "btn4";
+            }
+        }
+
+        GridLayout {
+            spacing: parent.spacing;
+
+            RemoteButton {
+                row: 0;
+                col: 1;
+                icon: Symbols.arrow-up;
+            }
+
+            RemoteButton {
+                row: 1;
+                col: 0;
+                icon: Symbols.arrow-left;
+            }
+
+            RemoteButton {
+                row: 1;
+                col: 1;
+                text: "Ok";
+            }
+
+            RemoteButton {
+                row: 1;
+                col: 2;
+                icon: Symbols.arrow-right;
+            }
+
+            RemoteButton {
+                row: 2;
+                col: 0;
+                text: "cancel";
+            }
+
+            RemoteButton {
+                row: 2;
+                col: 1;
+                icon: Symbols.arrow-down;
+            }
+
+            RemoteButton {
+                row: 2;
+                col: 2;
+                icon: Symbols.home;
+                screenID: RemoteScreenID.HOME;
+            }
+        }
+    }
+}
+
+export component VolumePanel {
+    VerticalLayout {
+        spacing: 5px;
+
+        RemoteButton {
+            text: "chan+";
+        }
+
+        RemoteButton {
+            text: "chan-";
+        }
+
+        RemoteButton {
+            text: "mute";
+        }
+
+        RemoteButton {
+            text: "vol+";
+        }
+
+        RemoteButton {
+            text: "vol-";
+        }
+    }
+}

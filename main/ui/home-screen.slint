@@ -1,0 +1,14 @@
+
+import { RemoteButton } from "common.slint";
+import { RemoteScreenID } from "remote-screens-index.slint";
+
+export component HomeScreen {
+    VerticalLayout { //container for whole screen
+        padding: 10px;
+
+        RemoteButton {
+            text: "TV Channels";
+            screenID: RemoteScreenID.TV-CHANNELS;
+        }
+    }
+}
