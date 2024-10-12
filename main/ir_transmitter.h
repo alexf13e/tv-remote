@@ -39,9 +39,9 @@ namespace IRTransmitter {
         
         carrier_config = {
             .frequency_hz = 38000,
-            .duty_cycle = 0.5,
+            .duty_cycle = 0.33,
             .flags = {
-                .polarity_active_low = 1
+                .polarity_active_low = false,
             }
         };
 

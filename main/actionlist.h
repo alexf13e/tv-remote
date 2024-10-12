@@ -22,6 +22,10 @@ std::unordered_map<std::string, std::vector<const RemoteButtonSignal*>> ALL_ACTI
 
 void createActionLists()
 {
+    ALL_ACTION_LISTS["TEST"] = {
+        RemoteTV::KEY_1
+    };
+
     ALL_ACTION_LISTS["BBC_ONE_HD"] = {
         RemoteTV::KEY_1,
         RemoteTV::KEY_0,
