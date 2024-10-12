@@ -51,7 +51,4 @@ struct RemoteButtonSignal
     }
 };
 
-//macro for more easily adding to list of buttons in each remote
-#define BUTTON(NAME, CODE) const RemoteButtonSignal* NAME = new RemoteButtonSignal(CODE)
-
 #endif

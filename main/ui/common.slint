@@ -40,27 +40,61 @@ export component RemoteButton { //custom button for sending remote signals and n
 }
 
 export component NavPanel { //panel with bottom navigation buttons to replicate pronto layout
+    in property <string> txt_btn1: "btn1"; //text to display on 4 main buttons
+    in property <string> txt_btn2: "btn2";
+    in property <string> txt_btn3: "btn3";
+    in property <string> txt_btn4: "btn4";
+
+    in property <string> al_btn1; //action list id to run when each button is pressed
+    in property <string> al_btn2;
+    in property <string> al_btn3;
+    in property <string> al_btn4;
+
+    in property <RemoteScreenID> screen_btn1; //screen id to change to when each button is pressed
+    in property <RemoteScreenID> screen_btn2;
+    in property <RemoteScreenID> screen_btn3;
+    in property <RemoteScreenID> screen_btn4;
+
+    in property <string> al_navLeft; //action list id for nav buttons (e.g. for tv or recording box)
+    in property <string> al_navRight;
+    in property <string> al_navUp;
+    in property <string> al_navDown;
+    in property <string> al_ok;
+    in property <string> al_return;
+    
     VerticalLayout {
         spacing: 10px;
 
         HorizontalLayout {
             spacing: parent.spacing;
-            max-height: 50px;
+            height: 50px;
 
             RemoteButton {
-                text: "btn1";
+                height: parent.height;
+                text: txt_btn1;
+                actionListID: al_btn1;
+                screenID: screen_btn1;
             }
-    
+
             RemoteButton {
-                text: "btn2";
+                height: parent.height;
+                text: txt_btn2;
+                actionListID: al_btn2;
+                screenID: screen_btn2;
             }
-    
+
             RemoteButton {
-                text: "btn3";
+                height: parent.height;
+                text: txt_btn3;
+                actionListID: al_btn3;
+                screenID: screen_btn3;
             }
-    
+
             RemoteButton {
-                text: "btn4";
+                height: parent.height;
+                text: txt_btn4;
+                actionListID: al_btn4;
+                screenID: screen_btn4;
             }
         }
 
@@ -71,37 +105,42 @@ export component NavPanel { //panel with bottom navigation buttons to replicate 
                 row: 0;
                 col: 1;
                 icon: Symbols.arrow-up;
+                actionListID: al_navUp;
             }
 
             RemoteButton {
                 row: 1;
                 col: 0;
                 icon: Symbols.arrow-left;
+                actionListID: al_navLeft;
             }
 
             RemoteButton {
                 row: 1;
                 col: 1;
                 text: "Ok";
-                actionListID: "TEST";
+                actionListID: al_ok;
             }
 
             RemoteButton {
                 row: 1;
                 col: 2;
                 icon: Symbols.arrow-right;
+                actionListID: al_navRight;
             }
 
             RemoteButton {
                 row: 2;
                 col: 0;
-                text: "cancel";
+                text: "Return";
+                actionListID: al_return;
             }
 
             RemoteButton {
                 row: 2;
                 col: 1;
                 icon: Symbols.arrow-down;
+                actionListID: al_navDown;
             }
 
             RemoteButton {
@@ -115,27 +154,38 @@ export component NavPanel { //panel with bottom navigation buttons to replicate 
 }
 
 export component VolumePanel {
+    in property <string> al_volUp;
+    in property <string> al_volDown;
+    in property <string> al_volMute;
+    in property <string> al_chanUp;
+    in property <string> al_chanDown;
+
     VerticalLayout {
         spacing: 5px;
 
         RemoteButton {
             text: "chan+";
+            actionListID: al_chanUp;
         }
 
         RemoteButton {
             text: "chan-";
+            actionListID: al_chanDown;
         }
 
         RemoteButton {
             text: "mute";
+            actionListID: al_volMute;
         }
 
         RemoteButton {
             text: "vol+";
+            actionListID: al_volUp;
         }
 
         RemoteButton {
             text: "vol-";
+            actionListID: al_volDown;
         }
     }
 }

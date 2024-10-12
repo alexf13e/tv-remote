@@ -5,6 +5,7 @@
 #include <chrono>
 #include <thread>
 #include <string>
+#include <type_traits>
 #include <unordered_map>
 #include <vector>
 #include <iostream>
@@ -22,9 +23,13 @@ std::unordered_map<std::string, std::vector<const RemoteButtonSignal*>> ALL_ACTI
 
 void createActionLists()
 {
+
     ALL_ACTION_LISTS["TEST"] = {
         RemoteTV::KEY_1
     };
+
+
+    //////////////////////////////////////// CHANNELS ////////////////////////////////////////
 
     ALL_ACTION_LISTS["BBC_ONE_HD"] = {
         RemoteTV::KEY_1,
@@ -313,14 +318,89 @@ void createActionLists()
         RemoteTV::KEY_8
     };
 
-    ALL_ACTION_LISTS["TALKTV"] = {                                  //////////////////////////////////////////////////////////////////////////////////////
-
-    };
-
     ALL_ACTION_LISTS["FREEVIEW"] = {
         RemoteTV::KEY_1,
         RemoteTV::KEY_0,
         RemoteTV::KEY_0
+    };
+
+
+    //////////////////////////////////////// TV REMOTE ////////////////////////////////////////
+
+    ALL_ACTION_LISTS["TV_POWER"] = {
+        RemoteTV::POWER
+    };
+
+    ALL_ACTION_LISTS["TV_INPUT_TV"] = {
+        RemoteTV::INPUT_TV
+    };
+
+    ALL_ACTION_LISTS["TV_INPUT_AV"] = {
+        RemoteTV::INPUT_AV
+    };
+
+    ALL_ACTION_LISTS["TV_HOME"] = {
+        RemoteTV::HOME
+    };
+
+    ALL_ACTION_LISTS["TV_GUIDE"] = {
+        RemoteTV::GUIDE
+    };
+
+    ALL_ACTION_LISTS["TV_OK"] = {
+        RemoteTV::OK
+    };
+
+    ALL_ACTION_LISTS["TV_RETURN"] = {
+        RemoteTV::RETURN
+    };
+
+    ALL_ACTION_LISTS["TV_EXIT"] = {
+        RemoteTV::EXIT
+    };
+
+    ALL_ACTION_LISTS["TV_INFO"] = {
+        RemoteTV::INFO
+    };
+
+    ALL_ACTION_LISTS["TV_NAV_LEFT"] = {
+        RemoteTV::NAV_LEFT
+    };
+
+    ALL_ACTION_LISTS["TV_NAV_RIGHT"] = {
+        RemoteTV::NAV_RIGHT
+    };
+
+    ALL_ACTION_LISTS["TV_NAV_UP"] = {
+        RemoteTV::NAV_UP
+    };
+
+    ALL_ACTION_LISTS["TV_NAV_DONW"] = {
+        RemoteTV::NAV_DOWN
+    };
+
+    ALL_ACTION_LISTS["TV_RED"] = {
+        RemoteTV::RED
+    };
+
+    ALL_ACTION_LISTS["TV_GREEN"] = {
+        RemoteTV::GREEN
+    };
+
+    ALL_ACTION_LISTS["TV_YELLOW"] = {
+        RemoteTV::YELLOW
+    };
+
+    ALL_ACTION_LISTS["TV_BLUE"] = {
+        RemoteTV::BLUE
+    };
+
+    ALL_ACTION_LISTS["TV_CHAN_UP"] = {
+        RemoteTV::CHAN_UP
+    };
+
+    ALL_ACTION_LISTS["TV_CHAN_DOWN"] = {
+        RemoteTV::CHAN_DOWN
     };
 }
 
@@ -335,21 +415,21 @@ void runActionList(const std::string& actionListID)
     }
 
     actionListRunning = true;
-    std::cout << "transmitting " << actionListID << std::endl;
+    //std::cout << "transmitting " << actionListID << std::endl;
     for (const RemoteButtonSignal* action : ALL_ACTION_LISTS[actionListID]) //action wants to be a copy as it is modified
     {
         //send action to be broadcast by IR
-        for (int i = 0; i < action->length; i++)
-        {
-            std::cout << action->words[i].duration0 << "-" << action->words[i].duration1 << " ";
-        }
-        std::cout << std::endl;
+        // for (int i = 0; i < action->length; i++)
+        // {
+        //     std::cout << action->words[i].duration0 << "-" << action->words[i].duration1 << " ";
+        // }
+        // std::cout << std::endl;
 
         IRTransmitter::transmit(action->words, action->length);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(MS_BETWEEN_ACTIONS));
     }
-    std::cout << "finished transmitting" << std::endl;
+    //std::cout << "finished transmitting" << std::endl;
     actionListRunning = false;
 }
 
