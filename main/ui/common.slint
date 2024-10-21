@@ -3,7 +3,8 @@ import { HorizontalBox, Button, VerticalBox } from "std-widgets.slint";
 import { RemoteScreenID } from "remote-screens-index.slint";
 import { Symbols } from "symbols.slint";
 
-export global Logic {
+
+export global Logic { //container for functions to interact with c++ from gui
     pure callback remote_btn_clicked(string, RemoteScreenID);
 }
 
@@ -33,8 +34,12 @@ export component RemoteButton { //custom button for sending remote signals and n
             background: #0000007f;
         }
         
-        touch := TouchArea { //toucharea to detec when the button is being pressed
-            clicked => { Logic.remote_btn_clicked(root.actionListID, root.screenID) }
+        touch := TouchArea { //toucharea to detect when the button is being pressed
+            pointer-event(event) => {
+                if (event.kind == PointerEventKind.up) {
+                    Logic.remote_btn_clicked(root.actionListID, root.screenID)
+                }
+            }
         }
     }
 }
@@ -154,11 +159,11 @@ export component NavPanel { //panel with bottom navigation buttons to replicate 
 }
 
 export component VolumePanel {
-    in property <string> al_volUp;
-    in property <string> al_volDown;
-    in property <string> al_volMute;
-    in property <string> al_chanUp;
-    in property <string> al_chanDown;
+    in property <string> al_volUp: "SOUND_VOL_UP";
+    in property <string> al_volDown: "SOUND_VOL_DOWN";
+    in property <string> al_volMute: "SOUND_VOL_MUTE";
+    in property <string> al_chanUp: "TV_CHAN_UP";
+    in property <string> al_chanDown: "TV_CHAN_DOWN";
 
     VerticalLayout {
         spacing: 5px;

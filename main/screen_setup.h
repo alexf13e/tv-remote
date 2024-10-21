@@ -153,12 +153,14 @@ void screenSetup()
     };
 
     i2c_param_config((i2c_port_t)i2c_master_port, &conf);
-    i2c_driver_install((i2c_port_t)i2c_master_port, conf.mode, I2C_MASTER_RX_BUF_DISABLE, I2C_MASTER_TX_BUF_DISABLE, 0);
+    ESP_ERROR_CHECK(i2c_driver_install((i2c_port_t)i2c_master_port, conf.mode, I2C_MASTER_RX_BUF_DISABLE, I2C_MASTER_TX_BUF_DISABLE, 0));
 
-    gpio_config_t io_conf = {};
-    io_conf.intr_type = GPIO_INTR_DISABLE;
-    io_conf.pin_bit_mask = GPIO_INPUT_PIN_SEL;
-    io_conf.mode = GPIO_MODE_OUTPUT;
+    gpio_config_t io_conf = {
+        .pin_bit_mask = GPIO_INPUT_PIN_SEL,
+        .mode = GPIO_MODE_OUTPUT,
+        .intr_type = GPIO_INTR_DISABLE,
+    };
+
     gpio_config(&io_conf);
 
     uint8_t write_buf = 0x01;
@@ -169,7 +171,7 @@ void screenSetup()
     i2c_master_write_to_device((i2c_port_t)I2C_MASTER_NUM, 0x38, &write_buf, 1, I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
     esp_rom_delay_us(100 * 1000);
 
-    gpio_set_level((gpio_num_t)GPIO_INPUT_IO_4,0);
+    gpio_set_level((gpio_num_t)GPIO_INPUT_IO_4, 0);
     esp_rom_delay_us(100 * 1000);
 
     write_buf = 0x2E;

@@ -2,6 +2,9 @@
 #ifndef IR_TRANSMITTER_H
 #define IR_TRANSMITTER_H
 
+#include <vector>
+#include <iostream>
+
 #include "driver/rmt_common.h"
 #include "driver/rmt_encoder.h"
 #include "driver/rmt_tx.h"
@@ -30,6 +33,7 @@ namespace IRTransmitter {
             .trans_queue_depth = 4,
             .flags = {
                 .invert_out = false,
+                .with_dma = true
             }
         };
 
@@ -38,7 +42,7 @@ namespace IRTransmitter {
         
         
         carrier_config = {
-            .frequency_hz = 38000,
+            .frequency_hz = 37000,
             .duty_cycle = 0.33,
             .flags = {
                 .polarity_active_low = false,
@@ -59,9 +63,9 @@ namespace IRTransmitter {
         ESP_ERROR_CHECK(rmt_new_copy_encoder(&encoder_config, &encoder_handle));
     }
 
-    void transmit(rmt_symbol_word_t* data, size_t length)
+    void transmit(const std::vector<rmt_symbol_word_t>& data)
     {
-        ESP_ERROR_CHECK(rmt_transmit(channel_handle, encoder_handle, data, length * sizeof(rmt_symbol_word_t), &transmit_config));
+        ESP_ERROR_CHECK(rmt_transmit(channel_handle, encoder_handle, data.data(), data.size() * sizeof(rmt_symbol_word_t), &transmit_config));
     }
 }
 

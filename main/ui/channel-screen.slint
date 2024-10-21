@@ -95,21 +95,21 @@ export component ChannelScreen { //whole screen for the tv channel selection
                 max-width: 50px;
                 al_chanUp: "TV_CHAN_UP";
                 al_chanDown: "TV_CHAN_DOWN";
-                al_volUp: ""; //todo, need to record sound remote
-                al_volDown: "";
-                al_volMute: "";
+                al_volUp: "SOUND_VOL_UP";
+                al_volDown: "SOUND_VOL_DOWN";
+                al_volMute: "SOUND_VOL_MUTE";
             }
         }
 
         VerticalLayout {
             NavPanel { //show a set of buttons at the bottom of the screen (e.g. directional, ok/back, home)
                 height: 300px;
-                // txt_btn1: "";
+                txt_btn1: "Speakers Power";
                 txt_btn2: "TV Power";
                 // txt_btn3: "";
                 // txt_btn4: "";
 
-                // al_btn1: "";
+                al_btn1: "SOUND_POWER";
                 al_btn2: "TV_POWER";
                 // al_btn3: "";
                 // al_btn4: "";

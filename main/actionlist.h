@@ -15,7 +15,7 @@
 #include "ir_transmitter.h"
 
 
-#define MS_BETWEEN_ACTIONS 300
+#define MS_BETWEEN_ACTIONS 100
 
 bool actionListRunning = false;
 std::unordered_map<std::string, std::vector<const RemoteButtonSignal*>> ALL_ACTION_LISTS;
@@ -23,12 +23,6 @@ std::unordered_map<std::string, std::vector<const RemoteButtonSignal*>> ALL_ACTI
 
 void createActionLists()
 {
-
-    ALL_ACTION_LISTS["TEST"] = {
-        RemoteTV::KEY_1
-    };
-
-
     //////////////////////////////////////// CHANNELS ////////////////////////////////////////
 
     ALL_ACTION_LISTS["BBC_ONE_HD"] = {
@@ -402,6 +396,25 @@ void createActionLists()
     ALL_ACTION_LISTS["TV_CHAN_DOWN"] = {
         RemoteTV::CHAN_DOWN
     };
+
+
+    //////////////////////////////////////// SOUND REMOTE ////////////////////////////////////////
+
+    ALL_ACTION_LISTS["SOUND_POWER"] = {
+        RemoteSound::POWER
+    };
+
+    ALL_ACTION_LISTS["SOUND_VOL_UP"] = {
+        RemoteSound::VOL_UP
+    };
+
+    ALL_ACTION_LISTS["SOUND_VOL_DOWN"] = {
+        RemoteSound::VOL_DOWN
+    };
+
+    ALL_ACTION_LISTS["SOUND_VOL_MUTE"] = {
+        RemoteSound::VOL_MUTE
+    };
 }
 
 void runActionList(const std::string& actionListID)
@@ -425,7 +438,7 @@ void runActionList(const std::string& actionListID)
         // }
         // std::cout << std::endl;
 
-        IRTransmitter::transmit(action->words, action->length);
+        IRTransmitter::transmit(action->words);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(MS_BETWEEN_ACTIONS));
     }
