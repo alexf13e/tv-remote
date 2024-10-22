@@ -1,12 +1,10 @@
 
-export struct RemoteButtonData {
-    icon: image,
-    actionListID: string
-}
+export component ChannelButtonData { //list of data to generate grid of channel buttons
+    out property <[{icon: image, actionListID: string}]> data;
 
-export component ChannelButtonData {
-    out property <[RemoteButtonData]> data;
-
+    //each button will have the specified image shown, and run the given action list when clicked
+    //buttons are generated in the grid in the order of this list, column by column
+    //if the channel number has changed, it should be changed in the corresponding item in actionlist.h, not here
     data: [
         { icon: @image-url("icons/channels/BBC ONE EastHD.png"),        actionListID: "BBC_ONE_HD"},
         { icon: @image-url("icons/channels/BBC TWO HD.png"),            actionListID: "BBC_TWO_HD"},

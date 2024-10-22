@@ -1,7 +1,11 @@
 
+//a list of the screens which exist in the remote.
+//used by remote buttons specifying which screen should be switched to when clicked
+//screen id is used by the main window in app-window.slint to determine which screen should be shown
+
 export enum RemoteScreenID
 {
-    SAME,
+    SAME,   //stay on the same screen (default when none is specified for a button)
     HOME,
     TV_CHANNELS
 }

@@ -10,7 +10,7 @@
 #include "hal/rmt_types.h"
 
 
-struct RemoteButtonSignal
+struct IRSignalContainer
 {
     //our remotes are using panasonic and denon-k protocols which are almost identical http://www.hifi-remote.com/johnsfine/DecodeIR.html
     //other remotes can probably still use long string code instead of a 64 bit number
@@ -58,7 +58,7 @@ struct RemoteButtonSignal
 
     //build array of rmt words from long string of rmt_symbol_word_t.val as hex concatenated together
     //e.g. 066d8d41018381cd018481ca04cc81cb018481cc04ce81c9018581cb04cd81c9018581cb018681c904ce81c9018581ca018581ca04cd81c904cd81cb018681ca018681c9018581c9018581ca018581c9018581c9019e81b2018781c604ce81c9019d81b304e481b2018581cb018381ca018381cc04cc81cb04e481b404ce81ca04e481b404cc81cc018281cd018281cc018281cc018281cd018281cd018281cc018281cc018281cd018181cd018181cd018081ce04c981cf04cb81ce018081ce04c781ce000081cd
-    RemoteButtonSignal(std::string code)
+    IRSignalContainer(std::string code)
     {        
         //each word is 32 bits, so 8 characters to describe each word
         if (code.length() <= 0 || code.length() % 8 != 0)
@@ -80,7 +80,7 @@ struct RemoteButtonSignal
 
     //build array of rmt words from decoded remote signal as one 64 bit value.
     //e.g. 101100000000000111110001010000000011001001010100 or 0xb001f1403254 as hex
-    RemoteButtonSignal(uint64_t code)
+    IRSignalContainer(uint64_t code)
     {
         words.push_back(symbol_start);
 

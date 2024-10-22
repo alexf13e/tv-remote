@@ -1,13 +1,18 @@
 
-import { HomeScreen } from "home-screen.slint";
-import { ChannelScreen } from "channel-screen.slint";
-import { RemoteButtonData } from "component-data.slint";
+//the main starting point for the ui
+//describes the window which will be displayed over the whole display
+//within the window, a "screen" can be selected to have its contents displayed
+//this file's contents are the only ones to be directly accessible from c++
+
+import { HomeScreen } from "screens/home-screen.slint";
+import { ChannelScreen } from "screens/channel-screen.slint";
 import { RemoteScreenID } from "remote-screens-index.slint";
 
-export { Logic } from "common.slint";
+export { Logic } from "custom-components.slint"; //export Logic so it can be accessed by c++
+
 
 export component AppWindow inherits Window {
-    in property <RemoteScreenID> currentScreenID;
+    in property <RemoteScreenID> currentScreenID: RemoteScreenID.TV-CHANNELS;
 
     VerticalLayout { //container rectangle for padding around edge for all screens
         padding: 10px;

@@ -3,6 +3,7 @@
 #define ACTIONLIST_H
 
 #include <chrono>
+#include <cstdint>
 #include <thread>
 #include <string>
 #include <type_traits>
@@ -12,13 +13,62 @@
 
 #include "hal/rmt_types.h"
 #include "remotes.h"
-#include "ir_transmitter.h"
+#include "IRTransmitter.h"
 
 
-#define MS_BETWEEN_ACTIONS 100
+#define MS_BETWEEN_IR_SIGNALS 100
 
+
+enum ActionType
+{
+    REMOTE_SIGNAL,
+    DELAY,
+};
+
+struct AbstractAction
+{
+    ActionType type;
+
+    virtual void run() = 0;
+};
+
+typedef struct ActionRemoteSignal : AbstractAction
+{
+    const IRSignalContainer* signal;
+
+    ActionRemoteSignal(const IRSignalContainer* signal)
+    {
+        type = REMOTE_SIGNAL;
+        this->signal = signal;
+    }
+
+    void run()
+    {
+        //send signal to be broadcast by IR
+        IRTransmitter::transmit(signal->words);
+    }
+} *RemoteSignal;
+
+typedef struct ActionDelayMilliseconds : AbstractAction
+{
+    uint32_t duration;
+
+    ActionDelayMilliseconds(uint32_t duration)
+    {
+        type = DELAY;
+        this->duration = duration;
+    }
+
+    void run()
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(duration));
+    }
+} *DelayMilliseconds;
+
+
+std::unordered_map<std::string, std::vector<AbstractAction*>> ALL_ACTION_LISTS;
 bool actionListRunning = false;
-std::unordered_map<std::string, std::vector<const RemoteButtonSignal*>> ALL_ACTION_LISTS;
+
 
 
 void createActionLists()
@@ -26,396 +76,398 @@ void createActionLists()
     //////////////////////////////////////// CHANNELS ////////////////////////////////////////
 
     ALL_ACTION_LISTS["BBC_ONE_HD"] = {
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_1
+        RemoteSignal(RemoteTV::KEY_1),
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_1)
     };
 
     ALL_ACTION_LISTS["BBC_TWO_HD"] = {
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_2
+        RemoteSignal(RemoteTV::KEY_1),
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_2)
     };
 
     ALL_ACTION_LISTS["BBC_THREE_HD"] = {
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_7
+        RemoteSignal(RemoteTV::KEY_1),
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_7)
     };
 
     ALL_ACTION_LISTS["BBC_FOUR_HD"] = {
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_6
+        RemoteSignal(RemoteTV::KEY_1),
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_6)
     };
 
     ALL_ACTION_LISTS["BBC_NEWS"] = {
-        RemoteTV::KEY_2,
-        RemoteTV::KEY_3,
-        RemoteTV::KEY_1
+        RemoteSignal(RemoteTV::KEY_2),
+        RemoteSignal(RemoteTV::KEY_3),
+        RemoteSignal(RemoteTV::KEY_1)
     };
 
     ALL_ACTION_LISTS["ITV1_HD"] = {
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_3
+        RemoteSignal(RemoteTV::KEY_1),
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_3)
     };
 
     ALL_ACTION_LISTS["ITV_1"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_3,
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_3),
     };
 
     ALL_ACTION_LISTS["ITV2"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_7
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_7)
     };
 
     ALL_ACTION_LISTS["ITV3"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_0
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_1),
+        RemoteSignal(RemoteTV::KEY_0)
     };
 
     ALL_ACTION_LISTS["ITV4"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_2,
-        RemoteTV::KEY_6
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_2),
+        RemoteSignal(RemoteTV::KEY_6)
     };
 
     ALL_ACTION_LISTS["CHANNEL_4_HD"] = {
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_4
+        RemoteSignal(RemoteTV::KEY_1),
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_4)
     };
 
     ALL_ACTION_LISTS["CHANNEL_5_HD"] = {
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_5
+        RemoteSignal(RemoteTV::KEY_1),
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_5)
     };
 
     ALL_ACTION_LISTS["FILM4"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_4
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_1),
+        RemoteSignal(RemoteTV::KEY_4)
     };
 
     ALL_ACTION_LISTS["MORE4"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_8
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_1),
+        RemoteSignal(RemoteTV::KEY_8)
     };
 
     ALL_ACTION_LISTS["E4"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_3
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_1),
+        RemoteSignal(RemoteTV::KEY_3)
     };
 
     ALL_ACTION_LISTS["DAVE"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_9
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_1),
+        RemoteSignal(RemoteTV::KEY_9)
     };
 
     ALL_ACTION_LISTS["YESTERDAY"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_2,
-        RemoteTV::KEY_7
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_2),
+        RemoteSignal(RemoteTV::KEY_7)
     };
 
     ALL_ACTION_LISTS["QUEST"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_2
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_1),
+        RemoteSignal(RemoteTV::KEY_2)
     };
 
     ALL_ACTION_LISTS["DMAX"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_3,
-        RemoteTV::KEY_9
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_3),
+        RemoteSignal(RemoteTV::KEY_9)
     };
 
     ALL_ACTION_LISTS["ITV_BE"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_2,
-        RemoteTV::KEY_8
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_2),
+        RemoteSignal(RemoteTV::KEY_8)
     };
 
     ALL_ACTION_LISTS["ITV1+1"] = {
-        RemoteTV::KEY_3,
-        RemoteTV::KEY_5
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_3),
+        RemoteSignal(RemoteTV::KEY_5)
     };
 
     ALL_ACTION_LISTS["ITV2+1"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_2,
-        RemoteTV::KEY_9
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_2),
+        RemoteSignal(RemoteTV::KEY_9)
     };
 
     ALL_ACTION_LISTS["CHANNEL_4+1"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_5
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_1),
+        RemoteSignal(RemoteTV::KEY_5)
     };
 
     ALL_ACTION_LISTS["CHANNEL_5+1"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_3,
-        RemoteTV::KEY_8
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_3),
+        RemoteSignal(RemoteTV::KEY_8)
     };
 
     ALL_ACTION_LISTS["E4+1"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_3,
-        RemoteTV::KEY_0
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_3),
+        RemoteSignal(RemoteTV::KEY_0)
     };
 
     ALL_ACTION_LISTS["5USA"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_2,
-        RemoteTV::KEY_1
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_2),
+        RemoteSignal(RemoteTV::KEY_1)
     };
 
     ALL_ACTION_LISTS["5STAR"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_3,
-        RemoteTV::KEY_2
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_3),
+        RemoteSignal(RemoteTV::KEY_2)
     };
 
     ALL_ACTION_LISTS["BLAZE"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_6,
-        RemoteTV::KEY_4
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_6),
+        RemoteSignal(RemoteTV::KEY_4)
     };
 
     ALL_ACTION_LISTS["E4_EXTRA"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_3,
-        RemoteTV::KEY_1
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_3),
+        RemoteSignal(RemoteTV::KEY_1)
     };
 
     ALL_ACTION_LISTS["FILM4+1"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_4,
-        RemoteTV::KEY_7
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_4),
+        RemoteSignal(RemoteTV::KEY_7)
     };
 
     ALL_ACTION_LISTS["5SELECT"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_4,
-        RemoteTV::KEY_6
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_4),
+        RemoteSignal(RemoteTV::KEY_6)
     };
 
     ALL_ACTION_LISTS["CBS_REALITY"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_6,
-        RemoteTV::KEY_7
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_6),
+        RemoteSignal(RemoteTV::KEY_7)
     };
 
     ALL_ACTION_LISTS["THATS_TV"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_5,
-        RemoteTV::KEY_6
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_5),
+        RemoteSignal(RemoteTV::KEY_6)
     };
 
     ALL_ACTION_LISTS["4SEVEN"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_4,
-        RemoteTV::KEY_9
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_4),
+        RemoteSignal(RemoteTV::KEY_9)
     };
 
     ALL_ACTION_LISTS["HGTV"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_4,
-        RemoteTV::KEY_4
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_4),
+        RemoteSignal(RemoteTV::KEY_4)
     };
 
     ALL_ACTION_LISTS["REALLY"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_7
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_1),
+        RemoteSignal(RemoteTV::KEY_7)
     };
 
     ALL_ACTION_LISTS["DRAMA"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_2,
-        RemoteTV::KEY_0
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_2),
+        RemoteSignal(RemoteTV::KEY_0)
     };
 
     ALL_ACTION_LISTS["TALKINGPICTURES_TV"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_8,
-        RemoteTV::KEY_2
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_8),
+        RemoteSignal(RemoteTV::KEY_2)
     };
 
     ALL_ACTION_LISTS["SKY_MIX"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_1
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_1),
+        RemoteSignal(RemoteTV::KEY_1)
     };
 
     ALL_ACTION_LISTS["SKY_ARTS"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_3,
-        RemoteTV::KEY_6
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_3),
+        RemoteSignal(RemoteTV::KEY_6)
     };
 
     ALL_ACTION_LISTS["GREAT_MOVIES"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_3,
-        RemoteTV::KEY_4
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_3),
+        RemoteSignal(RemoteTV::KEY_4)
     };
 
     ALL_ACTION_LISTS["GREAT_ACTION"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_4,
-        RemoteTV::KEY_2
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_4),
+        RemoteSignal(RemoteTV::KEY_2)
     };
 
     ALL_ACTION_LISTS["5ACTION"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_3,
-        RemoteTV::KEY_3
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_3),
+        RemoteSignal(RemoteTV::KEY_3)
     };
 
     ALL_ACTION_LISTS["SKY_NEWS"] = {
-        RemoteTV::KEY_2,
-        RemoteTV::KEY_3,
-        RemoteTV::KEY_3
+        RemoteSignal(RemoteTV::KEY_2),
+        RemoteSignal(RemoteTV::KEY_3),
+        RemoteSignal(RemoteTV::KEY_3)
     };
 
     ALL_ACTION_LISTS["QUEST_RED"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_4,
-        RemoteTV::KEY_0
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_4),
+        RemoteSignal(RemoteTV::KEY_0)
     };
 
     ALL_ACTION_LISTS["W"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_2,
-        RemoteTV::KEY_5
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_2),
+        RemoteSignal(RemoteTV::KEY_5)
     };
 
     ALL_ACTION_LISTS["TOGETHER_TV"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_8,
-        RemoteTV::KEY_3
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_8),
+        RemoteSignal(RemoteTV::KEY_3)
     };
 
     ALL_ACTION_LISTS["CHALLENGE"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_4,
-        RemoteTV::KEY_8
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_4),
+        RemoteSignal(RemoteTV::KEY_8)
     };
 
     ALL_ACTION_LISTS["FREEVIEW"] = {
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_0
+        RemoteSignal(RemoteTV::KEY_1),
+        RemoteSignal(RemoteTV::KEY_0),
+        RemoteSignal(RemoteTV::KEY_0)
     };
 
 
     //////////////////////////////////////// TV REMOTE ////////////////////////////////////////
 
     ALL_ACTION_LISTS["TV_POWER"] = {
-        RemoteTV::POWER
+        RemoteSignal(RemoteTV::POWER)
     };
 
     ALL_ACTION_LISTS["TV_INPUT_TV"] = {
-        RemoteTV::INPUT_TV
+        RemoteSignal(RemoteTV::INPUT_TV)
     };
 
     ALL_ACTION_LISTS["TV_INPUT_AV"] = {
-        RemoteTV::INPUT_AV
+        RemoteSignal(RemoteTV::INPUT_AV)
     };
 
     ALL_ACTION_LISTS["TV_HOME"] = {
-        RemoteTV::HOME
+        RemoteSignal(RemoteTV::HOME)
     };
 
     ALL_ACTION_LISTS["TV_GUIDE"] = {
-        RemoteTV::GUIDE
+        RemoteSignal(RemoteTV::GUIDE)
     };
 
     ALL_ACTION_LISTS["TV_OK"] = {
-        RemoteTV::OK
+        RemoteSignal(RemoteTV::OK)
     };
 
     ALL_ACTION_LISTS["TV_RETURN"] = {
-        RemoteTV::RETURN
+        RemoteSignal(RemoteTV::RETURN)
     };
 
     ALL_ACTION_LISTS["TV_EXIT"] = {
-        RemoteTV::EXIT
+        RemoteSignal(RemoteTV::EXIT)
     };
 
     ALL_ACTION_LISTS["TV_INFO"] = {
-        RemoteTV::INFO
+        RemoteSignal(RemoteTV::INFO)
     };
 
     ALL_ACTION_LISTS["TV_NAV_LEFT"] = {
-        RemoteTV::NAV_LEFT
+        RemoteSignal(RemoteTV::NAV_LEFT)
     };
 
     ALL_ACTION_LISTS["TV_NAV_RIGHT"] = {
-        RemoteTV::NAV_RIGHT
+        RemoteSignal(RemoteTV::NAV_RIGHT)
     };
 
     ALL_ACTION_LISTS["TV_NAV_UP"] = {
-        RemoteTV::NAV_UP
+        RemoteSignal(RemoteTV::NAV_UP)
     };
 
     ALL_ACTION_LISTS["TV_NAV_DONW"] = {
-        RemoteTV::NAV_DOWN
+        RemoteSignal(RemoteTV::NAV_DOWN)
     };
 
     ALL_ACTION_LISTS["TV_RED"] = {
-        RemoteTV::RED
+        RemoteSignal(RemoteTV::RED)
     };
 
     ALL_ACTION_LISTS["TV_GREEN"] = {
-        RemoteTV::GREEN
+        RemoteSignal(RemoteTV::GREEN)
     };
 
     ALL_ACTION_LISTS["TV_YELLOW"] = {
-        RemoteTV::YELLOW
+        RemoteSignal(RemoteTV::YELLOW)
     };
 
     ALL_ACTION_LISTS["TV_BLUE"] = {
-        RemoteTV::BLUE
+        RemoteSignal(RemoteTV::BLUE)
     };
 
     ALL_ACTION_LISTS["TV_CHAN_UP"] = {
-        RemoteTV::CHAN_UP
+        RemoteSignal(RemoteTV::CHAN_UP)
     };
 
     ALL_ACTION_LISTS["TV_CHAN_DOWN"] = {
-        RemoteTV::CHAN_DOWN
+        RemoteSignal(RemoteTV::CHAN_DOWN)
     };
 
 
     //////////////////////////////////////// SOUND REMOTE ////////////////////////////////////////
 
     ALL_ACTION_LISTS["SOUND_POWER"] = {
-        RemoteSound::POWER
+        RemoteSignal(RemoteSpeakers::POWER)
     };
 
     ALL_ACTION_LISTS["SOUND_VOL_UP"] = {
-        RemoteSound::VOL_UP
+        RemoteSignal(RemoteSpeakers::VOL_UP)
     };
 
     ALL_ACTION_LISTS["SOUND_VOL_DOWN"] = {
-        RemoteSound::VOL_DOWN
+        RemoteSignal(RemoteSpeakers::VOL_DOWN)
     };
 
     ALL_ACTION_LISTS["SOUND_VOL_MUTE"] = {
-        RemoteSound::VOL_MUTE
+        RemoteSignal(RemoteSpeakers::VOL_MUTE)
     };
 }
+
 
 void runActionList(const std::string& actionListID)
 {
@@ -428,21 +480,21 @@ void runActionList(const std::string& actionListID)
     }
 
     actionListRunning = true;
-    //std::cout << "transmitting " << actionListID << std::endl;
-    for (const RemoteButtonSignal* action : ALL_ACTION_LISTS[actionListID]) //action wants to be a copy as it is modified
+    const std::vector<AbstractAction*>& actionList = ALL_ACTION_LISTS[actionListID];
+    for (int i = 0; i < actionList.size(); i++)
     {
-        //send action to be broadcast by IR
-        // for (int i = 0; i < action->length; i++)
-        // {
-        //     std::cout << action->words[i].duration0 << "-" << action->words[i].duration1 << " ";
-        // }
-        // std::cout << std::endl;
+        actionList[i]->run();
 
-        IRTransmitter::transmit(action->words);
+        if (i + 1 < actionList.size() && actionList[i + 1]->type == REMOTE_SIGNAL)
+        {
+            //if the next action is an IR signal, want to delay a little to give it time to finish sending before
+            //the next one starts.
+            //but if the next action is a something else, no need to wait (and if its a delay, it would be confusing
+            //to wait this extra time on top of the specified delay)
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(MS_BETWEEN_ACTIONS));
+            std::this_thread::sleep_for(std::chrono::milliseconds(MS_BETWEEN_IR_SIGNALS));
+        }
     }
-    //std::cout << "finished transmitting" << std::endl;
     actionListRunning = false;
 }
 

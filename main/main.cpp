@@ -8,8 +8,6 @@
 #include "app-window.h"
 
 #include "screen_setup.h"
-#include "ir_transmitter.h"
-
 #include "actionlist.h"
 
 
@@ -27,8 +25,6 @@ extern "C" void app_main(void)
         //change the screen if one was specified
         if (screenID != RemoteScreenID::SAME) main_window->set_currentScreenID(screenID);
     });
-    
-    main_window->set_currentScreenID(RemoteScreenID::TVCHANNELS);
-    
+        
     main_window->run();
 }
