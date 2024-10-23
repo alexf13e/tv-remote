@@ -29,6 +29,7 @@ export component RemoteButton { //custom button for sending remote signals and n
         Text {
             text: text;
             font-size: root.font-size;
+            wrap: word-wrap;
         }
 
         if touch.pressed: Rectangle { //when the button is pressed, shade it darker for visual feedback
@@ -78,6 +79,7 @@ export component NavPanel { //panel with bottom navigation buttons to replicate 
 
             RemoteButton {
                 height: parent.height;
+                horizontal-stretch: 0;
                 text: txt_btn1;
                 actionListID: al_btn1;
                 screenID: screen_btn1;
@@ -85,6 +87,7 @@ export component NavPanel { //panel with bottom navigation buttons to replicate 
 
             RemoteButton {
                 height: parent.height;
+                horizontal-stretch: 0;
                 text: txt_btn2;
                 actionListID: al_btn2;
                 screenID: screen_btn2;
@@ -92,6 +95,7 @@ export component NavPanel { //panel with bottom navigation buttons to replicate 
 
             RemoteButton {
                 height: parent.height;
+                horizontal-stretch: 0;
                 text: txt_btn3;
                 actionListID: al_btn3;
                 screenID: screen_btn3;
@@ -99,6 +103,7 @@ export component NavPanel { //panel with bottom navigation buttons to replicate 
 
             RemoteButton {
                 height: parent.height;
+                horizontal-stretch: 0;
                 text: txt_btn4;
                 actionListID: al_btn4;
                 screenID: screen_btn4;
@@ -162,11 +167,11 @@ export component NavPanel { //panel with bottom navigation buttons to replicate 
 
 
 export component VolumePanel {
-    in property <string> al_volUp: "SPEAKERS_VOL_UP";
-    in property <string> al_volDown: "SPEAKERS_VOL_DOWN";
-    in property <string> al_volMute: "SPEAKERS_VOL_MUTE";
-    in property <string> al_chanUp: "TV_CHAN_UP";
-    in property <string> al_chanDown: "TV_CHAN_DOWN";
+    in property <string> al_volUp;
+    in property <string> al_volDown;
+    in property <string> al_volMute;
+    in property <string> al_chanUp;
+    in property <string> al_chanDown;
 
     VerticalLayout {
         spacing: 5px;
@@ -194,6 +199,82 @@ export component VolumePanel {
         RemoteButton {
             text: "vol-";
             actionListID: al_volDown;
+        }
+    }
+}
+
+
+export component ScreenTemplate { //whole screen for the tv channel selection    
+    
+    //properties to specify what the nav and volume buttons should do, with sensible defaults
+    //action list names for the volume and change channel buttons
+    in property <string> volume_panel_al_chan_up: "TV_CHAN_UP";
+    in property <string> volume_panel_al_chan_down: "TV_CHAN_DOWN";
+    in property <string> volume_panel_al_vol_up: "SPEAKERS_VOL_UP";
+    in property <string> volume_panel_al_vol_down: "SPEAKERS_VOL_DOWN";
+    in property <string> volume_panel_al_mute: "SPEAKERS_MUTE";
+
+    //text to display on the row of 4 buttons
+    in property <string> nav_panel_txt_btn_1: "Speakers Power";
+    in property <string> nav_panel_txt_btn_2: "TV Power";
+    in property <string> nav_panel_txt_btn_3: "HDD Power";
+    in property <string> nav_panel_txt_btn_4: "btn4";
+
+    //action lists to run when the row of 4 buttons are pressed
+    in property <string> nav_panel_al_btn_1: "SPEAKERS_POWER";
+    in property <string> nav_panel_al_btn_2: "TV_POWER";
+    in property <string> nav_panel_al_btn_3: "HDD_POWER";
+    in property <string> nav_panel_al_btn_4: "";
+
+    //action lists to run when directional buttons are pressed
+    in property <string> nav_panel_al_navLeft: "TV_NAV_LEFT";
+    in property <string> nav_panel_al_navRight: "TV_NAV_RIGHT";
+    in property <string> nav_panel_al_navUp: "TV_NAV_UP";
+    in property <string> nav_panel_al_navDown: "TV_NAV_DOWN";
+    in property <string> nav_panel_al_ok: "TV_OK";
+    in property <string> nav_panel_al_return: "TV_RETURN";
+
+    preferred-width: 100%;
+    preferred-height: 100%;
+
+
+    VerticalLayout { //container for whole screen
+        spacing: 50px;
+
+        HorizontalLayout { //container for main page content and volume/channel buttons
+            spacing: 10px;
+
+            @children //main page content goes here
+            
+            VolumePanel { //display vertical column with volume and channel controls
+                max-width: 50px;
+                al_chanUp: volume_panel_al_chan_up;
+                al_chanDown: volume_panel_al_chan_down;
+                al_volUp: volume_panel_al_vol_up;
+                al_volDown: volume_panel_al_vol_down;
+                al_volMute: volume_panel_al_mute;
+            }
+        }
+
+        NavPanel { //show a set of buttons at the bottom of the screen (e.g. directional, ok/back, home)
+            height: 300px;
+            
+            txt_btn1: nav_panel_txt_btn_1;
+            txt_btn2: nav_panel_txt_btn_2;
+            txt_btn3: nav_panel_txt_btn_3;
+            txt_btn4: nav_panel_txt_btn_4;
+
+            al_btn1: nav_panel_al_btn_1;
+            al_btn2: nav_panel_al_btn_2;
+            al_btn3: nav_panel_al_btn_3;
+            al_btn4: nav_panel_al_btn_4;
+
+            al_navLeft: nav_panel_al_navLeft;
+            al_navRight: nav_panel_al_navRight;
+            al_navUp: nav_panel_al_navUp;
+            al_navDown: nav_panel_al_navDown;
+            al_ok: nav_panel_al_ok;
+            al_return: nav_panel_al_return;
         }
     }
 }

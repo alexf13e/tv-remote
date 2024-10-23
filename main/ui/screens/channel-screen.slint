@@ -1,84 +1,50 @@
 
 import { Button } from "std-widgets.slint";
 
-import { ChannelPanel, VolumePanel, NavPanel } from "../custom-components.slint";
+import { ChannelPanel, ScreenTemplate } from "../custom-components.slint";
 import { Symbols } from "../symbols.slint";
 
 
-export component ChannelScreen { //whole screen for the tv channel selection    
-    VerticalLayout { //container for whole screen
-        spacing: 50px;
-        padding: 10px;
-
-        HorizontalLayout { //container for channel panel, chanel page switch, volume buttons
-            spacing: 10px;
-            VerticalLayout { //container for channel panel and chanel page switcher
-                cp := ChannelPanel { //display the grid of channels
-                    num_cols: 4;
-                    num_rows: 5;
-                    button_width : 80px;
-                    button_height : 60px;
-                }
-
-                HorizontalLayout { //navigation buttons between sub screens
-                    padding-top: 10px;
-                    if cp.numSubScreens > 1:
-                    Button {
-                        icon: Symbols.arrow-left;
-                        clicked => {
-                            if cp.currentSubScreen > 0 {
-                                cp.setSubScreen(cp.currentSubScreen - 1);
-                            }
-                        }
-                    }
-        
-                    Text {
-                        text: cp.currentSubScreen + 1 + "/" + cp.numSubScreens;
-                        vertical-alignment: center;
-                        horizontal-alignment: center;
-                    }
-        
-                    if cp.numSubScreens > 1:
-                    Button {
-                        icon: Symbols.arrow-right;
-                        clicked => {
-                            if cp.currentSubScreen < cp.numSubScreens - 1 {
-                                cp.setSubScreen(cp.currentSubScreen + 1);
-                            }
-                        }
-                    }
-                }
-            }
+export component ChannelScreen { //whole screen for tv channel selection    
+    ScreenTemplate {
+        VerticalLayout { //container for channel panel and chanel page switcher
+            horizontal-stretch: 1;
+            vertical-stretch: 1;
             
-            VolumePanel { //display vertical column with volume and channel controls
-                max-width: 50px;
-                al_chanUp: "TV_CHAN_UP";
-                al_chanDown: "TV_CHAN_DOWN";
-                al_volUp: "SOUND_VOL_UP";
-                al_volDown: "SOUND_VOL_DOWN";
-                al_volMute: "SOUND_VOL_MUTE";
+            cp := ChannelPanel { //display the grid of channels
+                num_cols: 4;
+                num_rows: 5;
+                button_width : 80px;
+                button_height : 60px;
             }
-        }
-
-        VerticalLayout {
-            NavPanel { //show a set of buttons at the bottom of the screen (e.g. directional, ok/back, home)
-                height: 300px;
-                txt_btn1: "Speakers Power";
-                txt_btn2: "TV Power";
-                // txt_btn3: "";
-                // txt_btn4: "";
-
-                al_btn1: "SOUND_POWER";
-                al_btn2: "TV_POWER";
-                // al_btn3: "";
-                // al_btn4: "";
-
-                al_navLeft: "TV_NAV_LEFT";
-                al_navRight: "TV_NAV_RIGHT";
-                al_navUp: "TV_NAV_UP";
-                al_navDown: "TV_NAV_DOWN";
-                al_ok: "TV_OK";
-                al_return: "TV_RETURN";
+    
+            HorizontalLayout { //navigation buttons between sub screens
+                padding-top: 10px;
+                if cp.numSubScreens > 1:
+                Button {
+                    icon: Symbols.arrow-left;
+                    clicked => {
+                        if cp.currentSubScreen > 0 {
+                            cp.setSubScreen(cp.currentSubScreen - 1);
+                        }
+                    }
+                }
+    
+                Text {
+                    text: cp.currentSubScreen + 1 + "/" + cp.numSubScreens;
+                    vertical-alignment: center;
+                    horizontal-alignment: center;
+                }
+    
+                if cp.numSubScreens > 1:
+                Button {
+                    icon: Symbols.arrow-right;
+                    clicked => {
+                        if cp.currentSubScreen < cp.numSubScreens - 1 {
+                            cp.setSubScreen(cp.currentSubScreen + 1);
+                        }
+                    }
+                }
             }
         }
     }

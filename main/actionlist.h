@@ -16,7 +16,7 @@
 #include "action.h"
 
 
-//tv won't respond to the same ir signal being sent to closely together, but forcing all signals to be slower is annoying
+//tv won't respond to the same ir signal being sent too closely together, but forcing all signals to be slower is annoying
 #define MS_BETWEEN_DIFFERENT_IR_SIGNALS 100
 #define MS_BETWEEN_SAME_IR_SIGNALS 300
 
@@ -420,7 +420,7 @@ void createActionLists()
         RemoteSpeakers::VOL_DOWN
     };
 
-    ALL_ACTION_LISTS["SPEAKERS_VOL_MUTE"] = {
+    ALL_ACTION_LISTS["SPEAKERS_MUTE"] = {
         RemoteSpeakers::VOL_MUTE
     };
 }

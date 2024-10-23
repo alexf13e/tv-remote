@@ -2,11 +2,9 @@
 #ifndef REMOTES_H
 #define REMOTES_H
 
-#include "IRSignalContainer.h"
 #include "action.h"
 
 //macro for more easily adding to list of buttons in each remote
-//#define IR_SIGNAL(NAME, CODE) const IRSignalContainer* NAME = new IRSignalContainer(CODE)
 #define ACTION(NAME, CODE) ActionRemoteSignal* NAME = new ActionRemoteSignal(CODE)
 
 //specify a remote to contain all the button signals
