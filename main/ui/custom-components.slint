@@ -12,7 +12,7 @@ export global Logic { //container for functions to interact with c++ from gui
 export component RemoteButton { //custom button for sending remote signals and navigating the ui
     in property <image> icon;                                   //image to show on button
     in property <string> text;                                  //text to show on button
-    in property <length> font-size;
+    in property <length> fontSize;
     in property <string> actionListID: "";                      //name of the "macro" to play when button is pressed
     in property <RemoteScreenID> screenID: RemoteScreenID.SAME; //the id of the screen which will be shown when this button is clicked
 
@@ -28,7 +28,7 @@ export component RemoteButton { //custom button for sending remote signals and n
 
         Text {
             text: text;
-            font-size: root.font-size;
+            font-size: fontSize;
             wrap: word-wrap;
         }
 
@@ -167,11 +167,11 @@ export component NavPanel { //panel with bottom navigation buttons to replicate 
 
 
 export component VolumePanel {
-    in property <string> al_volUp;
-    in property <string> al_volDown;
-    in property <string> al_volMute;
     in property <string> al_chanUp;
     in property <string> al_chanDown;
+    in property <string> al_volMute;
+    in property <string> al_volUp;
+    in property <string> al_volDown;
 
     VerticalLayout {
         spacing: 5px;
@@ -204,21 +204,21 @@ export component VolumePanel {
 }
 
 
-export component ScreenTemplate { //whole screen for the tv channel selection    
+export component ScreenTemplate { //template for screens mimicking pronto physical button layout  
     
     //properties to specify what the nav and volume buttons should do, with sensible defaults
     //action list names for the volume and change channel buttons
     in property <string> volume_panel_al_chan_up: "TV_CHAN_UP";
     in property <string> volume_panel_al_chan_down: "TV_CHAN_DOWN";
+    in property <string> volume_panel_al_mute: "SPEAKERS_MUTE";
     in property <string> volume_panel_al_vol_up: "SPEAKERS_VOL_UP";
     in property <string> volume_panel_al_vol_down: "SPEAKERS_VOL_DOWN";
-    in property <string> volume_panel_al_mute: "SPEAKERS_MUTE";
 
     //text to display on the row of 4 buttons
-    in property <string> nav_panel_txt_btn_1: "Speakers Power";
-    in property <string> nav_panel_txt_btn_2: "TV Power";
-    in property <string> nav_panel_txt_btn_3: "HDD Power";
-    in property <string> nav_panel_txt_btn_4: "btn4";
+    in property <string> nav_panel_txt_btn_1: "Speakers";
+    in property <string> nav_panel_txt_btn_2: "TV";
+    in property <string> nav_panel_txt_btn_3: "HDD";
+    in property <string> nav_panel_txt_btn_4: "YouView";
 
     //action lists to run when the row of 4 buttons are pressed
     in property <string> nav_panel_al_btn_1: "SPEAKERS_POWER";
@@ -244,15 +244,15 @@ export component ScreenTemplate { //whole screen for the tv channel selection
         HorizontalLayout { //container for main page content and volume/channel buttons
             spacing: 10px;
 
-            @children //main page content goes here
+            @children //screen-specific content will be placed here
             
             VolumePanel { //display vertical column with volume and channel controls
                 max-width: 50px;
                 al_chanUp: volume_panel_al_chan_up;
                 al_chanDown: volume_panel_al_chan_down;
+                al_volMute: volume_panel_al_mute;
                 al_volUp: volume_panel_al_vol_up;
                 al_volDown: volume_panel_al_vol_down;
-                al_volMute: volume_panel_al_mute;
             }
         }
 

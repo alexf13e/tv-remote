@@ -3,15 +3,12 @@
 #define ACTIONLIST_H
 
 #include <chrono>
-#include <cstdint>
 #include <thread>
 #include <string>
-#include <type_traits>
 #include <unordered_map>
 #include <vector>
 #include <iostream>
 
-#include "hal/rmt_types.h"
 #include "remotes.h"
 #include "action.h"
 

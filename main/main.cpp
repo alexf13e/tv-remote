@@ -1,9 +1,5 @@
 
-#include <memory>
-#include <vector>
 
-#include "slint.h"
-#include "slint_image.h"
 #include "slint_string.h"
 #include "app-window.h"
 

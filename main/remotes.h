@@ -12,7 +12,7 @@ namespace RemoteTV
 { //panasonic N2QAYB 001179
     
     //Codes for remote buttons go in a namespace to separate signals which may want the same name in different remotes.
-    //IR_SIGNAL(NAME, CODE) creates a new signal in the remote called NAME with the specified code.
+    //ACTION(NAME, CODE) creates a new signal in the remote with the specified code.
     //NAME can be whatever you want, and will be used as a variable name to refer to the signal elsewhere.
     //CODE should be a number representing the binary of the main part of the signal, provided by the receiver program.
     //Get codes by using receiver program and monitoring the output over usb. pressing a button on the actual remote

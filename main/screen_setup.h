@@ -2,6 +2,11 @@
 #ifndef SCREEN_SETUP_H
 #define SCREEN_SETUP_H
 
+//contents of this file are a mix between two examples with further modifications until they worked
+//the display and touch setup are from https://files.waveshare.com/wiki/ESP32-S3-Touch-LCD-7/ESP32-S3-Touch-LCD-7_Code.zip > ESP-IDF-5.3.0 > lvgl_Porting
+//the slint setup is from https://docs.slint.dev/latest/docs/cpp/mcu/esp_idf
+
+
 #include <cstdint>
 #include <slint-platform.h>
 #include <slint_generated_public.h>
@@ -67,8 +72,10 @@
 #define LCD_H_RES              800
 #define LCD_V_RES              480
 
+//number of framebuffers
 #define LCD_NUM_FB             2
 
+//default orientation is landscape, set to true for portrait (left landscape edge becomes bottom portrait edge)
 #define ROTATE_PORTRAIT true
 
 
@@ -217,7 +224,7 @@ void screenSetup()
         #if ROTATE_PORTRAIT
         .size = slint::PhysicalSize({ LCD_V_RES, LCD_H_RES }), //vertical and horizontal swapped to allow portrait orientation
         #else
-        .size = slint::PhysicalSize({ LCD_H_RES, LCD_V_RES })
+        .size = slint::PhysicalSize({ LCD_H_RES, LCD_V_RES }),
         #endif
         .panel_handle = panel_handle,
         .touch_handle = touch_handle,
