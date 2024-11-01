@@ -4,9 +4,12 @@
 //within the window, a "screen" can be selected to have its contents displayed
 //this file's contents are the only ones to be directly accessible from c++
 
+import { CurrentDisplayedScreen, RemoteScreenID } from "remote-screens-index.slint";
 import { HomeScreen } from "screens/home-screen.slint";
 import { ChannelScreen } from "screens/channel-screen.slint";
-import { RemoteScreenID } from "remote-screens-index.slint";
+import { TVAllButtonsScreen } from "screens/tv-all-buttons-screen.slint";
+import { SpeakersAllButtonsScreen } from "screens/speakers-all-buttons-screen.slint";
+import { HDDAllButtonsScreen } from "screens/hdd-all-buttons-screen.slint";
 
 export { Logic } from "custom-components.slint"; //export Logic so it can be accessed by c++
 
@@ -14,21 +17,16 @@ export { Logic } from "custom-components.slint"; //export Logic so it can be acc
 export component AppWindow inherits Window {
     width: 480px;
     height: 800px;
-    background: #808080;
-    
-    in property <RemoteScreenID> currentScreenID: RemoteScreenID.TV_CHANNELS;
-
+    background: #000000;
+    default-font-size: 14px;
 
     VerticalLayout { //container rectangle for padding around edge for all screens
         padding: 10px;
 
-        if currentScreenID == RemoteScreenID.TV_CHANNELS: ChannelScreen {}
-        if currentScreenID == RemoteScreenID.HOME: HomeScreen {}
-
-
-
+        if CurrentDisplayedScreen.id == RemoteScreenID.HOME: HomeScreen {}
+        if CurrentDisplayedScreen.id == RemoteScreenID.TV_CHANNELS: ChannelScreen {}
+        if CurrentDisplayedScreen.id == RemoteScreenID.TV_ALL_BUTTONS: TVAllButtonsScreen {}
+        if CurrentDisplayedScreen.id == RemoteScreenID.SPEAKERS_ALL_BUTTONS: SpeakersAllButtonsScreen {}
+        if CurrentDisplayedScreen.id == RemoteScreenID.HDD_ALL_BUTTONS: HDDAllButtonsScreen {}
     }
-
-
-
 }

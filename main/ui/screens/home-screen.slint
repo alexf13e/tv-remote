@@ -1,14 +1,38 @@
 
 import { RemoteButton } from "../custom-components.slint";
 import { RemoteScreenID } from "../remote-screens-index.slint";
+import { Button } from "std-widgets.slint";
+import { Logic } from "../custom-components.slint";
 
 export component HomeScreen {
     VerticalLayout { //container for whole screen
-        padding: 10px;
+        spacing: 10px;
 
         RemoteButton {
             text: "TV Channels";
-            screenID: RemoteScreenID.TV-CHANNELS;
+            screenID: RemoteScreenID.TV_CHANNELS;
+        }
+
+        RemoteButton {
+            text: "TV Remote Buttons";
+            screenID: RemoteScreenID.TV_ALL_BUTTONS;
+        }
+
+        RemoteButton {
+            text: "Speakers All Buttons";
+            screenID: RemoteScreenID.SPEAKERS_ALL_BUTTONS;
+        }
+
+        RemoteButton {
+            text: "HDD All Buttons";
+            screenID: RemoteScreenID.HDD_ALL_BUTTONS;
+        }
+
+        Button {
+            text: "Sleep test";
+            clicked => {
+                Logic.sleep();
+            }
         }
     }
 }

@@ -234,6 +234,8 @@ void screenSetup()
         .buffer2 = fb2,
         #endif
     });
+
+    
 }
 
 #endif

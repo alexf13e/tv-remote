@@ -82,7 +82,6 @@ struct ActionRepeatIRForMilliseconds : ActionBase
 
         while (!repeat_period_ended())
         {
-            std::cout << "sending repeated signal" << std::endl;
             IRTransmitter::transmit(actionRemoteSignal->signal->words);
             std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds_between_repeats));
         }

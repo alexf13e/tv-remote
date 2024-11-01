@@ -1,51 +1,18 @@
 
 import { Button } from "std-widgets.slint";
 
-import { ChannelPanel, ScreenTemplate } from "../custom-components.slint";
+import { ScreenTemplate, MultiPageRemoteButtonGrid } from "../custom-components.slint";
+import { TVChannelButtonData } from "../custom-component-data.slint";
 import { Symbols } from "../symbols.slint";
-
 
 export component ChannelScreen { //whole screen for tv channel selection    
     ScreenTemplate {
-        VerticalLayout { //container for channel panel and chanel page switcher
-            horizontal-stretch: 1;
-            vertical-stretch: 1;
-            
-            cp := ChannelPanel { //display the grid of channels
-                num_cols: 4;
-                num_rows: 5;
-                button_width : 80px;
-                button_height : 60px;
-            }
-    
-            HorizontalLayout { //navigation buttons between sub screens
-                padding-top: 10px;
-                if cp.numSubScreens > 1:
-                Button {
-                    icon: Symbols.arrow-left;
-                    clicked => {
-                        if cp.currentSubScreen > 0 {
-                            cp.setSubScreen(cp.currentSubScreen - 1);
-                        }
-                    }
-                }
-    
-                Text {
-                    text: cp.currentSubScreen + 1 + "/" + cp.numSubScreens;
-                    vertical-alignment: center;
-                    horizontal-alignment: center;
-                }
-    
-                if cp.numSubScreens > 1:
-                Button {
-                    icon: Symbols.arrow-right;
-                    clicked => {
-                        if cp.currentSubScreen < cp.numSubScreens - 1 {
-                            cp.setSubScreen(cp.currentSubScreen + 1);
-                        }
-                    }
-                }
-            }
+        channelGrid := MultiPageRemoteButtonGrid { //display the grid of channels
+            num_cols: 4;
+            num_rows: 5;
+            button_width : 80px;
+            button_height : 60px;
+            gridData: TVChannelButtonData.data;
         }
     }
 }

@@ -74,7 +74,7 @@ void createActionLists()
     ALL_ACTION_LISTS["ITV2"] = {
         RemoteTV::KEY_0,
         RemoteTV::KEY_0,
-        RemoteTV::KEY_7
+        RemoteTV::KEY_6
     };
 
     ALL_ACTION_LISTS["ITV3"] = {
@@ -324,7 +324,7 @@ void createActionLists()
     };
 
 
-    //////////////////////////////////////// TV REMOTE ////////////////////////////////////////
+    //////////////////////////////////////// TV REMOTE SINGLE BUTTONS ////////////////////////////////////////
 
     ALL_ACTION_LISTS["TV_POWER"] = {
         REPEAT_SIGNAL_FOR_MS(RemoteTV::POWER, 500)
@@ -402,11 +402,115 @@ void createActionLists()
         RemoteTV::CHAN_DOWN
     };
 
+    ALL_ACTION_LISTS["TV_KEY_0"] = {
+        RemoteTV::KEY_0
+    };
 
-    //////////////////////////////////////// SOUND REMOTE ////////////////////////////////////////
+    ALL_ACTION_LISTS["TV_KEY_1"] = {
+        RemoteTV::KEY_1
+    };
+
+    ALL_ACTION_LISTS["TV_KEY_2"] = {
+        RemoteTV::KEY_2
+    };
+
+    ALL_ACTION_LISTS["TV_KEY_3"] = {
+        RemoteTV::KEY_3
+    };
+
+    ALL_ACTION_LISTS["TV_KEY_4"] = {
+        RemoteTV::KEY_4
+    };
+
+    ALL_ACTION_LISTS["TV_KEY_5"] = {
+        RemoteTV::KEY_5
+    };
+
+    ALL_ACTION_LISTS["TV_KEY_6"] = {
+        RemoteTV::KEY_6
+    };
+
+    ALL_ACTION_LISTS["TV_KEY_7"] = {
+        RemoteTV::KEY_7
+    };
+
+    ALL_ACTION_LISTS["TV_KEY_8"] = {
+        RemoteTV::KEY_8
+    };
+
+    ALL_ACTION_LISTS["TV_KEY_9"] = {
+        RemoteTV::KEY_9
+    };
+
+
+    //////////////////////////////////////// SPEAKERS REMOTE ////////////////////////////////////////
 
     ALL_ACTION_LISTS["SPEAKERS_POWER"] = {
         RemoteSpeakers::POWER
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_SLEEP"] = {
+        RemoteSpeakers::SLEEP
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_CBL_SAT"] = {
+        RemoteSpeakers::CBL_SAT
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_MEDIA_PLAYER"] = {
+        RemoteSpeakers::MEDIA_PLAYER
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_BLU_RAY"] = {
+        RemoteSpeakers::BLU_RAY
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_GAME"] = {
+        RemoteSpeakers::GAME
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_AUX1"] = {
+        RemoteSpeakers::AUX1
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_AUX2"] = {
+        RemoteSpeakers::AUX2
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_PHONO"] = {
+        RemoteSpeakers::PHONO
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_TV_AUDIO"] = {
+        RemoteSpeakers::TV_AUDIO
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_TUNER"] = {
+        RemoteSpeakers::TUNER
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_USB"] = {
+        RemoteSpeakers::USB
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_BLUETOOTH"] = {
+        RemoteSpeakers::BLUETOOTH
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_INTERNET_RADIO"] = {
+        RemoteSpeakers::INTERNET_RADIO
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_HEOS"] = {
+        RemoteSpeakers::HEOS
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_CH_PAGE_UP"] = {
+        RemoteSpeakers::CH_PAGE_UP
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_CH_PAGE_DOWN"] = {
+        RemoteSpeakers::CH_PAGE_DOWN
     };
 
     ALL_ACTION_LISTS["SPEAKERS_VOL_UP"] = {
@@ -419,6 +523,305 @@ void createActionLists()
 
     ALL_ACTION_LISTS["SPEAKERS_MUTE"] = {
         RemoteSpeakers::VOL_MUTE
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_ECO"] = {
+        RemoteSpeakers::ECO
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_INFO"] = {
+        RemoteSpeakers::INFO
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_OPTION"] = {
+        RemoteSpeakers::OPTION
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_BACK"] = {
+        RemoteSpeakers::BACK
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_SETUP"] = {
+        RemoteSpeakers::SETUP
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_NAV_UP"] = {
+        RemoteSpeakers::NAV_UP
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_NAV_DOWN"] = {
+        RemoteSpeakers::NAV_DOWN
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_NAV_LEFT"] = {
+        RemoteSpeakers::NAV_LEFT
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_NAV_RIGHT"] = {
+        RemoteSpeakers::NAV_RIGHT
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_ENTER"] = {
+        RemoteSpeakers::ENTER
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_SKIP_BACK"] = {
+        RemoteSpeakers::SKIP_BACK
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_SKIP_FORWARD"] = {
+        RemoteSpeakers::SKIP_FORWARD
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_PLAY_PAUSE"] = {
+        RemoteSpeakers::PLAY_PAUSE
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_QUICK_SELECT_1"] = {
+        RemoteSpeakers::QUICK_SELECT_1
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_QUICK_SELECT_2"] = {
+        RemoteSpeakers::QUICK_SELECT_2
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_QUICK_SELECT_3"] = {
+        RemoteSpeakers::QUICK_SELECT_3
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_QUICK_SELECT_4"] = {
+        RemoteSpeakers::QUICK_SELECT_4
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_GREEN"] = {
+        RemoteSpeakers::GREEN
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_RED"] = {
+        RemoteSpeakers::RED
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_BLUE"] = {
+        RemoteSpeakers::BLUE
+    };
+
+    ALL_ACTION_LISTS["SPEAKERS_YELLOW"] = {
+        RemoteSpeakers::YELLOW
+    };
+
+
+    //////////////////////////////////////// HDD REMOTE ////////////////////////////////////////
+
+    ALL_ACTION_LISTS["HDD_POWER"] = {
+        RemoteSpeakers::POWER
+    };
+
+    ALL_ACTION_LISTS["HDD_DRIVE_SELECT"] = {
+        RemoteHDD::DRIVE_SELECT
+    };
+
+    ALL_ACTION_LISTS["HDD_KEY_0"] = {
+        RemoteHDD::KEY_0
+    };
+
+    ALL_ACTION_LISTS["HDD_KEY_1"] = {
+        RemoteHDD::KEY_1
+    };
+
+    ALL_ACTION_LISTS["HDD_KEY_2"] = {
+        RemoteHDD::KEY_2
+    };
+
+    ALL_ACTION_LISTS["HDD_KEY_3"] = {
+        RemoteHDD::KEY_3
+    };
+
+    ALL_ACTION_LISTS["HDD_KEY_4"] = {
+        RemoteHDD::KEY_4
+    };
+
+    ALL_ACTION_LISTS["HDD_KEY_5"] = {
+        RemoteHDD::KEY_5
+    };
+
+    ALL_ACTION_LISTS["HDD_KEY_6"] = {
+        RemoteHDD::KEY_6
+    };
+
+    ALL_ACTION_LISTS["HDD_KEY_7"] = {
+        RemoteHDD::KEY_7
+    };
+
+    ALL_ACTION_LISTS["HDD_KEY_8"] = {
+        RemoteHDD::KEY_8
+    };
+
+    ALL_ACTION_LISTS["HDD_KEY_9"] = {
+        RemoteHDD::KEY_9
+    };
+
+    ALL_ACTION_LISTS["HDD_LAST_VIEW"] = {
+        RemoteHDD::LAST_VIEW
+    };
+
+    ALL_ACTION_LISTS["HDD_NET"] = {
+        RemoteHDD::NET
+    };
+
+    ALL_ACTION_LISTS["HDD_CHAN_UP"] = {
+        RemoteHDD::CHAN_UP
+    };
+
+    ALL_ACTION_LISTS["HDD_CHAN_DOWN"] = {
+        RemoteHDD::CHAN_DOWN
+    };
+
+    ALL_ACTION_LISTS["HDD_FREEVIEW_PLAY"] = {
+        RemoteHDD::FREEVIEW_PLAY
+    };
+
+    ALL_ACTION_LISTS["HDD_NETFLIX"] = {
+        RemoteHDD::NETFLIX
+    };
+
+    ALL_ACTION_LISTS["HDD_SKIP_BACK"] = {
+        RemoteHDD::SKIP_BACK
+    };
+
+    ALL_ACTION_LISTS["HDD_SKIP_FORWARD"] = {
+        RemoteHDD::SKIP_FORWARD
+    };
+
+    ALL_ACTION_LISTS["HDD_REWIND"] = {
+        RemoteHDD::REWIND
+    };
+
+    ALL_ACTION_LISTS["HDD_FAST_FORWARD"] = {
+        RemoteHDD::FAST_FORWARD
+    };
+
+    ALL_ACTION_LISTS["HDD_STOP"] = {
+        RemoteHDD::STOP
+    };
+
+    ALL_ACTION_LISTS["HDD_PAUSE"] = {
+        RemoteHDD::PAUSE
+    };
+
+    ALL_ACTION_LISTS["HDD_PLAY"] = {
+        RemoteHDD::PLAY
+    };
+
+    ALL_ACTION_LISTS["HDD_INFO"] = {
+        RemoteHDD::INFO
+    };
+
+    ALL_ACTION_LISTS["HDD_EXIT"] = {
+        RemoteHDD::EXIT
+    };
+
+    ALL_ACTION_LISTS["HDD_OPTION"] = {
+        RemoteHDD::OPTION
+    };
+
+    ALL_ACTION_LISTS["HDD_RETURN"] = {
+        RemoteHDD::RETURN
+    };
+
+    ALL_ACTION_LISTS["HDD_VIDEO_MENU"] = {
+        RemoteHDD::VIDEO_MENU
+    };
+
+    ALL_ACTION_LISTS["HDD_GUIDE"] = {
+        RemoteHDD::GUIDE
+    };
+
+    ALL_ACTION_LISTS["HDD_FUNCITON_MENU"] = {
+        RemoteHDD::FUNCTION_MENU
+    };
+
+    ALL_ACTION_LISTS["HDD_NAV_UP"] = {
+        RemoteHDD::NAV_UP
+    };
+
+    ALL_ACTION_LISTS["HDD_NAV_DOWN"] = {
+        RemoteHDD::NAV_DOWN
+    };
+
+    ALL_ACTION_LISTS["HDD_NAV_LEFT"] = {
+        RemoteHDD::NAV_LEFT
+    };
+
+    ALL_ACTION_LISTS["HDD_NAV_RIGHT"] = {
+        RemoteHDD::NAV_RIGHT
+    };
+
+    ALL_ACTION_LISTS["HDD_OK"] = {
+        RemoteHDD::OK
+    };
+
+    ALL_ACTION_LISTS["HDD_RED"] = {
+        RemoteHDD::RED
+    };
+
+    ALL_ACTION_LISTS["HDD_GREE"] = {
+        RemoteHDD::GREEN
+    };
+
+    ALL_ACTION_LISTS["HDD_YELLO"] = {
+        RemoteHDD::YELLOW
+    };
+
+    ALL_ACTION_LISTS["HDD_BLUE"] = {
+        RemoteHDD::BLUE
+    };
+
+    ALL_ACTION_LISTS["HDD_REC"] = {
+        RemoteHDD::REC
+    };
+
+    ALL_ACTION_LISTS["HDD_REC_MODE"] = {
+        RemoteHDD::REC_MODE
+    };
+
+    ALL_ACTION_LISTS["HDD_TEXT"] = {
+        RemoteHDD::TEXT
+    };
+
+    ALL_ACTION_LISTS["HDD_SUBTITLE"] = {
+        RemoteHDD::SUBTITLE
+    };
+
+    ALL_ACTION_LISTS["HDD_PROG_CHECK"] = {
+        RemoteHDD::PROG_CHECK
+    };
+
+    ALL_ACTION_LISTS["HDD_CHAPTER"] = {
+        RemoteHDD::CHAPTER
+    };
+
+    ALL_ACTION_LISTS["HDD_DELETE"] = {
+        RemoteHDD::DELETE
+    };
+
+    ALL_ACTION_LISTS["HDD_RADIO_TV"] = {
+        RemoteHDD::RADIO_TV
+    };
+
+    ALL_ACTION_LISTS["HDD_AD"] = {
+        RemoteHDD::AD
+    };
+
+    ALL_ACTION_LISTS["HDD_TIME_SLIP"] = {
+        RemoteHDD::TIME_SLIP
+    };
+
+    ALL_ACTION_LISTS["HDD_MANUAL_SKIP_MINUS_10"] = {
+        RemoteHDD::MANUAL_SKIP_MINUS_10
+    };
+
+    ALL_ACTION_LISTS["HDD_MANUAL_SKIP_PLUS_60"] = {
+        RemoteHDD::MANUAL_SKIP_PLUS_60
     };
 }
 

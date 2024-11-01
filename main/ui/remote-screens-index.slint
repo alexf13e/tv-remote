@@ -7,5 +7,19 @@ export enum RemoteScreenID
 {
     SAME,   //stay on the same screen (default when none is specified for a button)
     HOME,
-    TV_CHANNELS
+    TV_CHANNELS,
+    TV_ALL_BUTTONS,
+    SPEAKERS_ALL_BUTTONS,
+    HDD_ALL_BUTTONS
+}
+
+export global CurrentDisplayedScreen {
+    out property <RemoteScreenID> id: RemoteScreenID.HOME;
+
+    callback set(RemoteScreenID);
+    set(newid) => {
+        if (newid != RemoteScreenID.SAME) {
+            id = newid;
+        }
+    }
 }
