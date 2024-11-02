@@ -28,11 +28,9 @@ export component HomeScreen {
             screenID: RemoteScreenID.HDD_ALL_BUTTONS;
         }
 
-        Button {
-            text: "Sleep test";
-            clicked => {
-                Logic.sleep();
-            }
+        RemoteButton {
+            text: "Backlight Test";
+            screenID: RemoteScreenID.BACKLIGHT_TEST;
         }
     }
 }

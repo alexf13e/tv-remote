@@ -613,7 +613,7 @@ void createActionLists()
     //////////////////////////////////////// HDD REMOTE ////////////////////////////////////////
 
     ALL_ACTION_LISTS["HDD_POWER"] = {
-        RemoteSpeakers::POWER
+        RemoteHDD::POWER
     };
 
     ALL_ACTION_LISTS["HDD_DRIVE_SELECT"] = {

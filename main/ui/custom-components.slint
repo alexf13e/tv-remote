@@ -7,7 +7,7 @@ import { Symbols } from "symbols.slint";
 
 export global Logic { //container for functions to interact with c++ from gui
     pure callback remote_btn_clicked(string);
-    pure callback sleep();
+    pure callback change_backlight(float);
 }
 
 
@@ -29,9 +29,11 @@ export component RemoteButton { //custom button for sending remote signals and n
         }
 
         Text {
-            text: text;
+            width: parent.width;
             font-size: fontSize;
-            wrap: word-wrap;
+            wrap: char-wrap;
+            horizontal-alignment: center;
+            text: text;
         }
 
         if touch.pressed: Rectangle { //when the button is pressed, shade it darker for visual feedback
@@ -39,11 +41,9 @@ export component RemoteButton { //custom button for sending remote signals and n
         }
         
         touch := TouchArea { //toucharea to detect when the button is being pressed
-            pointer-event(event) => {
-                if (event.kind == PointerEventKind.up) {
-                    Logic.remote_btn_clicked(root.actionListID);
-                    CurrentDisplayedScreen.set(root.screenID);
-                }
+            clicked => {
+                Logic.remote_btn_clicked(root.actionListID);
+                CurrentDisplayedScreen.set(root.screenID);
             }
         }
     }
@@ -81,6 +81,10 @@ export component NavPanel { //panel with bottom navigation buttons to replicate 
             height: 50px;
 
             RemoteButton {
+                //force all the buttons to take 1/4 the space, since by default they scale with the amount of text
+                //(despite there being enough space to all be equal, and setting them to scale by the same amount in the
+                //layout)
+                width: (parent.width - parent.spacing * 3) / 4;
                 height: parent.height;
                 horizontal-stretch: 0;
                 text: txt_btn1;
@@ -89,6 +93,7 @@ export component NavPanel { //panel with bottom navigation buttons to replicate 
             }
 
             RemoteButton {
+                width: (parent.width - parent.spacing * 3) / 4;
                 height: parent.height;
                 horizontal-stretch: 0;
                 text: txt_btn2;
@@ -97,6 +102,7 @@ export component NavPanel { //panel with bottom navigation buttons to replicate 
             }
 
             RemoteButton {
+                width: (parent.width - parent.spacing * 3) / 4;
                 height: parent.height;
                 horizontal-stretch: 0;
                 text: txt_btn3;
@@ -105,6 +111,7 @@ export component NavPanel { //panel with bottom navigation buttons to replicate 
             }
 
             RemoteButton {
+                width: (parent.width - parent.spacing * 3) / 4;
                 height: parent.height;
                 horizontal-stretch: 0;
                 text: txt_btn4;
@@ -283,7 +290,7 @@ export component ScreenTemplate { //template for screens mimicking pronto physic
 }
 
 
-component GridPage {
+component RemoteButtonGridPage {
     in property <int> num_cols; //how many rows and columns of buttons to fit within a sub screen
     in property <int> num_rows;
     in property <length> button_width; //how big the buttons should be
@@ -340,9 +347,9 @@ export component MultiPageRemoteButtonGrid { //automatically populated grid span
 
     //display buttons for this sub screen
     VerticalLayout {
-        //must create grid page as separate component to allow specific positioning of generated elements within vertical layout
-        //generated elements cannot use grid layout
-        gridPage := GridPage {
+        //must create grid page as separate component to allow specific positioning of generated elements within
+        //vertical layout generated elements cannot use grid layout
+        gridPage := RemoteButtonGridPage {
             num_cols: num_cols;
             num_rows: num_rows;
             button_width: button_width;
@@ -350,9 +357,8 @@ export component MultiPageRemoteButtonGrid { //automatically populated grid span
             gridData: gridData;
         }
 
-        HorizontalLayout { //navigation buttons between sub screens
+        if numSubScreens > 1: HorizontalLayout { //navigation buttons between sub screens
             padding-top: 10px;
-            if numSubScreens > 1:
             Button {
                 icon: Symbols.arrow-left;
                 clicked => {
@@ -369,7 +375,6 @@ export component MultiPageRemoteButtonGrid { //automatically populated grid span
                 color: white;
             }
 
-            if numSubScreens > 1:
             Button {
                 icon: Symbols.arrow-right;
                 clicked => {

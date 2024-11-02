@@ -10,11 +10,12 @@ export enum RemoteScreenID
     TV_CHANNELS,
     TV_ALL_BUTTONS,
     SPEAKERS_ALL_BUTTONS,
-    HDD_ALL_BUTTONS
+    HDD_ALL_BUTTONS,
+    BACKLIGHT_TEST
 }
 
 export global CurrentDisplayedScreen {
-    out property <RemoteScreenID> id: RemoteScreenID.HOME;
+    out property <RemoteScreenID> id: RemoteScreenID.TV_CHANNELS;
 
     callback set(RemoteScreenID);
     set(newid) => {

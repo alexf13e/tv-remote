@@ -9,25 +9,16 @@
 #include "app-window.h"
 
 #include "screen_setup.h"
+#include "backlight.h"
 #include "actionlist.h"
 
 
 extern "C" void app_main(void)
 {
     screenSetup();
+    //Backlight::init();
     IRTransmitter::init();
     createActionLists();
-
-
-    esp_pm_config_t pm_config = {
-        .max_freq_mhz = 240,
-        .min_freq_mhz = 40,
-    };
-
-    ESP_ERROR_CHECK(esp_pm_configure(&pm_config));
-    
-    ESP_ERROR_CHECK(esp_sleep_enable_touchpad_wakeup());
-    esp_sleep_enable_timer_wakeup(2000000);
 
     
     auto main_window = AppWindow::create();
@@ -36,9 +27,8 @@ extern "C" void app_main(void)
         if (actionListID != "") runActionList(actionListID.data());
     });
 
-    main_window->global<Logic>().on_sleep([]() {
-        ESP_ERROR_CHECK(esp_light_sleep_start());
-        //esp_deep_sleep_start();
+    main_window->global<Logic>().on_change_backlight([](float level) {
+        Backlight::set_brightness(level);
     });
 
         

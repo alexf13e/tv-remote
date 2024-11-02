@@ -7,6 +7,7 @@
 //the slint setup is from https://docs.slint.dev/latest/docs/cpp/mcu/esp_idf
 
 
+#include <cstddef>
 #include <cstdint>
 #include <slint-platform.h>
 #include <slint_generated_public.h>
@@ -27,62 +28,59 @@
 #include "esp_lcd_touch_gt911.h"
 
 #include "hal/i2c_types.h"
+#include "portmacro.h"
 #include "slint-esp.h"
 #include "soc/clk_tree_defs.h"
 #include "soc/gpio_num.h"
 
-#define I2C_MASTER_SCL_IO           9       /*!< GPIO number used for I2C master clock */
-#define I2C_MASTER_SDA_IO           8       /*!< GPIO number used for I2C master data  */
-#define I2C_MASTER_NUM              0       /*!< I2C master i2c port number, the number of i2c peripheral interfaces available will depend on the chip */
-#define I2C_MASTER_FREQ_HZ          400000                     /*!< I2C master clock frequency */
-#define I2C_MASTER_TX_BUF_DISABLE   0                          /*!< I2C master doesn't need buffer */
-#define I2C_MASTER_RX_BUF_DISABLE   0                          /*!< I2C master doesn't need buffer */
-#define I2C_MASTER_TIMEOUT_MS       1000
+constexpr gpio_num_t I2C_MASTER_SCL_IO = GPIO_NUM_9;    /*!< GPIO number used for I2C master clock */
+constexpr gpio_num_t I2C_MASTER_SDA_IO = GPIO_NUM_8;    /*!< GPIO number used for I2C master data  */
+constexpr i2c_port_t I2C_MASTER_NUM = I2C_NUM_0;        /*!< I2C master i2c port number, the number of i2c peripheral interfaces available will depend on the chip */
+constexpr uint32_t I2C_MASTER_FREQ_HZ = 400000;         /*!< I2C master clock frequency */
+constexpr size_t I2C_MASTER_TX_BUF_DISABLE = 0;         /*!< I2C master doesn't need buffer */
+constexpr size_t I2C_MASTER_RX_BUF_DISABLE = 0;         /*!< I2C master doesn't need buffer */
+constexpr TickType_t I2C_MASTER_TIMEOUT_MS = 1000;
 
-#define GPIO_INPUT_IO_4    4
-#define GPIO_INPUT_PIN_SEL  1ULL<<GPIO_INPUT_IO_4
+constexpr gpio_num_t GPIO_INPUT_IO_4 = GPIO_NUM_4;
+constexpr uint64_t GPIO_INPUT_PIN_SEL = 1ULL << GPIO_INPUT_IO_4;
 
-#define LCD_PIXEL_CLOCK_HZ     (18 * 1000 * 1000)
-#define LCD_BK_LIGHT_ON_LEVEL  1
-#define LCD_BK_LIGHT_OFF_LEVEL !LCD_BK_LIGHT_ON_LEVEL
-#define PIN_NUM_BK_LIGHT       -1
-#define PIN_NUM_DISP_EN        -1
-#define PIN_NUM_HSYNC          46
-#define PIN_NUM_VSYNC          3
-#define PIN_NUM_DE             5
-#define PIN_NUM_PCLK           7
-#define PIN_NUM_DATA0          14 // B3
-#define PIN_NUM_DATA1          38 // B4
-#define PIN_NUM_DATA2          18 // B5
-#define PIN_NUM_DATA3          17 // B6
-#define PIN_NUM_DATA4          10 // B7
-#define PIN_NUM_DATA5          39 // G2
-#define PIN_NUM_DATA6          0  // G3
-#define PIN_NUM_DATA7          45 // G4
-#define PIN_NUM_DATA8          48 // G5
-#define PIN_NUM_DATA9          47 // G6
-#define PIN_NUM_DATA10         21 // G7
-#define PIN_NUM_DATA11         1  // R3
-#define PIN_NUM_DATA12         2  // R4
-#define PIN_NUM_DATA13         42 // R5
-#define PIN_NUM_DATA14         41 // R6
-#define PIN_NUM_DATA15         40 // R7
+constexpr uint32_t LCD_PIXEL_CLOCK_HZ = (18 * 1000 * 1000);
+constexpr int PIN_NUM_DISP_EN = -1;
+constexpr int PIN_NUM_HSYNC = 46;
+constexpr int PIN_NUM_VSYNC = 3;
+constexpr int PIN_NUM_DE = 5;
+constexpr int PIN_NUM_PCLK = 7;
+constexpr int PIN_NUM_DATA0 = 14;   // B3
+constexpr int PIN_NUM_DATA1 = 38;   // B4
+constexpr int PIN_NUM_DATA2 = 18;   // B5
+constexpr int PIN_NUM_DATA3 = 17;   // B6
+constexpr int PIN_NUM_DATA4 = 10;   // B7
+constexpr int PIN_NUM_DATA5 = 39;   // G2
+constexpr int PIN_NUM_DATA6 = 0;    // G3
+constexpr int PIN_NUM_DATA7 = 45;   // G4
+constexpr int PIN_NUM_DATA8 = 48;   // G5
+constexpr int PIN_NUM_DATA9 = 47;   // G6
+constexpr int PIN_NUM_DATA10 = 21;  // G7
+constexpr int PIN_NUM_DATA11 = 1;   // R3
+constexpr int PIN_NUM_DATA12 = 2;   // R4
+constexpr int PIN_NUM_DATA13 = 42;  // R5
+constexpr int PIN_NUM_DATA14 = 41;  // R6
+constexpr int PIN_NUM_DATA15 = 40;  // R7
 
 // The pixel number in horizontal and vertical
-#define LCD_H_RES              800
-#define LCD_V_RES              480
+constexpr uint32_t LCD_H_RES = 800;
+constexpr uint32_t LCD_V_RES = 480;
 
 //number of framebuffers
-#define LCD_NUM_FB             2
+#define LCD_NUM_FB 2
 
 //default orientation is landscape, set to true for portrait (left landscape edge becomes bottom portrait edge)
 #define ROTATE_PORTRAIT true
 
 
-void screenSetup()
+esp_lcd_panel_handle_t displaySetup()
 {
-    //set up display
-    esp_lcd_panel_handle_t panel_handle = NULL;
+    esp_lcd_panel_handle_t panel_handle = nullptr;
     esp_lcd_rgb_panel_config_t panel_config = {
         .clk_src = LCD_CLK_SRC_DEFAULT,
         .timings = {
@@ -100,6 +98,7 @@ void screenSetup()
                 .pclk_active_neg = true,
             }
         },
+        
         .data_width = 16,
         .num_fbs = LCD_NUM_FB,
         .hsync_gpio_num = PIN_NUM_HSYNC,
@@ -145,9 +144,11 @@ void screenSetup()
     ESP_ERROR_CHECK(esp_lcd_panel_reset(panel_handle));
     ESP_ERROR_CHECK(esp_lcd_panel_init(panel_handle));
 
-    //set up touch panel
-    int i2c_master_port = I2C_MASTER_NUM;
+    return panel_handle;
+}
 
+esp_lcd_touch_handle_t touchSetup()
+{
     i2c_config_t conf = {
         .mode = I2C_MODE_MASTER,
         .sda_io_num = I2C_MASTER_SDA_IO,
@@ -159,8 +160,8 @@ void screenSetup()
         }
     };
 
-    i2c_param_config((i2c_port_t)i2c_master_port, &conf);
-    ESP_ERROR_CHECK(i2c_driver_install((i2c_port_t)i2c_master_port, conf.mode, I2C_MASTER_RX_BUF_DISABLE, I2C_MASTER_TX_BUF_DISABLE, 0));
+    i2c_param_config(I2C_MASTER_NUM, &conf);
+    ESP_ERROR_CHECK(i2c_driver_install(I2C_MASTER_NUM, conf.mode, I2C_MASTER_RX_BUF_DISABLE, I2C_MASTER_TX_BUF_DISABLE, 0));
 
     gpio_config_t io_conf = {
         .pin_bit_mask = GPIO_INPUT_PIN_SEL,
@@ -171,14 +172,14 @@ void screenSetup()
     gpio_config(&io_conf);
 
     uint8_t write_buf = 0x01;
-    i2c_master_write_to_device((i2c_port_t)I2C_MASTER_NUM, 0x24, &write_buf, 1, I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
+    i2c_master_write_to_device(I2C_MASTER_NUM, 0x24, &write_buf, 1, I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
 
     //Reset the touch screen. It is recommended that you reset the touch screen before using it.
     write_buf = 0x2C;
-    i2c_master_write_to_device((i2c_port_t)I2C_MASTER_NUM, 0x38, &write_buf, 1, I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
+    i2c_master_write_to_device(I2C_MASTER_NUM, 0x38, &write_buf, 1, I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
     esp_rom_delay_us(100 * 1000);
 
-    gpio_set_level((gpio_num_t)GPIO_INPUT_IO_4, 0);
+    gpio_set_level(GPIO_INPUT_IO_4, 0);
     esp_rom_delay_us(100 * 1000);
 
     write_buf = 0x2E;
@@ -188,7 +189,7 @@ void screenSetup()
     esp_lcd_touch_handle_t touch_handle = NULL;
     esp_lcd_panel_io_handle_t tp_io_handle = NULL;
     esp_lcd_panel_io_i2c_config_t tp_io_config = ESP_LCD_TOUCH_IO_I2C_GT911_CONFIG();
-    esp_lcd_new_panel_io_i2c((esp_lcd_i2c_bus_handle_t)I2C_MASTER_NUM, &tp_io_config, &tp_io_handle);
+    esp_lcd_new_panel_io_i2c(I2C_MASTER_NUM, &tp_io_config, &tp_io_handle);
     
     esp_lcd_touch_config_t tp_cfg = {
         .x_max = LCD_H_RES,
@@ -205,8 +206,12 @@ void screenSetup()
     };
     
     ESP_ERROR_CHECK(esp_lcd_touch_new_i2c_gt911(tp_io_handle, &tp_cfg, &touch_handle));
-    
 
+    return touch_handle;
+}
+
+void slintSetup(const esp_lcd_panel_handle_t panel_handle, const esp_lcd_touch_handle_t touch_handle)
+{
     /* Allocate a drawing buffer */
     static std::vector<slint::platform::Rgb565Pixel> fb1(LCD_H_RES * LCD_V_RES);
     slint::platform::Rgb565Pixel* fb1Data = fb1.data();
@@ -234,8 +239,13 @@ void screenSetup()
         .buffer2 = fb2,
         #endif
     });
+}
 
-    
+void screenSetup()
+{
+    esp_lcd_panel_handle_t panel_handle = displaySetup();
+    esp_lcd_touch_handle_t touch_handle = touchSetup();
+    slintSetup(panel_handle, touch_handle);
 }
 
 #endif

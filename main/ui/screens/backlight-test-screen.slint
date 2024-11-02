@@ -1,0 +1,31 @@
+
+
+import { Slider } from "std-widgets.slint";
+import { Logic, RemoteButton } from "../custom-components.slint";
+import { RemoteScreenID } from "../remote-screens-index.slint";
+import { Symbols } from "../symbols.slint";
+
+
+export component BacklightTestScreen {
+    VerticalLayout {
+        sld := Slider {
+            minimum: 0;
+            maximum: 1;
+            value: 0.5;
+    
+            changed => {
+                Logic.change_backlight(self.value);
+            }
+        }
+    
+        Text {
+            text: sld.value;
+            color: white;
+        }
+
+        RemoteButton {
+            icon: Symbols.home;
+            screenID: RemoteScreenID.HOME;
+        }
+    }
+}
