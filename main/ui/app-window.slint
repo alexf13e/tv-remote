@@ -10,7 +10,6 @@ import { ChannelScreen } from "screens/channel-screen.slint";
 import { TVAllButtonsScreen } from "screens/tv-all-buttons-screen.slint";
 import { SpeakersAllButtonsScreen } from "screens/speakers-all-buttons-screen.slint";
 import { HDDAllButtonsScreen } from "screens/hdd-all-buttons-screen.slint";
-import { BacklightTestScreen } from "screens/backlight-test-screen.slint";
 
 export { Logic } from "custom-components.slint"; //export Logic so it can be accessed by c++
 
@@ -29,6 +28,5 @@ export component AppWindow inherits Window {
         if CurrentDisplayedScreen.id == RemoteScreenID.TV_ALL_BUTTONS: TVAllButtonsScreen {}
         if CurrentDisplayedScreen.id == RemoteScreenID.SPEAKERS_ALL_BUTTONS: SpeakersAllButtonsScreen {}
         if CurrentDisplayedScreen.id == RemoteScreenID.HDD_ALL_BUTTONS: HDDAllButtonsScreen {}
-        if CurrentDisplayedScreen.id == RemoteScreenID.BACKLIGHT_TEST: BacklightTestScreen {}
     }
 }

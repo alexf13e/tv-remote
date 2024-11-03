@@ -1,6 +1,6 @@
 
 
-import { Slider } from "std-widgets.slint";
+import { Slider, Button } from "std-widgets.slint";
 import { Logic, RemoteButton } from "../custom-components.slint";
 import { RemoteScreenID } from "../remote-screens-index.slint";
 import { Symbols } from "../symbols.slint";
@@ -23,9 +23,32 @@ export component BacklightTestScreen {
             color: white;
         }
 
-        RemoteButton {
-            icon: Symbols.home;
-            screenID: RemoteScreenID.HOME;
+        HorizontalLayout {
+            Button {
+                text: "Read LDR";
+                clicked => {
+                    ldr_val.text = Logic.read_ldr();
+                }
+            }
+
+            ldr_val := Text {
+                color: white;
+            }
+
         }
+        
+
+
+
+        VerticalLayout {
+            alignment: end;
+
+            RemoteButton {
+                height: 40px;
+                icon: Symbols.home;
+                screenID: RemoteScreenID.HOME;
+            }
+        }
+        
     }
 }

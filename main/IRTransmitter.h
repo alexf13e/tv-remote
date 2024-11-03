@@ -25,6 +25,12 @@ namespace IRTransmitter {
 
     void init()
     {
+        if (initialised)
+        {
+            std::cerr << "attempted to initialise IR transmitter more than once" << std::endl;
+            return;
+        }
+
         //create "channel" describing where the signal will be physically sent on the board
         channel_handle = NULL;
         channel_config = {
