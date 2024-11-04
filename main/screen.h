@@ -7,11 +7,8 @@
 //the slint setup is from https://docs.slint.dev/latest/docs/cpp/mcu/esp_idf
 
 
-#include <cstddef>
 #include <cstdint>
 #include <slint-platform.h>
-#include <slint_generated_public.h>
-#include <stdio.h>
 #include <vector>
 #include <iostream>
 
@@ -19,21 +16,16 @@
 #include "esp_lcd_io_i2c.h"
 #include "esp_lcd_touch.h"
 #include "esp_lcd_types.h"
-#include "freertos/task.h"
-#include "freertos/semphr.h"
 #include "esp_lcd_panel_ops.h"
 #include "esp_lcd_panel_rgb.h"
 #include "driver/gpio.h"
 #include "esp_err.h"
-
-#include "driver/i2c.h"
 #include "esp_lcd_touch_gt911.h"
-
 #include "hal/i2c_types.h"
 #include "portmacro.h"
-#include "slint-esp.h"
 #include "soc/clk_tree_defs.h"
 #include "soc/gpio_num.h"
+#include "slint-esp.h"
 
 
 namespace Screen

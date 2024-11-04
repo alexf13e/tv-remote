@@ -1,8 +1,4 @@
 
-#include <iostream>
-
-#include "esp_err.h"
-
 #include "slint_string.h"
 #include "app-window.h"
 

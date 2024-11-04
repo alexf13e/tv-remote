@@ -4,7 +4,6 @@
 
 #include <algorithm>
 #include <chrono>
-#include <cmath>
 #include <iostream>
 #include <thread>
 
@@ -16,7 +15,6 @@
 #include "hal/ledc_types.h"
 #include "soc/clk_tree_defs.h"
 #include "soc/gpio_num.h"
-
 
 
 namespace Backlight {
