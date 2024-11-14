@@ -374,7 +374,7 @@ void createActionLists()
         RemoteTV::NAV_UP
     };
 
-    ALL_ACTION_LISTS["TV_NAV_DONW"] = {
+    ALL_ACTION_LISTS["TV_NAV_DOWN"] = {
         RemoteTV::NAV_DOWN
     };
 

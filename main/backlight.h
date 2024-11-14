@@ -90,8 +90,8 @@ namespace Backlight {
 
         if (apply_perception_scale) level = scale_perceived_brightness(level);
 
-        ESP_ERROR_CHECK(ledc_set_fade_with_time(SPEED_MODE, CHANNEL, brightness_level_to_duty(level), duration_ms));
-        ESP_ERROR_CHECK(ledc_fade_start(SPEED_MODE, CHANNEL, LEDC_FADE_NO_WAIT));
+        ledc_set_fade_with_time(SPEED_MODE, CHANNEL, brightness_level_to_duty(level), duration_ms);
+        ledc_fade_start(SPEED_MODE, CHANNEL, LEDC_FADE_NO_WAIT);
     }
 
     int read_ldr()

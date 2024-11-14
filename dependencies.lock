@@ -1,8 +1,30 @@
 dependencies:
+  espressif/esp32_io_expander:
+    component_hash: c153d044e1b25bc5e4804b4d9516a623bca524188d13151cbf10e92e3a9cda02
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=5.1'
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 0.1.0
+  espressif/esp_io_expander:
+    component_hash: fbc0de4082fc7c207dc98a93a0ed83d1a929a4ecee83cc567afb406f3ee6d4a6
+    dependencies:
+    - name: idf
+      registry_url: https://components.espressif.com
+      require: private
+      version: '>=4.4.2'
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 1.0.1
   espressif/esp_lcd_touch:
     component_hash: 779b4ba2464a3ae85681e4b860caa5fdc35801458c23f3039ee761bae7f442a4
     dependencies:
     - name: idf
+      registry_url: https://components.espressif.com
       require: private
       version: '>=4.4.2'
     source:
@@ -12,13 +34,14 @@ dependencies:
   espressif/esp_lcd_touch_gt911:
     component_hash: f90c3f82f052d1ccdfd71895a062f396ccc1c90ec69d8a99c483180387230bac
     dependencies:
+    - name: idf
+      registry_url: https://components.espressif.com
+      require: private
+      version: '>=4.4.2'
     - name: espressif/esp_lcd_touch
       registry_url: https://components.espressif.com/
       require: public
       version: ^1.1.0
-    - name: idf
-      require: private
-      version: '>=4.4.2'
     source:
       registry_url: https://components.espressif.com/
       type: service
@@ -30,21 +53,24 @@ dependencies:
   slint/slint:
     component_hash: aaea16b3ab43e573cc5dc3fcd4170f79b9c9ad8ca3a23ced60f1dfafaca1b7b8
     dependencies:
+    - name: idf
+      registry_url: https://components.espressif.com
+      require: private
+      version: '>=5.1'
     - name: espressif/esp_lcd_touch
       registry_url: https://components.espressif.com/
       require: public
       version: '>=1.0.4'
-    - name: idf
-      require: private
-      version: '>=5.1'
     source:
       registry_url: https://components.espressif.com/
       type: service
     version: 1.8.0
 direct_dependencies:
+- espressif/esp32_io_expander
+- espressif/esp_io_expander
 - espressif/esp_lcd_touch_gt911
 - idf
 - slint/slint
-manifest_hash: 0b69d53b919ff098a3b5ce212979b7ff4d949fbea3be5b91f4f7cfcdd2b84b41
+manifest_hash: 5b56ec80fed8dcef4e959bd0c20da15e2084823c6006091159290d961c64dfc3
 target: esp32s3
 version: 2.0.0
