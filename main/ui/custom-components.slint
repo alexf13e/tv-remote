@@ -1,14 +1,8 @@
 
 import { Button } from "std-widgets.slint";
 import { RemoteButtonData } from "custom-component-data.slint";
-import { RemoteScreenID, CurrentDisplayedScreen } from "remote-screens-index.slint";
-import { Symbols } from "symbols.slint";
-
-
-export global Logic { //container for functions to interact with c++ from gui
-    pure callback remote_btn_clicked(string);
-    pure callback sleep();
-}
+import { RemoteScreenID } from "remote-screens-index.slint";
+import { Logic, CurrentDisplayedScreen, Symbols } from "globals.slint";
 
 
 export component RemoteButton { //custom button for sending remote signals and navigating the ui

@@ -13,6 +13,7 @@
 #include "soc/gpio_num.h"
 #include "driver/rtc_io.h"
 #include "ESP_IOExpander_Library.h"
+#include "esp_pm.h"
 
 #include "i2c_init.h"
 
@@ -53,11 +54,22 @@ namespace Power
             return;
         }
 
-        i2c_init(); //initialise i2c if nothing else has
 
         esp_sleep_wakeup_cause_t wakeup_cause = esp_sleep_get_wakeup_cause();
-        std::cout << wakeup_cause_strings[wakeup_cause] << std::endl;
+        std::cout << "wakeup cause: " << wakeup_cause_strings[wakeup_cause] << std::endl;
         if (wakeup_cause == ESP_SLEEP_WAKEUP_EXT0) ESP_ERROR_CHECK(rtc_gpio_deinit(RTC_GPIO_NUM_WAKEUP));
+
+        i2c_init(); //initialise i2c if nothing else has
+
+        //for a reason unknown to me, adding this power config prevents an issue where holding a button on the ui causes
+        //it to be released and pressed automatically 1-2 times per second...
+        esp_pm_config_t pm_config = {
+            .max_freq_mhz = 240,
+            .min_freq_mhz = 80,
+        };
+
+        ESP_ERROR_CHECK(esp_pm_configure(&pm_config));
+
 
         io_expander = new ESP_IOExpander_CH422G(I2C_NUM_0, ESP_IO_EXPANDER_I2C_CH422G_ADDRESS);
         io_expander->init();

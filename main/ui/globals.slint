@@ -1,0 +1,31 @@
+
+import { RemoteScreenID } from "remote-screens-index.slint";
+
+
+export global Logic { //container for functions to interact with c++ from gui
+    pure callback remote_btn_clicked(string);
+    pure callback sleep();
+    pure callback update_remembered_ui_screen(RemoteScreenID);
+}
+
+
+export global CurrentDisplayedScreen { //manage the currently displayed screen
+    out property <RemoteScreenID> id: RemoteScreenID.TV_CHANNELS;
+
+    callback set(RemoteScreenID);
+    set(newid) => {
+        if (newid != RemoteScreenID.SAME) {
+            id = newid;
+            Logic.update_remembered_ui_screen(newid);
+        }
+    }
+}
+
+
+export global Symbols { //general icon symbols which may want to be used on various screens
+    out property <image> arrow-left:    @image-url("icons/buttons/arrow-left.png");
+    out property <image> arrow-right:   @image-url("icons/buttons/arrow-right.png");
+    out property <image> arrow-up:      @image-url("icons/buttons/arrow-up.png");
+    out property <image> arrow-down:    @image-url("icons/buttons/arrow-down.png");
+    out property <image> home:          @image-url("icons/buttons/home.png");
+}

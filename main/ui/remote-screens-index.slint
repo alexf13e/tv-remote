@@ -12,14 +12,3 @@ export enum RemoteScreenID
     SPEAKERS_ALL_BUTTONS,
     HDD_ALL_BUTTONS,
 }
-
-export global CurrentDisplayedScreen {
-    out property <RemoteScreenID> id: RemoteScreenID.TV_CHANNELS;
-
-    callback set(RemoteScreenID);
-    set(newid) => {
-        if (newid != RemoteScreenID.SAME) {
-            id = newid;
-        }
-    }
-}
