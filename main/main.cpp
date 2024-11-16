@@ -9,6 +9,10 @@
 #include "backlight.h"
 #include "actionlist.h"
 
+
+//store the most recently displayed screen in RTC memory to preserve it through sleeps so it can be restored
+//RTC has to remain powered for the wakeup GPIO signal to be used, so the RTC memory will be preserved for free
+//the value will be lost on a complete power down
 RTC_NOINIT_ATTR RemoteScreenID ui_screen;
 
 extern "C" void app_main(void)

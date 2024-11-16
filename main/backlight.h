@@ -49,6 +49,7 @@ namespace Backlight {
         //https://www.desmos.com/calculator/6bflyfsp6w
 
         //adapted for screen by scaling between min_brightness and 1, as below around 5% duty the backlight turns off
+        //fully turning the backlight off for power saving is done just before sleep in power.h
         const float min_brightness = 0.06;
         
         if (level < 0.08f)
@@ -90,8 +91,8 @@ namespace Backlight {
 
         if (apply_perception_scale) level = scale_perceived_brightness(level);
 
-        ledc_set_fade_with_time(SPEED_MODE, CHANNEL, brightness_level_to_duty(level), duration_ms);
-        ledc_fade_start(SPEED_MODE, CHANNEL, LEDC_FADE_NO_WAIT);
+        ESP_ERROR_CHECK(ledc_set_fade_with_time(SPEED_MODE, CHANNEL, brightness_level_to_duty(level), duration_ms));
+        ESP_ERROR_CHECK(ledc_fade_start(SPEED_MODE, CHANNEL, LEDC_FADE_NO_WAIT));
     }
 
     int read_ldr()
@@ -125,14 +126,6 @@ namespace Backlight {
             //waiting the remainder
             fade_brightness(brightness_level, BRIGHTNESS_UPDATE_INTERVAL_MS, true);
             std::this_thread::sleep_for(std::chrono::milliseconds(BRIGHTNESS_UPDATE_INTERVAL_MS + 50));
-
-            // for (int i = 0; i <= 20; i++)
-            // {
-            //     float test_brightness = i / 20.0f;
-            //     std::cout << "test brightness: " << test_brightness << std::endl;
-            //     set_brightness(test_brightness, true);
-            //     std::this_thread::sleep_for(std::chrono::milliseconds(BRIGHTNESS_UPDATE_INTERVAL_MS + 50));
-            // }
         }
     }
 
@@ -171,8 +164,8 @@ namespace Backlight {
 
         initialised = true;
 
-        thread_ldr_auto_brightness = std::thread(update_brightness_from_ldr);
         set_brightness(0.5, true);
+        thread_ldr_auto_brightness = std::thread(update_brightness_from_ldr);
     }
 }
 
