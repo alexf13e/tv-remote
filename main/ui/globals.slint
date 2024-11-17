@@ -3,7 +3,8 @@ import { RemoteScreenID } from "remote-screens-index.slint";
 
 
 export global Logic { //container for functions to interact with c++ from gui
-    pure callback remote_btn_clicked(string);
+    pure callback remote_btn_press(string, bool);
+    pure callback remote_btn_release();
     pure callback sleep();
     pure callback update_remembered_ui_screen(RemoteScreenID);
 }

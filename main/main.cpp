@@ -8,6 +8,7 @@
 #include "screen.h"
 #include "backlight.h"
 #include "actionlist.h"
+#include "button_hold_manager.h"
 
 
 //store the most recently displayed screen in RTC memory to preserve it through sleeps so it can be restored
@@ -21,14 +22,18 @@ extern "C" void app_main(void)
     Screen::init();
     Backlight::init();
     IRTransmitter::init();
+    ButtonHoldManager::init();
     createActionLists();
 
     
     auto main_window = AppWindow::create();
 
-    main_window->global<Logic>().on_remote_btn_clicked([&](slint::SharedString actionListID) {
-        //run the list of actions specified by actionListID if one was set for the button
-        if (actionListID != "") runActionList(actionListID.data());
+    main_window->global<Logic>().on_remote_btn_press([&](slint::SharedString actionListID, bool repeat_on_hold) {
+        ButtonHoldManager::press(actionListID.data(), repeat_on_hold);
+    });
+
+    main_window->global<Logic>().on_remote_btn_release([]() {
+        ButtonHoldManager::release();
     });
 
     main_window->global<Logic>().on_sleep([]() {

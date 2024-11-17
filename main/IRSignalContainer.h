@@ -1,6 +1,6 @@
 
-#ifndef REMOTE_BUTTON_SIGNAL_H
-#define REMOTE_BUTTON_SIGNAL_H
+#ifndef IR_SIGNAL_CONTAINER_H
+#define IR_SIGNAL_CONTAINER_H
 
 #include <cstdint>
 #include <sstream>
@@ -55,6 +55,7 @@ struct IRSignalContainer
     //each word describes the timing for one pair of low-high or high-low in the signal
     std::vector<rmt_symbol_word_t> words;
 
+    IRSignalContainer() {};
 
     //build array of rmt words from long string of rmt_symbol_word_t.val as hex concatenated together
     //e.g. 066d8d41018381cd018481ca04cc81cb018481cc04ce81c9018581cb04cd81c9018581cb018681c904ce81c9018581ca018581ca04cd81c904cd81cb018681ca018681c9018581c9018581ca018581c9018581c9019e81b2018781c604ce81c9019d81b304e481b2018581cb018381ca018381cc04cc81cb04e481b404ce81ca04e481b404cc81cc018281cd018281cc018281cc018281cd018281cd018281cc018281cc018281cd018181cd018181cd018081ce04c981cf04cb81ce018081ce04c781ce000081cd

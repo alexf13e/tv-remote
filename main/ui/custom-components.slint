@@ -11,6 +11,9 @@ export component RemoteButton { //custom button for sending remote signals and n
     in property <length> fontSize;
     in property <string> actionListID: "";                      //name of the "macro" to play when button is pressed
     in property <RemoteScreenID> screenID: RemoteScreenID.SAME; //the id of the screen which will be shown when this button is clicked
+    in property <bool> repeat_on_hold: true;
+
+    callback pointer-event(PointerEvent);
 
     Rectangle { //rectangle for the whole button shape
         background: white;
@@ -35,9 +38,17 @@ export component RemoteButton { //custom button for sending remote signals and n
         }
         
         touch := TouchArea { //toucharea to detect when the button is being pressed
-            clicked => {
-                Logic.remote_btn_clicked(root.actionListID);
-                CurrentDisplayedScreen.set(root.screenID);
+            pointer-event(event) => {
+                root.pointer-event(event);
+
+                if event.kind == PointerEventKind.down {
+                    Logic.remote_btn_press(root.actionListID, root.repeat_on_hold);
+                }
+
+                if event.kind == PointerEventKind.up {
+                    Logic.remote_btn_release();
+                    CurrentDisplayedScreen.set(root.screenID);
+                }
             }
         }
     }
@@ -320,6 +331,7 @@ component RemoteButtonGridPage {
         icon: gridData[i + iMin].icon;
         text: gridData[i + iMin].text;
         actionListID: gridData[i + iMin].actionListID;
+        repeat_on_hold: gridData[i + iMin].repeat_on_hold;
     }
 }
 
@@ -353,10 +365,12 @@ export component MultiPageRemoteButtonGrid { //automatically populated grid span
 
         if numSubScreens > 1: HorizontalLayout { //navigation buttons between sub screens
             padding-top: 10px;
-            Button {
+
+            RemoteButton {
+                height: 40px;
                 icon: Symbols.arrow-left;
-                clicked => {
-                    if gridPage.currentSubScreen > 0 {
+                pointer-event(event) => {
+                    if event.kind == PointerEventKind.up && gridPage.currentSubScreen > 0 {
                         setSubScreen(gridPage.currentSubScreen - 1);
                     }
                 }
@@ -369,10 +383,11 @@ export component MultiPageRemoteButtonGrid { //automatically populated grid span
                 color: white;
             }
 
-            Button {
+            RemoteButton {
+                height: 40px;
                 icon: Symbols.arrow-right;
-                clicked => {
-                    if gridPage.currentSubScreen < numSubScreens - 1 {
+                pointer-event(event) => {
+                    if event.kind == PointerEventKind.up && gridPage.currentSubScreen < numSubScreens - 1 {
                         setSubScreen(gridPage.currentSubScreen + 1);
                     }
                 }

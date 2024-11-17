@@ -26,39 +26,39 @@ struct ActionBase
 
 struct ActionRemoteSignal : ActionBase
 {
-    const IRSignalContainer* signal;
+    IRSignalContainer signal;
 
     ActionRemoteSignal(uint64_t code)
     {
         this->type = REMOTE_SIGNAL;
-        this->signal = new IRSignalContainer(code);
+        this->signal = IRSignalContainer(code);
     }
 
     void run()
     {
-        IRTransmitter::transmit(signal->words);
+        IRTransmitter::transmit(signal.words);
     }
 };
 
 struct ActionDelayMilliseconds : ActionBase
 {
-    uint32_t duration;
+    std::chrono::milliseconds duration;
 
-    ActionDelayMilliseconds(uint32_t duration)
+    ActionDelayMilliseconds(uint32_t duration_ms)
     {
         this->type = DELAY;
-        this->duration = duration;
+        this->duration = std::chrono::milliseconds(duration);
     }
 
     void run()
     {
-        std::this_thread::sleep_for(std::chrono::milliseconds(duration));
+        std::this_thread::sleep_for(duration);
     }
 };
 
 struct ActionRepeatIRForMilliseconds : ActionBase
 {
-    static constexpr uint32_t milliseconds_between_repeats = 100;
+    static constexpr std::chrono::milliseconds repeat_interval = std::chrono::milliseconds(100);
 
     ActionRemoteSignal* actionRemoteSignal;
     uint32_t duration;
@@ -82,8 +82,8 @@ struct ActionRepeatIRForMilliseconds : ActionBase
 
         while (!repeat_period_ended())
         {
-            IRTransmitter::transmit(actionRemoteSignal->signal->words);
-            std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds_between_repeats));
+            IRTransmitter::transmit(actionRemoteSignal->signal.words);
+            std::this_thread::sleep_for(repeat_interval);
         }
     }
 };

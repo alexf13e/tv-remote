@@ -22,6 +22,8 @@ bool i2c_initialised = false;
 
 void i2c_init()
 {
+    //initialise the i2c driver, which is used for communicating with the screen and the io expansion chip
+
     if (i2c_initialised) return;
 
     i2c_config_t conf = {

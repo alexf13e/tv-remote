@@ -104,7 +104,6 @@ namespace Power
         while (true) {
             if (xQueueReceive(gpio_event_queue, &gpio_num, portMAX_DELAY)) {
                 //there was an event in the queue, act on it
-                std::cout << "interrupt" << std::endl;
                 sleep_timeout_time = std::chrono::system_clock::now() + INACTIVITY_SLEEP_TIMEOUT;
 
                 //clear the rest of the queue as we don't care how many other times the motion detector switch activated
