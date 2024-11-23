@@ -57,11 +57,13 @@ namespace Power
     {
         sleep_timeout_time = std::chrono::system_clock::now() + INACTIVITY_SLEEP_TIMEOUT;
         sleep_enabled = true;
+        std::cout << "sleep enabled" << std::endl;
     }
 
     void disable_sleep()
     {
         sleep_enabled = false;
+        std::cout << "sleep disabled" << std::endl;
     }
 
     void sleep()

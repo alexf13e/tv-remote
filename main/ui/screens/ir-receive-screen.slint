@@ -42,8 +42,10 @@ export component IRReceiveScreen {
             icon: Symbols.home;
             screenID: RemoteScreenID.HOME;
 
-            pointer-event => {
-                Logic.enable_sleep();
+            pointer-event(event) => {
+                if (event.kind == PointerEventKind.up && self.held == true) {
+                    Logic.enable_sleep();
+                }
             }
         }
     }
