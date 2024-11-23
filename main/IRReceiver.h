@@ -29,6 +29,11 @@ namespace IRReceiver
     constexpr uint16_t word_duration_tolerance = 150; //how much tolerance is given around the duration of a high or low
                                                       //part of a signal word
 
+    constexpr uint64_t SYMBOL_START_ID = 2;
+    constexpr uint64_t SYMBOL_END_ID = 3;
+    constexpr uint64_t SYMBOL_ERROR_ID = 10;
+
+
     rmt_channel_handle_t channel_handle;
     rmt_rx_channel_config_t channel_config;
     QueueHandle_t receive_queue;
@@ -66,7 +71,9 @@ namespace IRReceiver
 
         if (compare_symbols(word, IRSignalContainer::symbol_zero)) return 0;
         else if (compare_symbols(word, IRSignalContainer::symbol_one)) return 1;
-        else return -1;
+        else if (compare_symbols(word, IRSignalContainer::symbol_start)) return SYMBOL_START_ID;
+        else if (compare_symbols(word, IRSignalContainer::symbol_end)) return SYMBOL_END_ID;
+        else return SYMBOL_ERROR_ID;
     }
 
     void init()
@@ -115,11 +122,14 @@ namespace IRReceiver
 
     void decode_signal()
     {
-        rmt_symbol_word_t word;
+        rmt_symbol_word_t word = rx_data.received_symbols[0];
+        if (decode_word(word) != SYMBOL_START_ID)
+        {
+            std::cout << "signal does not start with expected pattern, so likely will not work" << std::endl;
+        }
 
         #if OUTPUT_EXTRA_SIGNAL_DATA
         //print the timings for the start symbol of the signal
-        word = rx_data.received_symbols[0];
         std::cout << "start symbol timings: " << word.level0 << "_" << word.duration0 << ", " <<  word.level1 << "_" <<
             word.duration1 << std::endl;
         #endif
@@ -129,8 +139,8 @@ namespace IRReceiver
         {
             word = rx_data.received_symbols[i];
 
-            uint64_t decoded_word = decode_word(word);
-            if (decoded_word == -1)
+            uint64_t bit = decode_word(word);
+            if (bit != 0 && bit != 1)
             {
                 //word does not encode 0 or 1
                 std::cout << "unexpected symbol with timings: " << word.level0 << "_" << word.duration0 << ", " << 
@@ -139,7 +149,7 @@ namespace IRReceiver
             }
             else
             {
-                output |= (decoded_word << (i - 1));
+                output |= (bit << (i - 1));
                 #if OUTPUT_EXTRA_SIGNAL_DATA
                 //print the timings for this word and what it was decoded as
                 std::cout <<  word.level0 << "_" << word.duration0 << ", " <<  word.level1 << "_" << word.duration1 <<
@@ -148,9 +158,14 @@ namespace IRReceiver
             }            
         }
 
+        word = rx_data.received_symbols[rx_data.num_symbols - 1];
+        if (decode_word(word) != SYMBOL_END_ID)
+        {
+            std::cout << "signal does not end with expected pattern, so likely will not work" << std::endl;
+        }
+
         #if OUTPUT_EXTRA_SIGNAL_DATA
         //print the timings for the end symbol of the word
-        word = rx_data.received_symbols[rx_data.num_symbols - 1];
         std::cout << "end symbol timings: " << word.level0 << "_" << word.duration0 << ", " <<  word.level1 << "_" <<
             word.duration1 << std::endl << std::endl;
         #endif
