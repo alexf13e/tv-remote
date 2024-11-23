@@ -9,6 +9,7 @@
 #include "backlight.h"
 #include "actionlist.h"
 #include "button_hold_manager.h"
+#include "IRReceiver.h"
 
 
 //store the most recently displayed screen in RTC memory to preserve it through sleeps so it can be restored
@@ -22,6 +23,7 @@ extern "C" void app_main(void)
     Screen::init();
     Backlight::init();
     IRTransmitter::init();
+    IRReceiver::init();
     ButtonHoldManager::init();
     createActionLists();
 
@@ -43,6 +45,19 @@ extern "C" void app_main(void)
     main_window->global<Logic>().on_update_remembered_ui_screen([](RemoteScreenID screen_id) {
         ui_screen = screen_id;
     });
+
+    main_window->global<Logic>().on_disable_sleep([] () {
+        Power::disable_sleep();
+    });
+
+    main_window->global<Logic>().on_enable_sleep([] () {
+        Power::enable_sleep();
+    });
+
+    main_window->global<Logic>().on_begin_ir_receive([]() {
+        IRReceiver::receive();
+    });
+
 
     if (esp_sleep_get_wakeup_cause() == ESP_SLEEP_WAKEUP_EXT0)
     {

@@ -49,12 +49,29 @@ namespace Power
     QueueHandle_t gpio_event_queue = NULL;
     std::chrono::system_clock::time_point sleep_timeout_time;
     std::thread thread_sleep_timeout;
+    bool sleep_enabled = true;
 
-    bool power_initialised = false;
+    bool initialised = false;
 
+    void enable_sleep()
+    {
+        sleep_timeout_time = std::chrono::system_clock::now() + INACTIVITY_SLEEP_TIMEOUT;
+        sleep_enabled = true;
+    }
+
+    void disable_sleep()
+    {
+        sleep_enabled = false;
+    }
 
     void sleep()
     {
+        if (!initialised)
+        {
+            std::cerr << "attempted to sleep before initialising power management" << std::endl;
+            return;
+        }
+
         io_expander->digitalWrite(EXIO_DISPLAY, 0); //turn the display backlight off to save power
         
         std::this_thread::sleep_for(std::chrono::milliseconds(200)); //seems to prevent TG1WDT_SYS_RST from occurring
@@ -69,11 +86,25 @@ namespace Power
 
     void sleep_timeout()
     {
+        //potential confusion: we are using thread sleeping to pause some amount of time before checking if the device
+        //should be put into a low power state which is also called sleeping
+
         while (true)
         {
-            //begin sleep until the currently set timeout time
             std::chrono::system_clock::time_point current_sleep_timeout_time = sleep_timeout_time;
-            std::this_thread::sleep_until(current_sleep_timeout_time);
+            
+            //begin thread sleep until the currently set timeout time
+            if (sleep_enabled)
+            {
+                std::this_thread::sleep_until(current_sleep_timeout_time);
+            }
+            
+            if (!sleep_enabled) //device sleep may have been disabled during previous thread sleep
+            {
+                //sleeping has been disabled, so delay a little and then restart loop
+                std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+                continue;
+            }
 
             //if the sleep timeout time has not been updated, we now want to put the device to sleep
             if (current_sleep_timeout_time == sleep_timeout_time)
@@ -117,7 +148,7 @@ namespace Power
 
     void init()
     {
-        if (power_initialised)
+        if (initialised)
         {
             std::cerr << "attempted initialise power more than once" << std::endl;
             return;
@@ -168,7 +199,7 @@ namespace Power
         sleep_timeout_time = std::chrono::system_clock::now() + INACTIVITY_SLEEP_TIMEOUT;
         thread_sleep_timeout = std::thread(sleep_timeout);
 
-        power_initialised = true;
+        initialised = true;
     }
 }
 

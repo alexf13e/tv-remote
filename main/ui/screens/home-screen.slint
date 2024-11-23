@@ -28,11 +28,16 @@ export component HomeScreen {
             screenID: RemoteScreenID.HDD_ALL_BUTTONS;
         }
 
-        Button {
-            text: "sleep test";
-            clicked => {
-                Logic.sleep();
-            }
+        RemoteButton {
+            text: "IR Code Learning";
+            screenID: RemoteScreenID.IR_RECEIVE;
         }
+
+        // Button {
+        //     text: "sleep test";
+        //     clicked => {
+        //         Logic.sleep();
+        //     }
+        // }
     }
 }

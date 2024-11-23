@@ -18,7 +18,7 @@ struct IRSignalContainer
     //remotes.h will probably need extending to be structs/classes with a property for signal parameters, and the ir
     //transmitter will need to allow these parameters to be passed...
 
-    static const uint16_t time_unit = 432; //microseconds
+    static const uint16_t time_unit = 432; //microseconds* (see note at bottom of file)
     static const uint8_t num_signal_bits = 48; //how long the main part of the signal is
     
     //representations of 0 and 1 as high and low times
@@ -102,5 +102,10 @@ struct IRSignalContainer
         words.push_back(symbol_end);
     }
 };
+
+/*
+the time unit is based on the resolution_hz value set in channel_config for both the transmitter and receiver.
+we are (at the time of writing this) using 1 * 1000 * 1000 = 1MHz, so 1 time unit is 1/1MHz = 1 microsecond
+*/
 
 #endif

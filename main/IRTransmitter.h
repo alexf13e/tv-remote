@@ -15,6 +15,8 @@
 
 
 namespace IRTransmitter {
+    constexpr gpio_num_t GPIO_NUM_TRANSMIT = GPIO_NUM_6;
+
     rmt_channel_handle_t channel_handle;
     rmt_tx_channel_config_t channel_config;
     rmt_carrier_config_t carrier_config;
@@ -34,7 +36,7 @@ namespace IRTransmitter {
         //create "channel" describing where the signal will be physically sent on the board
         channel_handle = NULL;
         channel_config = {
-            .gpio_num = GPIO_NUM_6,
+            .gpio_num = GPIO_NUM_TRANSMIT,
             .clk_src = rmt_clock_source_t::RMT_CLK_SRC_DEFAULT,
             .resolution_hz = 1 * 1000 * 1000,
             .mem_block_symbols = 64,
