@@ -13,6 +13,8 @@ export component RemoteButton { //custom button for sending remote signals and n
     in property <RemoteScreenID> screenID: RemoteScreenID.SAME; //the id of the screen which will be shown when this button is clicked
     in property <bool> repeat_on_hold: true;
 
+    out property <bool> held: false;
+
     callback pointer-event(PointerEvent);
 
     Rectangle { //rectangle for the whole button shape
@@ -43,11 +45,13 @@ export component RemoteButton { //custom button for sending remote signals and n
 
                 if event.kind == PointerEventKind.down {
                     Logic.remote_btn_press(root.actionListID, root.repeat_on_hold);
+                    held = true;
                 }
 
-                if event.kind == PointerEventKind.up {
+                if event.kind == PointerEventKind.up && held == true {
                     Logic.remote_btn_release();
                     CurrentDisplayedScreen.set(root.screenID);
+                    held = false;
                 }
             }
         }
