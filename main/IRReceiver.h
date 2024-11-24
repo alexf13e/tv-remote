@@ -2,10 +2,7 @@
 #ifndef IR_RECEIVER_H
 #define IR_RECEIVER_H
 
-#define OUTPUT_EXTRA_SIGNAL_DATA true
-
 #include <iostream>
-#include <cmath>
 #include <iomanip>
 #include <ios>
 
