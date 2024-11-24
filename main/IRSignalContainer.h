@@ -6,7 +6,9 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <iostream>
 
+#include "esp_log_level.h"
 #include "hal/rmt_types.h"
 
 
@@ -28,14 +30,18 @@ struct IRSignalContainer
     //e.g. 066d8d41018381cd018481ca04cc81cb018481cc04ce81c9018581cb04cd81c9018581cb018681c904ce81c9018581ca018581ca04cd81c904cd81cb018681ca018681c9018581c9018581ca018581c9018581c9019e81b2018781c604ce81c9019d81b304e481b2018581cb018381ca018381cc04cc81cb04e481b404ce81ca04e481b404cc81cc018281cd018281cc018281cc018281cd018281cd018281cc018281cc018281cd018181cd018181cd018081ce04c981cf04cb81ce018081ce04c781ce000081cd
     IRSignalContainer(std::string code)
     {        
-        //each word is 32 bits, so 8 characters to describe each word
-        if (code.length() <= 0 || code.length() % 8 != 0)
+        //each word is 32 bits. one hex character is 4 bits, so 8 characters to describe each word
+
+        int len = code.length();
+        if (len <= 0 || len % 8 != 0)
         {
             //code is not valid, it should have a whole number of 8 character sections
+            std::cerr << "failed to create IRSignalContainer, code was not a valid length" << std::endl;
+            std::cerr << "(length should be a multiple of 8 characters, actual length was " << len << ")" << std::endl;
             return;
         }
 
-        words = std::vector<rmt_symbol_word_t>(code.length() / 8); //allocate space for words in vector
+        words = std::vector<rmt_symbol_word_t>(len / 8); //allocate space for words in vector
 
         for (int i = 0; i < words.size(); i++)
         {

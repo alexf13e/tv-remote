@@ -5,6 +5,7 @@
 #include <iostream>
 #include <iomanip>
 #include <ios>
+#include <sstream>
 
 #include "driver/rmt_rx.h"
 #include "driver/rmt_types.h"
@@ -105,15 +106,14 @@ namespace IRReceiver
 
         std::ios original_cout(nullptr);
         original_cout.copyfmt(std::cout);
-        std::cout << std::hex << std::noshowbase << std::setw(8) << std::setfill('0');
 
         for (int i = 0; i < rx_data.num_symbols; i++)
         {
-            std::cout << rx_data.received_symbols[i].val;
+            std::cout << std::hex << std::noshowbase << std::setw(8) << std::setfill('0') << rx_data.received_symbols[i].val;
         }
-
-        std::cout << std::endl << std::endl;
+        
         std::cout.copyfmt(original_cout);
+        std::cout << std::endl << std::endl;
     }
 
     void receive()
