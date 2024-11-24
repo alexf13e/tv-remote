@@ -2,9 +2,12 @@
 #ifndef IR_RECEIVER_H
 #define IR_RECEIVER_H
 
-#define OUTPUT_EXTRA_SIGNAL_DATA false
+#define OUTPUT_EXTRA_SIGNAL_DATA true
 
 #include <iostream>
+#include <cmath>
+#include <iomanip>
+#include <ios>
 
 #include "driver/rmt_rx.h"
 #include "driver/rmt_types.h"
@@ -17,22 +20,9 @@
 #include "soc/gpio_num.h"
 
 
-//using IRSignalContainer for time_unit and symbol words which encode zero and one
-//if a more generalised system for handling remote signals is required, both IRSignalContainer and IRReceiver will need
-//significant refactoring
-#include "IRSignalContainer.h"
-
-
 namespace IRReceiver
 {
     constexpr gpio_num_t GPIO_NUM_RECEIVE = GPIO_NUM_16;
-    constexpr uint16_t word_duration_tolerance = 150; //how much tolerance is given around the duration of a high or low
-                                                      //part of a signal word
-
-    constexpr uint64_t SYMBOL_START_ID = 2;
-    constexpr uint64_t SYMBOL_END_ID = 3;
-    constexpr uint64_t SYMBOL_ERROR_ID = 10;
-
 
     rmt_channel_handle_t channel_handle;
     rmt_rx_channel_config_t channel_config;
@@ -53,27 +43,6 @@ namespace IRReceiver
 
         // return whether any task is woken up
         return high_task_wakeup == pdTRUE;
-    }
-
-    uint64_t decode_word(const rmt_symbol_word_t& word)
-    {
-        //check which symbol a word describes, accounting for variation and tolerance in received data
-        
-        auto within_tolerance = [&](const int duration1, const int duration2) {
-            //durations cast to int to allow negative difference
-            return abs(duration1 - duration2) < word_duration_tolerance;
-        };
-
-        auto compare_symbols = [&](const rmt_symbol_word_t& sym1, const rmt_symbol_word_t& sym2) {
-            return sym1.level0 == sym2.level0 && within_tolerance(sym1.duration0, sym2.duration0) &&
-                   sym1.level1 == sym2.level1 && within_tolerance(sym1.duration1, sym2.duration1);
-        };
-
-        if (compare_symbols(word, IRSignalContainer::symbol_zero)) return 0;
-        else if (compare_symbols(word, IRSignalContainer::symbol_one)) return 1;
-        else if (compare_symbols(word, IRSignalContainer::symbol_start)) return SYMBOL_START_ID;
-        else if (compare_symbols(word, IRSignalContainer::symbol_end)) return SYMBOL_END_ID;
-        else return SYMBOL_ERROR_ID;
     }
 
     void init()
@@ -120,65 +89,44 @@ namespace IRReceiver
         initialised = true;
     }
 
-    void decode_signal()
+    void print_signal()
     {
-        rmt_symbol_word_t word = rx_data.received_symbols[0];
-        if (decode_word(word) != SYMBOL_START_ID)
+        //prints the received rmt_symbol_word_t values, which are 32 bit numbers describing the duration and level of
+        //pairs in the signal.
+
+        //attempts were made to find a way of describing signals which was flexible enough to support lots of remotes,
+        //without having the codes be excessively long, to no avail.
+
+        //it is likely possible to write code to identify the protocol being used by the signal, and also have different
+        //methods of sending the signal for each one.
+
+        //however, it is much simpler to just store the signal as it was received, and send it in the same manner.
+
+        //since the code is the exact timings which were received, there will be slight differences between the codes
+        //generated from the same button press.
+
+
+        std::ios original_cout(nullptr);
+        original_cout.copyfmt(std::cout);
+        std::cout << std::hex << std::noshowbase << std::setw(8) << std::setfill('0');
+
+        for (int i = 0; i < rx_data.num_symbols; i++)
         {
-            std::cout << "signal does not start with expected pattern, so likely will not work" << std::endl;
+            std::cout << rx_data.received_symbols[i].val;
         }
 
-        #if OUTPUT_EXTRA_SIGNAL_DATA
-        //print the timings for the start symbol of the signal
-        std::cout << "start symbol timings: " << word.level0 << "_" << word.duration0 << ", " <<  word.level1 << "_" <<
-            word.duration1 << std::endl;
-        #endif
-
-        uint64_t output = 0;
-        for (int i = 1; i < rx_data.num_symbols - 1; i++)
-        {
-            word = rx_data.received_symbols[i];
-
-            uint64_t bit = decode_word(word);
-            if (bit != 0 && bit != 1)
-            {
-                //word does not encode 0 or 1
-                std::cout << "unexpected symbol with timings: " << word.level0 << "_" << word.duration0 << ", " << 
-                    word.level1 << "_" << word.duration1 << std::endl;
-                std::cout << "decoded signal likely will not work" << std::endl;
-            }
-            else
-            {
-                output |= (bit << (i - 1));
-                #if OUTPUT_EXTRA_SIGNAL_DATA
-                //print the timings for this word and what it was decoded as
-                std::cout <<  word.level0 << "_" << word.duration0 << ", " <<  word.level1 << "_" << word.duration1 <<
-                    " -> " << decoded_word << std::endl;
-                #endif
-            }            
-        }
-
-        word = rx_data.received_symbols[rx_data.num_symbols - 1];
-        if (decode_word(word) != SYMBOL_END_ID)
-        {
-            std::cout << "signal does not end with expected pattern, so likely will not work" << std::endl;
-        }
-
-        #if OUTPUT_EXTRA_SIGNAL_DATA
-        //print the timings for the end symbol of the word
-        std::cout << "end symbol timings: " << word.level0 << "_" << word.duration0 << ", " <<  word.level1 << "_" <<
-            word.duration1 << std::endl << std::endl;
-        #endif
-
-        std::cout << "code to use in remote ACTION: " << std::hex << std::showbase << output << std::dec << std::endl;
+        std::cout << std::endl << std::endl;
+        std::cout.copyfmt(original_cout);
     }
 
     void receive()
     {
-        //wait until a signal is received, then decode it
+        //wait until a signal is received
         ESP_ERROR_CHECK(rmt_receive(channel_handle, raw_symbols, sizeof(raw_symbols), &receive_config));
         xQueueReceive(receive_queue, &rx_data, portMAX_DELAY);
-        decode_signal();
+
+        //display it in a format which can be copied and used when creating remote actions
+        print_signal();
     }
 }
 

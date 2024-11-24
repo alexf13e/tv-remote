@@ -53,7 +53,9 @@ namespace IRTransmitter {
         
         //create carrier signal which will be applied when sending ir signal
         carrier_config = {
-            .frequency_hz = 37000,
+            .frequency_hz = 38000,  //could differ for some remotes, but detecting the carrier frequency when learning a
+                                    //signal is not currently supported (i.e. I don't know a good way to do it, and our
+                                    //current receiver automatically demodulates)
             .duty_cycle = 0.33,
             .flags = {
                 .polarity_active_low = false,

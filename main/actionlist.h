@@ -823,6 +823,191 @@ void createActionLists()
     ALL_ACTION_LISTS["HDD_MANUAL_SKIP_PLUS_60"] = {
         RemoteHDD::MANUAL_SKIP_PLUS_60
     };
+
+
+    //////////////////////////////////////// YOUVIEW REMOTE ////////////////////////////////////////
+
+    ALL_ACTION_LISTS["YOUVIEW_POWER"] = {
+        RemoteYouView::POWER
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_ZOOM"] = {
+        RemoteYouView::ZOOM
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_TEXT"] = {
+        RemoteYouView::TEXT
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_HELP"] = {
+        RemoteYouView::HELP
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_BT_PLAYER"] = {
+        RemoteYouView::BT_PLAYER
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_HOME"] = {
+        RemoteYouView::HOME
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_RED"] = {
+        RemoteYouView::RED
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_GREEN"] = {
+        RemoteYouView::GREEN
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_YELLOW"] = {
+        RemoteYouView::YELLOW
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_BLUE"] = {
+        RemoteYouView::BLUE
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_INFO"] = {
+        RemoteYouView::INFO
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_VOL_UP"] = {
+        RemoteYouView::VOL_UP
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_VOL_DOWN"] = {
+        RemoteYouView::VOL_DOWN
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_VOL_MUTE"] = {
+        RemoteYouView::VOL_MUTE
+    };
+    
+    
+    ALL_ACTION_LISTS["YOUVIEW_CHAN_UP"] = {
+        RemoteYouView::CHAN_UP
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_CHAN_DOWN"] = {
+        RemoteYouView::CHAN_DOWN
+    };
+    
+    
+    ALL_ACTION_LISTS["YOUVIEW_NAV_UP"] = {
+        RemoteYouView::NAV_UP
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_NAV_DOWN"] = {
+        RemoteYouView::NAV_DOWN
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_NAV_LEFT"] = {
+        RemoteYouView::NAV_LEFT
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_NAV_RIGHT"] = {
+        RemoteYouView::NAV_RIGHT
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_OK"] = {
+        RemoteYouView::OK
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_BACK"] = {
+        RemoteYouView::BACK
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_REWIND"] = {
+        RemoteYouView::REWIND
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_PLAY"] = {
+        RemoteYouView::PLAY
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_PAUSE"] = {
+        RemoteYouView::PAUSE
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_FAST_FORWARD"] = {
+        RemoteYouView::FAST_FORWARD
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_SKIP_BACK"] = {
+        RemoteYouView::SKIP_BACK
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_RECORD"] = {
+        RemoteYouView::RECORD
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_STOP"] = {
+        RemoteYouView::STOP
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_SKIP_FORWARD"] = {
+        RemoteYouView::SKIP_FORWARD
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_GUIDE"] = {
+        RemoteYouView::GUIDE
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_SEARCH"] = {
+        RemoteYouView::SEARCH
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_CLOSE"] = {
+        RemoteYouView::CLOSE
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_KEY_0"] = {
+        RemoteYouView::KEY_0
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_KEY_1"] = {
+        RemoteYouView::KEY_1
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_KEY_2"] = {
+        RemoteYouView::KEY_2
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_KEY_3"] = {
+        RemoteYouView::KEY_3
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_KEY_4"] = {
+        RemoteYouView::KEY_4
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_KEY_5"] = {
+        RemoteYouView::KEY_5
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_KEY_6"] = {
+        RemoteYouView::KEY_6
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_KEY_7"] = {
+        RemoteYouView::KEY_7
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_KEY_8"] = {
+        RemoteYouView::KEY_8
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_KEY_9"] = {
+        RemoteYouView::KEY_9
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_AD"] = {
+        RemoteYouView::AD
+    };
+    
+    ALL_ACTION_LISTS["YOUVIEW_DELETE_SUB"] = {
+        RemoteYouView::DELETE_SUB
+    };
 }
 
 

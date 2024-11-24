@@ -33,6 +33,8 @@ namespace Backlight {
     ledc_timer_config_t timer_config;
     ledc_channel_config_t channel_config;
     std::thread thread_ldr_auto_brightness;
+    bool auto_brightness_enabled = true;
+
     bool initialised = false;
 
     uint32_t brightness_level_to_duty(float level)
@@ -124,7 +126,11 @@ namespace Backlight {
             //run the fade without waiting to stop, then sleep the thread for desired update interval to ensure the next
             //brightness update is delayed. simpler this way than blocking, checking how long it actually took, then
             //waiting the remainder
-            fade_brightness(brightness_level, BRIGHTNESS_UPDATE_INTERVAL_MS, true);
+            if (auto_brightness_enabled)
+            {
+                fade_brightness(brightness_level, BRIGHTNESS_UPDATE_INTERVAL_MS, true);
+            }
+            
             std::this_thread::sleep_for(std::chrono::milliseconds(BRIGHTNESS_UPDATE_INTERVAL_MS + 50));
         }
     }

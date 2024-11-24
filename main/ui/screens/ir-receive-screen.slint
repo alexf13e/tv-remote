@@ -6,7 +6,8 @@ import { Button } from "std-widgets.slint";
 
 export component IRReceiveScreen {
     init => {
-        Logic.disable_sleep();
+        Logic.disable_sleep(); //when on this screen, disable sleep as device may not be touched for a few seconds while learning codes
+        Logic.disable_auto_brightness(); //disable auto brightness to prevent warnings about ledc fade too slow
     }
 
     VerticalLayout {
@@ -22,13 +23,13 @@ export component IRReceiveScreen {
     
             Text {
                 font-size: 16px;
-                text: "Connect usb to pc and begin monitoring\nPress button below to begin listening for signal, the remote will be stuck listening until a signal is received (or it is powered off)\nPoint remote at receiver and press a button\nThe code will be printed out in the monitor terminal\nThe hex code should be used for creating ACTIONs in remotes.h";
+                text: "Connect usb to pc and begin monitoring\nPress button below to begin listening for signal, the remote will be stuck listening until a signal is received (or remote powered off)\nPoint remote at receiver and press a button\nThe code will be printed out in the monitor terminal\nThe code should be used for creating ACTIONs in remotes.h";
                 color: white;
                 wrap: word-wrap;
             }
     
             Button {
-                height: 60px;
+                height: 100px;
                 text: "Click to begin receiving";
     
                 clicked => {
@@ -45,6 +46,7 @@ export component IRReceiveScreen {
             pointer-event(event) => {
                 if (event.kind == PointerEventKind.up && self.held == true) {
                     Logic.enable_sleep();
+                    Logic.enable_auto_brightness();
                 }
             }
         }

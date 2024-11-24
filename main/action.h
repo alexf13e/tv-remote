@@ -28,7 +28,7 @@ struct ActionRemoteSignal : ActionBase
 {
     IRSignalContainer signal;
 
-    ActionRemoteSignal(uint64_t code)
+    ActionRemoteSignal(std::string code)
     {
         this->type = REMOTE_SIGNAL;
         this->signal = IRSignalContainer(code);

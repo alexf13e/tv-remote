@@ -46,12 +46,20 @@ extern "C" void app_main(void)
         ui_screen = screen_id;
     });
 
-    main_window->global<Logic>().on_disable_sleep([] () {
+    main_window->global<Logic>().on_disable_sleep([]() {
         Power::disable_sleep();
     });
 
-    main_window->global<Logic>().on_enable_sleep([] () {
+    main_window->global<Logic>().on_enable_sleep([]() {
         Power::enable_sleep();
+    });
+
+    main_window->global<Logic>().on_disable_auto_brightness([]() {
+        Backlight::auto_brightness_enabled = false;
+    });
+
+    main_window->global<Logic>().on_enable_auto_brightness([]() {
+        Backlight::auto_brightness_enabled = true;
     });
 
     main_window->global<Logic>().on_begin_ir_receive([]() {
