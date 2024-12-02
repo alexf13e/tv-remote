@@ -5,11 +5,6 @@ import { RemoteScreenID } from "../remote-screens-index.slint";
 import { Button } from "std-widgets.slint";
 
 export component IRReceiveScreen {
-    init => {
-        Logic.disable_sleep(); //when on this screen, disable sleep as device may not be touched for a few seconds while learning codes
-        Logic.disable_auto_brightness(); //disable auto brightness to prevent warnings about ledc fade too slow
-    }
-
     VerticalLayout {
         VerticalLayout {
             alignment: start;
@@ -35,17 +30,6 @@ export component IRReceiveScreen {
                 clicked => {
                     Logic.begin_ir_receive();
                 }
-            }
-        }
-
-        RemoteButton {
-            height: 40px;
-            icon: Symbols.home;
-            screen_id: RemoteScreenID.SCREEN_LIST;
-
-            press_release => {
-                Logic.enable_sleep();
-                Logic.enable_auto_brightness();
             }
         }
     }

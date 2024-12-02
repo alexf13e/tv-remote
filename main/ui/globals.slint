@@ -16,7 +16,7 @@ export global Logic { //container for functions to interact with c++ from gui
     pure callback begin_ir_receive();
 
     pure callback init_history_screens(int) -> [RemoteScreenID];
-    pure callback shift_history_screens([RemoteScreenID]) -> [RemoteScreenID];
+    pure callback shift_history_screens([RemoteScreenID]);
 }
 
 
@@ -28,18 +28,22 @@ export struct ScreenHistoryData { //history data separated to a struct to simpli
 }
 
 export global ScreenHistory { //manage the previously visited screens
-    private property <int> capacity;
-    out property <ScreenHistoryData> history: {
-        capacity: capacity,
-        screens: Logic.init_history_screens(capacity), //cannot variably initialise array in slint, have to send to c++
-        front: 0,
-        length: 0
-    };
+    out property <ScreenHistoryData> history;
 
+    public function init(capacity: int, screen_id: RemoteScreenID) { //use on first power up
+        history = {
+            capacity: capacity,
+            screens: Logic.init_history_screens(capacity), //cannot variably initialise array in slint, have to send to c++
+            front: 0,
+            length: 0
+        };
 
-    public function restore(history: ScreenHistoryData) {
+        CurrentDisplayedScreen.set(screen-id);
+    }
+
+    public function restore(history: ScreenHistoryData) { //use when restoring from sleep
         self.history = history;
-        CurrentDisplayedScreen.set_restore(history.screens[history.front]);
+        CurrentDisplayedScreen.set_without_history(history.screens[history.front]);
     }
 
     public function go_back() -> RemoteScreenID { //return the previous screen and move the front of the history back 1 space
@@ -67,7 +71,7 @@ export global ScreenHistory { //manage the previously visited screens
             //we are at capacity of history, need to forget oldest screen
 
             //shift array elements down by 1 so the first one is forgotten
-            history.screens = Logic.shift_history_screens(history.screens);
+            Logic.shift_history_screens(history.screens);
 
             history.front -= 1; //move front backwards by 1 space, as though the last space in the array was empty
         }
@@ -84,21 +88,38 @@ export global ScreenHistory { //manage the previously visited screens
 
 
 export global CurrentDisplayedScreen { //manage the currently displayed screen
-    out property <RemoteScreenID> id: RemoteScreenID.TV_CHANNELS;
+    out property <RemoteScreenID> id: RemoteScreenID.TV_CHANNELS; //initialised by native code, placeholder for previewing
 
-    //specifically for restoring from sleep, don't want to influence screen history which will also be restored
-    public function set_restore(new_id: RemoteScreenID) {
-        id = new_id;
+    function check_special_screen_changes(old_id: RemoteScreenID, new_id: RemoteScreenID) {
+        if (new_id == RemoteScreenID.IR_RECEIVE) {
+            Logic.disable_sleep(); //when on this screen, disable sleep as device may not be touched for a few seconds while learning codes
+            Logic.disable_auto_brightness(); //disable auto brightness to prevent warnings about ledc fade too slow
+        }
+
+        if (old_id == RemoteScreenID.IR_RECEIVE) { //leaving receive screen, re-enable sleep and auto brightness
+            Logic.enable_sleep();
+            Logic.enable_auto_brightness();
+        }
     }
 
     //change the displayed screen and update the history if relevant
     public function set(new_id: RemoteScreenID) {
         if (new_id != RemoteScreenID.SAME) {
+            check_special_screen_changes(id, new_id);
+
             id = new_id;
 
             if (new_id != RemoteScreenID.SCREEN_LIST) {
-                ScreenHistory.append_screen(new_id);
+                //ScreenHistory.append_screen(new_id);
             }
+        }
+    }
+
+    //for setting screen without affecting history. used when restoring history and when navigating forward/back
+    public function set_without_history(new_id: RemoteScreenID) {
+        if (new_id != RemoteScreenID.SAME) { //shouldn't ever be used with SAME, but best check anyway
+            check_special_screen_changes(id, new_id);
+            id = new_id;
         }
     }
 }

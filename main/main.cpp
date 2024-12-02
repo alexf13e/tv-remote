@@ -57,18 +57,11 @@ void create_callbacks(slint::ComponentHandle<AppWindow> main_window)
         return new_screens_model;
     });
 
-    main_window->global<Logic>().on_shift_history_screens([](std::shared_ptr<slint::Model<RemoteScreenID>> old_screens) {
-        std::vector<RemoteScreenID> new_screens;
-        
-        for (uint32_t i = 0; i < old_screens->row_count() - 1; i++)
+    main_window->global<Logic>().on_shift_history_screens([](std::shared_ptr<slint::Model<RemoteScreenID>> screens) {        
+        for (uint32_t i = 0; i < screens->row_count() - 1; i++)
         {
-            new_screens.push_back(*old_screens->row_data(i + 1));
+            screens->set_row_data(i, screens->row_data(i + 1).value());
         }
-
-        new_screens.push_back(RemoteScreenID::SAME);
-
-        auto new_screens_model = std::make_shared<slint::VectorModel<RemoteScreenID>>(new_screens);
-        return new_screens_model;
     });
 }
 

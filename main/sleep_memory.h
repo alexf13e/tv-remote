@@ -27,10 +27,16 @@ namespace SleepMemory {
 
     void restore()
     {
-        if (esp_sleep_get_wakeup_cause() != ESP_SLEEP_WAKEUP_EXT0) return; //didn't wake from sleep, nothing can be restored
-
-        //woke up from sleep, restore saved values
-        (*p_main_window)->global<ScreenHistory>().invoke_restore(ui_screen_history);
+        if (esp_sleep_get_wakeup_cause() != ESP_SLEEP_WAKEUP_EXT0)
+        {
+            //didn't wake from sleep, set initial screen
+            (*p_main_window)->global<ScreenHistory>().invoke_init(10, RemoteScreenID::TVCHANNELS);
+        }
+        else
+        {
+            //woke up from sleep, restore saved values
+            (*p_main_window)->global<ScreenHistory>().invoke_restore(ui_screen_history);
+        }
     }
 }
 

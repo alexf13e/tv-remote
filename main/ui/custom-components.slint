@@ -174,13 +174,6 @@ export component RemoteNavPanel { //panel with bottom navigation buttons to repl
                 icon: Symbols.arrow-down;
                 action_list_id: al_navDown;
             }
-
-            RemoteButton {
-                row: 2;
-                col: 2;
-                icon: Symbols.home;
-                screen_id: RemoteScreenID.SCREEN_LIST;
-            }
         }
     }
 }
@@ -402,11 +395,13 @@ export component MultiPageRemoteButtonGrid { //automatically populated grid span
 
 export component UINavPanel { //navigation buttons at bottom of screen for for going back/forward screens and to screen list
     HorizontalLayout {
+        spacing: 10px;
+
         RemoteButton {
             height: 40px;
             icon: Symbols.nav-back;
             press_release => {
-                CurrentDisplayedScreen.set(ScreenHistory.go_back());
+                CurrentDisplayedScreen.set_without_history(ScreenHistory.go_back());
             }
         }
 
@@ -414,7 +409,7 @@ export component UINavPanel { //navigation buttons at bottom of screen for for g
             height: 40px;
             icon: Symbols.nav-list;
             press_release => {
-                CurrentDisplayedScreen.set(RemoteScreenID.SCREEN_LIST);
+                CurrentDisplayedScreen.set_without_history(RemoteScreenID.SCREEN_LIST);
             }
         }
 
@@ -422,7 +417,7 @@ export component UINavPanel { //navigation buttons at bottom of screen for for g
             height: 40px;
             icon: Symbols.nav-forward;
             press_release => {
-                CurrentDisplayedScreen.set(ScreenHistory.go_forward());
+                CurrentDisplayedScreen.set_without_history(ScreenHistory.go_forward());
             }
         }
     }

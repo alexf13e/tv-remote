@@ -14,9 +14,9 @@ import { HDDAllButtonsScreen } from "screens/hdd-all-buttons-screen.slint";
 import { YouViewAllButtonsScreen } from "screens/youview-all-buttons-screen.slint";
 import { IRReceiveScreen } from "screens/ir-receive-screen.slint";
 
-import { UINavPanel } from "custom-components.slint";
+import { UINavPanel, RemoteButton } from "custom-components.slint";
 
-export { Logic, ScreenHistory } from "globals.slint"; //export Logic so it can be accessed by c++
+export { Logic, ScreenHistory, CurrentDisplayedScreen } from "globals.slint"; //export Logic so it can be accessed by c++
 
 
 export component AppWindow inherits Window {
@@ -27,6 +27,12 @@ export component AppWindow inherits Window {
 
     VerticalLayout { //container rectangle for padding around edge for all screens
         padding: 10px;
+        spacing: 10px;
+
+        if CurrentDisplayedScreen.id == RemoteScreenID.SAME: RemoteButton {
+            text: "Something went wrong... click to get back to normal";
+            screen_id: RemoteScreenID.SCREEN_LIST;
+        }
 
         if CurrentDisplayedScreen.id == RemoteScreenID.SCREEN_LIST: ScreenListScreen {}
         if CurrentDisplayedScreen.id == RemoteScreenID.TV_CHANNELS: ChannelScreen {}
