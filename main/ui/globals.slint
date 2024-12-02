@@ -34,7 +34,7 @@ export global ScreenHistory { //manage the previously visited screens
         history = {
             capacity: capacity,
             screens: Logic.init_history_screens(capacity), //cannot variably initialise array in slint, have to send to c++
-            front: 0,
+            front: -1,
             length: 0
         };
 
