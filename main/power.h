@@ -7,6 +7,7 @@
 #include <iostream>
 #include <string>
 #include <thread>
+#include <unistd.h>
 
 #include "driver/gpio.h"
 #include "esp_err.h"
@@ -21,6 +22,7 @@
 #include "esp_pm.h"
 
 #include "i2c_init.h"
+#include "sleep_memory.h"
 
 
 namespace Power
@@ -73,6 +75,7 @@ namespace Power
         }
 
         io_expander->digitalWrite(EXIO_DISPLAY, 0); //turn the display backlight off to save power
+        SleepMemory::save(); //save data which should be remembered through sleep
         
         std::this_thread::sleep_for(std::chrono::milliseconds(200)); //seems to prevent TG1WDT_SYS_RST from occurring
 

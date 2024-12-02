@@ -41,13 +41,11 @@ export component IRReceiveScreen {
         RemoteButton {
             height: 40px;
             icon: Symbols.home;
-            screenID: RemoteScreenID.HOME;
+            screen_id: RemoteScreenID.SCREEN_LIST;
 
-            pointer-event(event) => {
-                if (event.kind == PointerEventKind.up && self.held == true) {
-                    Logic.enable_sleep();
-                    Logic.enable_auto_brightness();
-                }
+            press_release => {
+                Logic.enable_sleep();
+                Logic.enable_auto_brightness();
             }
         }
     }

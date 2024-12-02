@@ -21,7 +21,7 @@
 #define REPEAT_SIGNAL_FOR_MS(ACTION_REMOTE_SIGNAL, DURATION) new ActionRepeatIRForMilliseconds(ACTION_REMOTE_SIGNAL, DURATION)
 
 std::unordered_map<std::string, std::vector<ActionBase*>> ALL_ACTION_LISTS;
-bool actionListRunning = false;
+bool action_list_running = false;
 
 
 
@@ -1011,32 +1011,32 @@ void createActionLists()
 }
 
 
-void runActionList(const std::string& actionListID)
+void runActionList(const std::string& action_list_id)
 {
-    if (actionListRunning) return;
+    if (action_list_running) return;
 
-    if (ALL_ACTION_LISTS.find(actionListID) == ALL_ACTION_LISTS.end())
+    if (ALL_ACTION_LISTS.find(action_list_id) == ALL_ACTION_LISTS.end())
     {
-        std::cerr << "No action list exists with id: " << actionListID << std::endl;
+        std::cerr << "No action list exists with id: " << action_list_id << std::endl;
         return;
     }
 
-    actionListRunning = true;
-    const std::vector<ActionBase*>& actionList = ALL_ACTION_LISTS[actionListID];
-    for (int i = 0; i < actionList.size(); i++)
+    action_list_running = true;
+    const std::vector<ActionBase*>& action_list = ALL_ACTION_LISTS[action_list_id];
+    for (int i = 0; i < action_list.size(); i++)
     {
-        actionList[i]->run();
+        action_list[i]->run();
 
         //if two IR signals back to back, need a little time between them
         //if they are the same, the tv won't respond unless a bit more time is given
         //if they are different, then can send them more quickly
         //if the next action is a something else, no need to wait
 
-        if (i + 1 < actionList.size() && actionList[i]->type == REMOTE_SIGNAL && actionList[i + 1]->type == REMOTE_SIGNAL)
+        if (i + 1 < action_list.size() && action_list[i]->type == REMOTE_SIGNAL && action_list[i + 1]->type == REMOTE_SIGNAL)
         {
             //there are two IR signals back to back
 
-            if (actionList[i] == actionList[i + 1])
+            if (action_list[i] == action_list[i + 1])
             {
                 //they are the same signal, wait a bit longer
                 std::this_thread::sleep_for(std::chrono::milliseconds(MS_BETWEEN_SAME_IR_SIGNALS));
@@ -1048,7 +1048,7 @@ void runActionList(const std::string& actionListID)
             }
         }
     }
-    actionListRunning = false;
+    action_list_running = false;
 }
 
 #endif

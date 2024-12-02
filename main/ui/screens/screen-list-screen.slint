@@ -1,0 +1,48 @@
+
+import { RemoteButton } from "../custom-components.slint";
+import { RemoteScreenID } from "../remote-screens-index.slint";
+import { Button } from "std-widgets.slint";
+import { Logic } from "../globals.slint";
+
+export component ScreenListScreen {
+    VerticalLayout { //container for whole screen
+        spacing: 10px;
+
+        RemoteButton {
+            text: "TV Channels";
+            screen_id: RemoteScreenID.TV_CHANNELS;
+        }
+
+        RemoteButton {
+            text: "TV Remote Buttons";
+            screen_id: RemoteScreenID.TV_ALL_BUTTONS;
+        }
+
+        RemoteButton {
+            text: "Speakers All Buttons";
+            screen_id: RemoteScreenID.SPEAKERS_ALL_BUTTONS;
+        }
+
+        RemoteButton {
+            text: "HDD All Buttons";
+            screen_id: RemoteScreenID.HDD_ALL_BUTTONS;
+        }
+
+        RemoteButton {
+            text: "YouView All Buttons";
+            screen_id: RemoteScreenID.YOUVIEW_ALL_BUTTONS;
+        }
+
+        RemoteButton {
+            text: "IR Code Learning";
+            screen_id: RemoteScreenID.IR_RECEIVE;
+        }
+
+        // Button {
+        //     text: "sleep test";
+        //     clicked => {
+        //         Logic.sleep();
+        //     }
+        // }
+    }
+}

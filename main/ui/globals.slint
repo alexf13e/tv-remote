@@ -5,24 +5,100 @@ import { RemoteScreenID } from "remote-screens-index.slint";
 export global Logic { //container for functions to interact with c++ from gui
     pure callback remote_btn_press(string, bool);
     pure callback remote_btn_release();
+
     pure callback sleep();
-    pure callback update_remembered_ui_screen(RemoteScreenID);
-    pure callback disable_sleep();
     pure callback enable_sleep();
-    pure callback disable_auto_brightness();
+    pure callback disable_sleep();
+
     pure callback enable_auto_brightness();
+    pure callback disable_auto_brightness();
+
     pure callback begin_ir_receive();
+
+    pure callback init_history_screens(int) -> [RemoteScreenID];
+    pure callback shift_history_screens([RemoteScreenID]) -> [RemoteScreenID];
+}
+
+
+export struct ScreenHistoryData { //history data separated to a struct to simplify saving in c++ through sleeps
+    capacity: int, //maximum number of screens to remember
+    screens: [RemoteScreenID], //the screens which have been visited recently
+    front: int, //where in the history we are. screens[front] is the currently displayed screen
+    length: int //how many screens are currently remembered
+}
+
+export global ScreenHistory { //manage the previously visited screens
+    private property <int> capacity;
+    out property <ScreenHistoryData> history: {
+        capacity: capacity,
+        screens: Logic.init_history_screens(capacity), //cannot variably initialise array in slint, have to send to c++
+        front: 0,
+        length: 0
+    };
+
+
+    public function restore(history: ScreenHistoryData) {
+        self.history = history;
+        CurrentDisplayedScreen.set_restore(history.screens[history.front]);
+    }
+
+    public function go_back() -> RemoteScreenID { //return the previous screen and move the front of the history back 1 space
+        if (history.front == 0) {
+            //we are as far back as we can go already
+            return RemoteScreenID.SAME;
+        }
+
+        history.front -= 1;
+        return history.screens[history.front];
+    }
+
+    public function go_forward() -> RemoteScreenID { //return the screen after the current one in history, move the front of the history forward 1 space
+        if (history.front == history.length - 1) {
+            //we are as far forward as we can go
+            return RemoteScreenID.SAME;
+        }
+
+        history.front += 1;
+        return history.screens[history.front];
+    }
+
+    public function append_screen(screen_id: RemoteScreenID) {
+        if (history.front == history.capacity - 1) {
+            //we are at capacity of history, need to forget oldest screen
+
+            //shift array elements down by 1 so the first one is forgotten
+            history.screens = Logic.shift_history_screens(history.screens);
+
+            history.front -= 1; //move front backwards by 1 space, as though the last space in the array was empty
+        }
+
+        history.front += 1;
+        history.screens[history.front] = screen_id; //put the new screen in the next empty space
+
+        history.length = history.front + 1; //update length to match where front currently is
+        //e.g. if we had remembered 10 screens (front = 9), then went back by 3 (front = 6), then went to a new screen
+        //(front = 7), the screens after front are no longer part of this branch of history, so length should jump back
+        //from 10 to 8 and going forward can't reach the now invalid screens
+    }
 }
 
 
 export global CurrentDisplayedScreen { //manage the currently displayed screen
     out property <RemoteScreenID> id: RemoteScreenID.TV_CHANNELS;
 
-    callback set(RemoteScreenID);
-    set(newid) => {
-        if (newid != RemoteScreenID.SAME) {
-            id = newid;
-            Logic.update_remembered_ui_screen(newid);
+    //specifically for restoring from sleep, don't want to influence screen history which will also be restored
+    public function set_restore(new_id: RemoteScreenID) {
+        id = new_id;
+    }
+
+    //change the displayed screen and update the history if relevant
+    public function set(new_id: RemoteScreenID) {
+        if (new_id != RemoteScreenID.SAME) {
+            id = new_id;
+
+            if (new_id != RemoteScreenID.SCREEN_LIST) {
+                ScreenHistory.append_screen(new_id);
+            }
         }
     }
 }
@@ -34,4 +110,7 @@ export global Symbols { //general icon symbols which may want to be used on vari
     out property <image> arrow-up:      @image-url("icons/buttons/arrow-up.png");
     out property <image> arrow-down:    @image-url("icons/buttons/arrow-down.png");
     out property <image> home:          @image-url("icons/buttons/home.png");
+    out property <image> nav-back:      @image-url("icons/buttons/nav-back.png");
+    out property <image> nav-forward:   @image-url("icons/buttons/nav-forward.png");
+    out property <image> nav-list:      @image-url("icons/buttons/nav-list.png");
 }
