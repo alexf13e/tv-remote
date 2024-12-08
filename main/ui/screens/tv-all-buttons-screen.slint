@@ -1,23 +1,12 @@
 
-import { MultiPageRemoteButtonGrid, RemoteButton } from "../custom-components.slint";
+import { RemoteButtonDebugGrid } from "../custom-components.slint";
 import { TVRemoteButtonData } from "../custom-component-data.slint";
-import { Symbols } from "../globals.slint";
-import { RemoteScreenID } from "../remote-screens-index.slint";
-
 
 export component TVAllButtonsScreen {
-    VerticalLayout {
-        spacing: 10px;
-
-        MultiPageRemoteButtonGrid {
-            preferred-width: 100%;
-            preferred-height: 100%;
-            
-            num_cols: 4;
-            num_rows: 8;
-            button_width: 80px;
-            button_height: 60px;
-            grid_data: TVRemoteButtonData.data;
-        }
+    RemoteButtonDebugGrid {
+        preferred-width: 100%;
+        preferred-height: 100%;
+        
+        remote_data: TVRemoteButtonData.data;
     }
 }

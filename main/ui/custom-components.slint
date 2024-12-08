@@ -51,7 +51,7 @@ export component RemoteButton { //custom button for sending remote signals and n
                 if event.kind == PointerEventKind.up && held == true {
                     root.press_release();
                     Logic.remote_btn_release();
-                    CurrentDisplayedScreen.set(root.screen_id);
+                    CurrentDisplayedScreen.set_screen(root.screen_id);
                     held = false;
                 }
             }
@@ -389,6 +389,22 @@ export component MultiPageRemoteButtonGrid { //automatically populated grid span
                 }
             }
         }
+    }
+}
+
+
+export component RemoteButtonDebugGrid {
+    in property <[RemoteButtonData]> remote_data;
+        
+    MultiPageRemoteButtonGrid {
+        preferred-width: 100%;
+        preferred-height: 100%;
+        
+        num_cols: 4;
+        num_rows: 8;
+        button_width: 80px;
+        button_height: 60px;
+        grid_data: remote_data;
     }
 }
 
