@@ -30,7 +30,7 @@ export struct ScreenHistoryData { //history data separated to a struct to simpli
 export global ScreenHistory { //manage the previously visited screens
     out property <ScreenHistoryData> history;
 
-    public function init(capacity: int, screen_id: RemoteScreenID) { //use on first power up
+    public function init(capacity: int, initial_screen_id: RemoteScreenID) { //use on first power up
         history = {
             capacity: capacity,
             screens: Logic.init_history_screens(capacity), //cannot variably initialise array in slint, have to send to c++
@@ -38,7 +38,7 @@ export global ScreenHistory { //manage the previously visited screens
             length: 0
         };
 
-        CurrentDisplayedScreen.set(screen-id);
+        CurrentDisplayedScreen.set_screen(initial_screen_id);
     }
 
     public function restore(history: ScreenHistoryData) { //use when restoring from sleep
@@ -103,21 +103,21 @@ export global CurrentDisplayedScreen { //manage the currently displayed screen
     }
 
     //change the displayed screen and update the history if relevant
-    public function set(new_id: RemoteScreenID) {
+    public function set_screen(new_id: RemoteScreenID) {
         if (new_id != RemoteScreenID.SAME) {
             check_special_screen_changes(id, new_id);
 
             id = new_id;
 
             if (new_id != RemoteScreenID.SCREEN_LIST) {
-                ScreenHistory.append_screen(new_id);
+                //ScreenHistory.append_screen(new_id);
             }
         }
     }
 
     //for setting screen without affecting history. used when restoring history and when navigating forward/back
     public function set_without_history(new_id: RemoteScreenID) {
-        if (new_id != RemoteScreenID.SAME) { //shouldn't ever be used with SAME, but best check anyway
+        if (new_id != RemoteScreenID.SAME) {
             check_special_screen_changes(id, new_id);
             id = new_id;
         }
