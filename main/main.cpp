@@ -11,7 +11,6 @@
 #include "sleep_memory.h"
 
 
-
 void create_callbacks(slint::ComponentHandle<AppWindow> main_window)
 {
     main_window->global<Logic>().on_remote_btn_press([&](slint::SharedString action_list_id, bool repeat_on_hold) {
@@ -53,8 +52,7 @@ void create_callbacks(slint::ComponentHandle<AppWindow> main_window)
             new_screens.push_back(RemoteScreenID::SAME);
         }
 
-        auto new_screens_model = std::make_shared<slint::VectorModel<RemoteScreenID>>(new_screens);
-        return new_screens_model;
+        return std::make_shared<slint::VectorModel<RemoteScreenID>>(new_screens);
     });
 
     main_window->global<Logic>().on_shift_history_screens([](std::shared_ptr<slint::Model<RemoteScreenID>> screens) {        

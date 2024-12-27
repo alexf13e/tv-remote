@@ -2,6 +2,13 @@
 import { RemoteScreenID } from "remote-screens-index.slint";
 
 
+export struct ScreenHistoryData { //history data separated to a struct to simplify saving in c++ through sleeps
+    capacity: int, //maximum number of screens to remember
+    screens: [RemoteScreenID], //the screens which have been visited recently
+    front: int, //where in the history we are. screens[front] is the currently displayed screen
+    length: int //how many screens are currently remembered
+}
+
 export global Logic { //container for functions to interact with c++ from gui
     pure callback remote_btn_press(string, bool);
     pure callback remote_btn_release();
@@ -20,17 +27,17 @@ export global Logic { //container for functions to interact with c++ from gui
 }
 
 
-export struct ScreenHistoryData { //history data separated to a struct to simplify saving in c++ through sleeps
-    capacity: int, //maximum number of screens to remember
-    screens: [RemoteScreenID], //the screens which have been visited recently
-    front: int, //where in the history we are. screens[front] is the currently displayed screen
-    length: int //how many screens are currently remembered
-}
+
 
 export global ScreenHistory { //manage the previously visited screens
     out property <ScreenHistoryData> history;
+    property <bool> initialised: false;
 
     public function init(capacity: int, initial_screen_id: RemoteScreenID) { //use on first power up
+        if (capacity < 1) {
+            return;
+        }
+        
         history = {
             capacity: capacity,
             screens: Logic.init_history_screens(capacity), //cannot variably initialise array in slint, have to send to c++
@@ -38,15 +45,25 @@ export global ScreenHistory { //manage the previously visited screens
             length: 0
         };
 
+        initialised = true;
         CurrentDisplayedScreen.set_screen(initial_screen_id);
     }
 
     public function restore(history: ScreenHistoryData) { //use when restoring from sleep
         self.history = history;
+        if (history.capacity < 1) {
+            return;
+        }
+
         CurrentDisplayedScreen.set_without_history(history.screens[history.front]);
+        initialised = true;
     }
 
     public function go_back() -> RemoteScreenID { //return the previous screen and move the front of the history back 1 space
+        if (!initialised) {
+            return RemoteScreenID.SAME;
+        }
+        
         if (history.front == 0) {
             //we are as far back as we can go already
             return RemoteScreenID.SAME;
@@ -57,6 +74,10 @@ export global ScreenHistory { //manage the previously visited screens
     }
 
     public function go_forward() -> RemoteScreenID { //return the screen after the current one in history, move the front of the history forward 1 space
+        if (!initialised) {
+            return RemoteScreenID.SAME;
+        }
+        
         if (history.front == history.length - 1) {
             //we are as far forward as we can go
             return RemoteScreenID.SAME;
@@ -67,6 +88,10 @@ export global ScreenHistory { //manage the previously visited screens
     }
 
     public function append_screen(screen_id: RemoteScreenID) {
+        if (!initialised) {
+            return;
+        }
+
         if (history.front == history.capacity - 1) {
             //we are at capacity of history, need to forget oldest screen
 
@@ -110,7 +135,15 @@ export global CurrentDisplayedScreen { //manage the currently displayed screen
             id = new_id;
 
             if (new_id != RemoteScreenID.SCREEN_LIST) {
-                //ScreenHistory.append_screen(new_id);
+                if (ScreenHistory.history.front == -1) { //this is the initial screen being set
+                    ScreenHistory.append_screen(id);
+                    return;
+                }
+
+                //if the front screen is valid, ensure we don't add it twice in a row in the history
+                if (new_id != ScreenHistory.history.screens[ScreenHistory.history.front]) {
+                    ScreenHistory.append_screen(id);
+                }
             }
         }
     }
