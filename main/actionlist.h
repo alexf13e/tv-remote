@@ -16,7 +16,7 @@
 
 
 //tv won't respond to the same ir signal being sent too closely together, but forcing all signals to be slower is annoying
-#define MS_BETWEEN_DIFFERENT_IR_SIGNALS 100
+#define MS_BETWEEN_DIFFERENT_IR_SIGNALS 200
 #define MS_BETWEEN_SAME_IR_SIGNALS 300
 
 #define WAIT_FOR_MS(DURATION) new ActionDelayMilliseconds(DURATION)
@@ -34,7 +34,7 @@ void createActionLists()
         WAIT_FOR_MS(500),
         RemoteSpeakers::TV_AUDIO,
         REPEAT_SIGNAL_FOR_MS(RemoteTV::POWER, 500),
-        WAIT_FOR_MS(3000),
+        WAIT_FOR_MS(5000),
         RemoteTV::EXIT
     };
 
@@ -1146,6 +1146,7 @@ namespace ActionListRunner
             const std::vector<ActionBase*>& action_list = ALL_ACTION_LISTS[action_list_id];
             for (int i = 0; i < action_list.size(); i++)
             {
+                std::cout << "running action " << i << std::endl;
                 action_list[i]->run();
 
                 //if two IR signals back to back, need a little time between them
@@ -1153,21 +1154,27 @@ namespace ActionListRunner
                 //if they are different, then can send them more quickly
                 //if the next action is a something else, no need to wait
 
-                if (i + 1 < action_list.size() && action_list[i]->type == REMOTE_SIGNAL && action_list[i + 1]->type == REMOTE_SIGNAL)
+                if (i + 1 < action_list.size() && action_list[i]->compare_type(action_list[i + 1]))
                 {
                     //there are two IR signals back to back
 
-                    if (action_list[i] == action_list[i + 1])
+                    if (action_list[i]->compare_content(action_list[i + 1]))
                     {
                         //they are the same signal, wait a bit longer
+                        //std::cout << "waiting longer time between same signal" << std::endl;
                         std::this_thread::sleep_for(std::chrono::milliseconds(MS_BETWEEN_SAME_IR_SIGNALS));
                     }
                     else
                     {
                         //they are different, can wait a bit less
+                        //std::cout << "waiting shorter time between different signal" << std::endl;
                         std::this_thread::sleep_for(std::chrono::milliseconds(MS_BETWEEN_DIFFERENT_IR_SIGNALS));
                     }
                 }
+                // else
+                // {
+                //     std::cout << "not waiting between non ir signals" << std::endl;
+                // }
             }
 
             action_list_running = false;
