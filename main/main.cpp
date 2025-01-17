@@ -14,10 +14,12 @@
 void create_callbacks(slint::ComponentHandle<AppWindow> main_window)
 {
     main_window->global<Logic>().on_remote_btn_press([&](slint::SharedString action_list_id, bool repeat_on_hold) {
+        Power::refresh_sleep_timeout();
         ButtonHoldManager::press(action_list_id.data(), repeat_on_hold);
     });
 
     main_window->global<Logic>().on_remote_btn_release([]() {
+        Power::refresh_sleep_timeout();
         ButtonHoldManager::release();
     });
 
@@ -77,6 +79,7 @@ extern "C" void app_main(void)
     IRTransmitter::init();
     IRReceiver::init();
     ButtonHoldManager::init();
+    ActionListRunner::init();
     createActionLists();
     
     auto main_window = AppWindow::create();

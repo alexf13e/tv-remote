@@ -55,9 +55,14 @@ namespace Power
 
     bool initialised = false;
 
-    void enable_sleep()
+    void refresh_sleep_timeout()
     {
         sleep_timeout_time = std::chrono::system_clock::now() + INACTIVITY_SLEEP_TIMEOUT;
+    }
+
+    void enable_sleep()
+    {
+        refresh_sleep_timeout();
         sleep_enabled = true;
     }
 
@@ -138,7 +143,7 @@ namespace Power
         while (true) {
             if (xQueueReceive(gpio_event_queue, &gpio_num, portMAX_DELAY)) {
                 //there was an event in the queue, act on it
-                sleep_timeout_time = std::chrono::system_clock::now() + INACTIVITY_SLEEP_TIMEOUT;
+                refresh_sleep_timeout();
 
                 //clear the rest of the queue as we don't care how many other times the motion detector switch activated
                 xQueueReset(gpio_event_queue);

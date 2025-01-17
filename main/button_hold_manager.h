@@ -10,7 +10,6 @@
 #include "actionlist.h"
 #include "clicker.h"
 
-
 namespace ButtonHoldManager {
 
     constexpr std::chrono::milliseconds hold_repeat_delay = std::chrono::milliseconds(350);
@@ -38,12 +37,12 @@ namespace ButtonHoldManager {
             {
                 //same button still being held, so repeat
 
-                Clicker::down();
-                runActionList(desired_held_actionList);
+                bool success = ActionListRunner::request_run(desired_held_actionList);
+                if (success) Clicker::down(); //only click for feedback of action actually happening
                 
                 if (repeat_interval > clicker_reclick_delay) std::this_thread::sleep_for(repeat_interval - clicker_reclick_delay);
                 
-                Clicker::up();
+                if (success) Clicker::up();
                 std::this_thread::sleep_for(clicker_reclick_delay);
             }
         }
@@ -63,7 +62,7 @@ namespace ButtonHoldManager {
         initialised = true;
     }
 
-    void press(const std::string& actionList, const bool repeat_on_hold)
+    void press(const std::string& action_list_id, const bool repeat_on_hold)
     {
         if (!initialised)
         {
@@ -71,12 +70,18 @@ namespace ButtonHoldManager {
             return;
         }
 
-        Clicker::down();
-        if (actionList != "")
+        if (action_list_id == "") Clicker::down(); //button is just for doing things with ui, should always click
+        else
         {
-            runActionList(actionList);
+            //button wants to run ir action, only give feedback if it actually runs
+            if (ActionListRunner::request_run(action_list_id))
+            {
+                Clicker::down();
+            }
 
-            if (repeat_on_hold) current_held_actionList = actionList;
+            //even if the initial request couldnt be run, holding the button down should allow for the action to start
+            //running as soon as possible
+            if (repeat_on_hold) current_held_actionList = action_list_id;
         }
     }
 

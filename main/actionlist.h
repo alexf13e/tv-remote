@@ -9,8 +9,10 @@
 #include <vector>
 #include <iostream>
 
-#include "remotes.h"
 #include "action.h"
+#include "power.h"
+#include "remotes.h"
+
 
 
 //tv won't respond to the same ir signal being sent too closely together, but forcing all signals to be slower is annoying
@@ -21,8 +23,6 @@
 #define REPEAT_SIGNAL_FOR_MS(ACTION_REMOTE_SIGNAL, DURATION) new ActionRepeatIRForMilliseconds(ACTION_REMOTE_SIGNAL, DURATION)
 
 std::unordered_map<std::string, std::vector<ActionBase*>> ALL_ACTION_LISTS;
-bool action_list_running = false;
-
 
 
 void createActionLists()
@@ -1118,45 +1118,100 @@ void createActionLists()
     };
 }
 
-
-void runActionList(const std::string& action_list_id)
+namespace ActionListRunner
 {
-    if (action_list_running) return;
+    constexpr std::chrono::milliseconds poll_interval = std::chrono::milliseconds(50);
+    
+    std::string current_action_list_id;
+    std::thread action_worker;
+    bool action_list_running = false;
+    bool initialised = false;
 
-    if (ALL_ACTION_LISTS.find(action_list_id) == ALL_ACTION_LISTS.end())
+    namespace
     {
-        std::cerr << "No action list exists with id: " << action_list_id << std::endl;
-        return;
-    }
-
-    action_list_running = true;
-    const std::vector<ActionBase*>& action_list = ALL_ACTION_LISTS[action_list_id];
-    for (int i = 0; i < action_list.size(); i++)
-    {
-        action_list[i]->run();
-
-        //if two IR signals back to back, need a little time between them
-        //if they are the same, the tv won't respond unless a bit more time is given
-        //if they are different, then can send them more quickly
-        //if the next action is a something else, no need to wait
-
-        if (i + 1 < action_list.size() && action_list[i]->type == REMOTE_SIGNAL && action_list[i + 1]->type == REMOTE_SIGNAL)
+        void run_action_list(const std::string& action_list_id)
         {
-            //there are two IR signals back to back
+            //last resort safety check to prevent trying to run multiple lists at the same time
+            if (action_list_running) return; 
 
-            if (action_list[i] == action_list[i + 1])
+            if (ALL_ACTION_LISTS.find(action_list_id) == ALL_ACTION_LISTS.end())
             {
-                //they are the same signal, wait a bit longer
-                std::this_thread::sleep_for(std::chrono::milliseconds(MS_BETWEEN_SAME_IR_SIGNALS));
+                std::cerr << "No action list exists with id: " << action_list_id << std::endl;
+                return;
             }
-            else
+
+            Power::disable_sleep(); //prevent from sleeping in case of long action lists
+            action_list_running = true;
+
+            const std::vector<ActionBase*>& action_list = ALL_ACTION_LISTS[action_list_id];
+            for (int i = 0; i < action_list.size(); i++)
             {
-                //they are different, can wait a bit less
-                std::this_thread::sleep_for(std::chrono::milliseconds(MS_BETWEEN_DIFFERENT_IR_SIGNALS));
+                action_list[i]->run();
+
+                //if two IR signals back to back, need a little time between them
+                //if they are the same, the tv won't respond unless a bit more time is given
+                //if they are different, then can send them more quickly
+                //if the next action is a something else, no need to wait
+
+                if (i + 1 < action_list.size() && action_list[i]->type == REMOTE_SIGNAL && action_list[i + 1]->type == REMOTE_SIGNAL)
+                {
+                    //there are two IR signals back to back
+
+                    if (action_list[i] == action_list[i + 1])
+                    {
+                        //they are the same signal, wait a bit longer
+                        std::this_thread::sleep_for(std::chrono::milliseconds(MS_BETWEEN_SAME_IR_SIGNALS));
+                    }
+                    else
+                    {
+                        //they are different, can wait a bit less
+                        std::this_thread::sleep_for(std::chrono::milliseconds(MS_BETWEEN_DIFFERENT_IR_SIGNALS));
+                    }
+                }
+            }
+
+            action_list_running = false;
+            Power::enable_sleep();
+        }
+
+        void begin()
+        {
+            while (true)
+            {
+                std::this_thread::sleep_for(poll_interval);
+                if (current_action_list_id == "") continue;
+
+                //an action list has been requested to be run
+                run_action_list(current_action_list_id);
+
+                current_action_list_id = "";
             }
         }
     }
-    action_list_running = false;
+
+    void init()
+    {
+        if (initialised)
+        {
+            std::cerr << "attempted to initialise action list runner more than once" << std::endl;
+            return;
+        }
+
+        current_action_list_id = "";
+        action_worker = std::thread(begin);
+
+        initialised = true;
+    }
+
+    bool request_run(const std::string& action_list_id)
+    {
+        //return if the request was successful so feedback can be given
+
+        if (current_action_list_id != "") return false; //something running, don't accept another request
+
+        current_action_list_id = action_list_id;
+        return true;
+    }
 }
 
 #endif
