@@ -47,7 +47,7 @@ struct ActionDelayMilliseconds : ActionBase
     ActionDelayMilliseconds(uint32_t duration_ms)
     {
         this->type = DELAY;
-        this->duration = std::chrono::milliseconds(duration);
+        this->duration = std::chrono::milliseconds(duration_ms);
     }
 
     void run()
@@ -61,26 +61,20 @@ struct ActionRepeatIRForMilliseconds : ActionBase
     static constexpr std::chrono::milliseconds repeat_interval = std::chrono::milliseconds(100);
 
     ActionRemoteSignal* actionRemoteSignal;
-    uint32_t duration;
+    std::chrono::milliseconds duration;
 
-    ActionRepeatIRForMilliseconds(ActionRemoteSignal* actionRemoteSignal, uint32_t duration)
+    ActionRepeatIRForMilliseconds(ActionRemoteSignal* actionRemoteSignal, uint32_t duration_ms)
     {
         this->type = REPEAT;
         this->actionRemoteSignal = actionRemoteSignal;
-        this->duration = duration;
+        this->duration = std::chrono::milliseconds(duration_ms);
     }
 
     void run()
     {
         std::chrono::system_clock::time_point t0 = std::chrono::system_clock::now();
-        
-        auto repeat_period_ended = [&]() {
-            std::chrono::system_clock::time_point t1 = std::chrono::system_clock::now();
-            auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count();
-            return ms > this->duration;
-        };
 
-        while (!repeat_period_ended())
+        while (std::chrono::system_clock::now() - t0 < duration)
         {
             IRTransmitter::transmit(actionRemoteSignal->signal.words);
             std::this_thread::sleep_for(repeat_interval);
