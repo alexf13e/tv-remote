@@ -1,0 +1,34 @@
+
+import { Button } from "std-widgets.slint";
+
+import { RemoteButton, TVRemoteNavPanel, TVPlaybackControlPanel } from "../../custom-components.slint";
+import { RemoteScreenID } from "../../remote-screens-index.slint";
+
+
+export component NasPhotoVideoScreen {
+    VerticalLayout {
+        spacing: 20px;
+
+        VerticalLayout {
+            alignment: center;
+            
+            TVPlaybackControlPanel {
+                height: 50%;
+            }
+        }
+        
+        VerticalLayout {
+            alignment: end;
+            spacing: 10px;
+
+            RemoteButton {
+                height: 40px;
+                text: "Back to TV Channels";
+                action_list_id: "TV_EXIT";
+                screen_id: RemoteScreenID.TV_CHANNELS;
+            }
+
+            TVRemoteNavPanel {}
+        }
+    }
+}

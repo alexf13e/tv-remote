@@ -1,0 +1,12 @@
+
+import { RemoteButtonDebugGrid } from "../../custom-components.slint";
+import { HDRRemoteButtonData } from "../../custom-component-data.slint";
+
+export component HDRAllButtonsScreen {
+    RemoteButtonDebugGrid {
+        preferred-width: 100%;
+        preferred-height: 100%;
+        
+        remote_data: HDRRemoteButtonData.data;
+    }
+}

@@ -1,0 +1,45 @@
+
+import { Button } from "std-widgets.slint";
+
+import { RemoteButton, TVRemoteNavPanel, TVPlaybackControlPanel, TVNumberGrid, NumberGrid } from "../../custom-components.slint";
+import { RemoteScreenID } from "../../remote-screens-index.slint";
+
+
+export component TVAppsScreen {
+    VerticalLayout {
+        spacing: 20px;
+
+        VerticalLayout {
+            spacing: 20px;
+            vertical-stretch: 1;
+
+            TVPlaybackControlPanel {}
+
+            TVNumberGrid {
+                RemoteButton {
+                    col: 0;
+                    icon: @image-url("../../icons/channels/Freeview.png");
+                    action_list_id: "FREEVIEW_PLAY";
+                }
+
+                RemoteButton {
+                    col: 2;
+                    text: "Apps";
+                    action_list_id: "TV_APPS";
+                }
+            }
+        }
+
+        RemoteButton {
+            height: 40px;
+            text: "Back to TV Channels";
+            action_list_id: "TV_EXIT";
+            screen_id: RemoteScreenID.TV_CHANNELS;
+        }
+        
+        VerticalLayout {
+            alignment: end;
+            TVRemoteNavPanel {}
+        }
+    }
+}

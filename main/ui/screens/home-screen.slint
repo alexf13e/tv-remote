@@ -1,0 +1,24 @@
+
+import { RemoteButton } from "../custom-components.slint";
+import { RemoteScreenID } from "../remote-screens-index.slint";
+
+export component HomeScreen {
+    VerticalLayout {
+        spacing: 10px;
+
+
+        RemoteButton {
+            text: "TV";
+            action_list_id: "STARTUP_TV";
+            screen_id: RemoteScreenID.TV_CHANNELS;
+        }
+
+        RemoteButton {
+            text: "Radio";
+        }
+
+        RemoteButton {
+            text: "Speaker Bluetooth";
+        }
+    }
+}

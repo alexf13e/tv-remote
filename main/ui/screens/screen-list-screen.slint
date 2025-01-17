@@ -1,16 +1,15 @@
 
 import { RemoteButton } from "../custom-components.slint";
 import { RemoteScreenID } from "../remote-screens-index.slint";
-import { Button } from "std-widgets.slint";
-import { Logic } from "../globals.slint";
 
 export component ScreenListScreen {
     VerticalLayout { //container for whole screen
         spacing: 10px;
+        alignment: stretch;
 
         RemoteButton {
-            text: "TV Channels";
-            screen_id: RemoteScreenID.TV_CHANNELS;
+            text: "Home";
+            screen_id: RemoteScreenID.HOME;
         }
 
         RemoteButton {
@@ -19,13 +18,28 @@ export component ScreenListScreen {
         }
 
         RemoteButton {
+            text: "TV Channels";
+            screen_id: RemoteScreenID.TV_CHANNELS;
+        }
+
+        RemoteButton {
+            text: "TV Apps";
+            screen_id: RemoteScreenID.TV_APPS;
+        }
+
+        RemoteButton {
+            text: "NAS/Photo/Video";
+            screen_id: RemoteScreenID.NAS_PHOTO_VIDEO;
+        }
+
+        RemoteButton {
             text: "Speakers All Buttons";
             screen_id: RemoteScreenID.SPEAKERS_ALL_BUTTONS;
         }
 
         RemoteButton {
-            text: "HDD All Buttons";
-            screen_id: RemoteScreenID.HDD_ALL_BUTTONS;
+            text: "HDR All Buttons";
+            screen_id: RemoteScreenID.HDR_ALL_BUTTONS;
         }
 
         RemoteButton {

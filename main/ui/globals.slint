@@ -2,13 +2,6 @@
 import { RemoteScreenID } from "remote-screens-index.slint";
 
 
-export struct ScreenHistoryData { //history data separated to a struct to simplify saving in c++ through sleeps
-    capacity: int, //maximum number of screens to remember
-    screens: [RemoteScreenID], //the screens which have been visited recently
-    front: int, //where in the history we are. screens[front] is the currently displayed screen
-    length: int //how many screens are currently remembered
-}
-
 export global Logic { //container for functions to interact with c++ from gui
     pure callback remote_btn_press(string, bool);
     pure callback remote_btn_release();
@@ -27,7 +20,12 @@ export global Logic { //container for functions to interact with c++ from gui
 }
 
 
-
+export struct ScreenHistoryData { //history data separated to a struct to simplify saving in c++ through sleeps
+    capacity: int, //maximum number of screens to remember
+    screens: [RemoteScreenID], //the screens which have been visited recently
+    front: int, //where in the history we are. screens[front] is the currently displayed screen
+    length: int //how many screens are currently remembered
+}
 
 export global ScreenHistory { //manage the previously visited screens
     out property <ScreenHistoryData> history;
@@ -69,7 +67,13 @@ export global ScreenHistory { //manage the previously visited screens
             return RemoteScreenID.SAME;
         }
 
-        history.front -= 1;
+        if (history.screens[history.front] != RemoteScreenID.SCREEN_LIST) {
+            //if the current screen IS the screen list, then we want to just go back to the screen we were on before
+            //opening the screen list. therefore the front should only be moved back when NOT on the screen list
+            
+            history.front -= 1;
+        }
+        
         return history.screens[history.front];
     }
 
@@ -108,6 +112,14 @@ export global ScreenHistory { //manage the previously visited screens
         //e.g. if we had remembered 10 screens (front = 9), then went back by 3 (front = 6), then went to a new screen
         //(front = 7), the screens after front are no longer part of this branch of history, so length should jump back
         //from 10 to 8 and going forward can't reach the now invalid screens
+    }
+
+    pure public function get_back_possible() -> bool {
+        return history.front > 0;
+    }
+
+    pure public function get_forward_possible() -> bool {
+        return history.front < history.length - 1;
     }
 }
 
@@ -163,8 +175,26 @@ export global Symbols { //general icon symbols which may want to be used on vari
     out property <image> arrow-right:   @image-url("icons/buttons/arrow-right.png");
     out property <image> arrow-up:      @image-url("icons/buttons/arrow-up.png");
     out property <image> arrow-down:    @image-url("icons/buttons/arrow-down.png");
+
     out property <image> home:          @image-url("icons/buttons/home.png");
     out property <image> nav-back:      @image-url("icons/buttons/nav-back.png");
     out property <image> nav-forward:   @image-url("icons/buttons/nav-forward.png");
     out property <image> nav-list:      @image-url("icons/buttons/nav-list.png");
+
+    out property <image> plus:          @image-url("icons/buttons/plus.png");
+    out property <image> minus:         @image-url("icons/buttons/minus.png");
+    out property <image> cross:         @image-url("icons/buttons/cross.png");
+
+    out property <image> vol-plus:      @image-url("icons/buttons/volume-plus.png");
+    out property <image> vol-minus:     @image-url("icons/buttons/volume-minus.png");
+    out property <image> vol-mute:      @image-url("icons/buttons/volume-mute.png");
+
+    out property <image> play:          @image-url("icons/buttons/play.png");
+    out property <image> pause:         @image-url("icons/buttons/pause.png");
+    out property <image> stop:          @image-url("icons/buttons/stop.png");
+    out property <image> rewind:        @image-url("icons/buttons/rewind.png");
+    out property <image> fast-forward:  @image-url("icons/buttons/fast-forward.png");
+    out property <image> skip-back:     @image-url("icons/buttons/skip-back.png");
+    out property <image> skip-forward:  @image-url("icons/buttons/skip-forward.png");
+
 }
