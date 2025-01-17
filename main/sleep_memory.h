@@ -48,7 +48,7 @@ namespace SleepMemory {
         if (esp_sleep_get_wakeup_cause() != ESP_SLEEP_WAKEUP_EXT0)
         {
             //didn't wake from sleep, set initial screen
-            (*p_main_window)->global<ScreenHistory>().invoke_init(SCREEN_HISTORY_SIZE, RemoteScreenID::TVCHANNELS);
+            (*p_main_window)->global<ScreenHistory>().invoke_init(SCREEN_HISTORY_SIZE, DEFAULT_SCREEN);
             std::cout << "screen history created new" << std::endl;
         }
         else
