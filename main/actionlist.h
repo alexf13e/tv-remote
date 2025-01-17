@@ -27,6 +27,31 @@ bool action_list_running = false;
 
 void createActionLists()
 {
+    //////////////////////////////////////// GENERAL MACROS ////////////////////////////////////////
+
+    ALL_ACTION_LISTS["STARTUP_TV"] = {
+        RemoteSpeakers::POWER,
+        WAIT_FOR_MS(500),
+        RemoteSpeakers::TV_AUDIO,
+        REPEAT_SIGNAL_FOR_MS(RemoteTV::POWER, 500),
+        WAIT_FOR_MS(3000),
+        RemoteTV::EXIT
+    };
+
+    ALL_ACTION_LISTS["SHUTDOWN_TV"] = {
+        RemoteTV::POWER,
+        RemoteSpeakers::POWER
+    };
+
+    ALL_ACTION_LISTS["FREEVIEW_PLAY"] = {
+        RemoteTV::FREEVIEW_PLAY,
+        WAIT_FOR_MS(1000),
+        RemoteTV::NAV_RIGHT,
+        RemoteTV::OK
+    };
+
+
+
     //////////////////////////////////////// CHANNELS ////////////////////////////////////////
 
     ALL_ACTION_LISTS["BBC_ONE_HD"] = {
@@ -330,12 +355,36 @@ void createActionLists()
         REPEAT_SIGNAL_FOR_MS(RemoteTV::POWER, 500)
     };
 
+    ALL_ACTION_LISTS["TV_PICTURE"] = {
+        RemoteTV::PICTURE
+    };
+
     ALL_ACTION_LISTS["TV_INPUT_TV"] = {
         RemoteTV::INPUT_TV
     };
 
     ALL_ACTION_LISTS["TV_INPUT_AV"] = {
         RemoteTV::INPUT_AV
+    };
+
+    ALL_ACTION_LISTS["TV_MENU"] = {
+        RemoteTV::MENU
+    };
+
+    ALL_ACTION_LISTS["TV_TEXT"] = {
+        RemoteTV::TEXT
+    };
+
+    ALL_ACTION_LISTS["TV_STTL"] = {
+        RemoteTV::STTL
+    };
+
+    ALL_ACTION_LISTS["TV_APPS"] = {
+        RemoteTV::APPS
+    };
+
+    ALL_ACTION_LISTS["TV_NETFLIX"] = {
+        RemoteTV::NETFLIX
     };
 
     ALL_ACTION_LISTS["TV_HOME"] = {
@@ -346,20 +395,24 @@ void createActionLists()
         RemoteTV::GUIDE
     };
 
-    ALL_ACTION_LISTS["TV_OK"] = {
-        RemoteTV::OK
-    };
-
-    ALL_ACTION_LISTS["TV_RETURN"] = {
-        RemoteTV::RETURN
+    ALL_ACTION_LISTS["TV_INFO"] = {
+        RemoteTV::INFO
     };
 
     ALL_ACTION_LISTS["TV_EXIT"] = {
         RemoteTV::EXIT
     };
 
-    ALL_ACTION_LISTS["TV_INFO"] = {
-        RemoteTV::INFO
+    ALL_ACTION_LISTS["TV_OK"] = {
+        RemoteTV::OK
+    };
+
+    ALL_ACTION_LISTS["TV_OPTION"] = {
+        RemoteTV::OPTION
+    };
+
+    ALL_ACTION_LISTS["TV_RETURN"] = {
+        RemoteTV::RETURN
     };
 
     ALL_ACTION_LISTS["TV_NAV_LEFT"] = {
@@ -392,6 +445,18 @@ void createActionLists()
 
     ALL_ACTION_LISTS["TV_BLUE"] = {
         RemoteTV::BLUE
+    };
+
+    ALL_ACTION_LISTS["TV_VOL_UP"] = {
+        RemoteTV::VOL_UP
+    };
+
+    ALL_ACTION_LISTS["TV_VOL_DOWN"] = {
+        RemoteTV::VOL_DOWN
+    };
+
+    ALL_ACTION_LISTS["TV_VOL_MUTE"] = {
+        RemoteTV::VOL_MUTE
     };
 
     ALL_ACTION_LISTS["TV_CHAN_UP"] = {
@@ -442,6 +507,49 @@ void createActionLists()
         RemoteTV::KEY_9
     };
 
+    ALL_ACTION_LISTS["TV_HELP"] = {
+        RemoteTV::HELP
+    };
+
+    ALL_ACTION_LISTS["TV_FREEVIEW_PLAY"] = {
+        RemoteTV::FREEVIEW_PLAY
+    };
+
+    ALL_ACTION_LISTS["TV_REWIND"] = {
+        RemoteTV::REWIND
+    };
+
+    ALL_ACTION_LISTS["TV_PLAY"] = {
+        RemoteTV::PLAY
+    };
+
+    ALL_ACTION_LISTS["TV_FAST_FORWARD"] = {
+        RemoteTV::FAST_FORWARD
+    };
+
+    ALL_ACTION_LISTS["TV_SKIP_BACK"] = {
+        RemoteTV::SKIP_BACK
+    };
+
+    ALL_ACTION_LISTS["TV_PAUSE"] = {
+        RemoteTV::PAUSE
+    };
+
+    ALL_ACTION_LISTS["TV_SKIP_FORWARD"] = {
+        RemoteTV::SKIP_FORWARD
+    };
+
+    ALL_ACTION_LISTS["TV_MY_APP"] = {
+        RemoteTV::MY_APP
+    };
+
+    ALL_ACTION_LISTS["TV_STOP"] = {
+        RemoteTV::STOP
+    };
+
+    ALL_ACTION_LISTS["TV_RECORD"] = {
+        RemoteTV::RECORD
+    };
 
     //////////////////////////////////////// SPEAKERS REMOTE ////////////////////////////////////////
 
@@ -453,11 +561,11 @@ void createActionLists()
         RemoteSpeakers::SLEEP
     };
 
-    ALL_ACTION_LISTS["SPEAKERS_CBL_SAT"] = {
+    ALL_ACTION_LISTS["SPEAKERS_CBL_SAT"] = { //YouView
         RemoteSpeakers::CBL_SAT
     };
 
-    ALL_ACTION_LISTS["SPEAKERS_MEDIA_PLAYER"] = {
+    ALL_ACTION_LISTS["SPEAKERS_MEDIA_PLAYER"] = { //HDR
         RemoteSpeakers::MEDIA_PLAYER
     };
 
@@ -481,11 +589,11 @@ void createActionLists()
         RemoteSpeakers::PHONO
     };
 
-    ALL_ACTION_LISTS["SPEAKERS_TV_AUDIO"] = {
+    ALL_ACTION_LISTS["SPEAKERS_TV_AUDIO"] = { //TV
         RemoteSpeakers::TV_AUDIO
     };
 
-    ALL_ACTION_LISTS["SPEAKERS_TUNER"] = {
+    ALL_ACTION_LISTS["SPEAKERS_TUNER"] = { //Radio
         RemoteSpeakers::TUNER
     };
 
@@ -610,218 +718,218 @@ void createActionLists()
     };
 
 
-    //////////////////////////////////////// HDD REMOTE ////////////////////////////////////////
+    //////////////////////////////////////// HDR REMOTE ////////////////////////////////////////
 
-    ALL_ACTION_LISTS["HDD_POWER"] = {
-        RemoteHDD::POWER
+    ALL_ACTION_LISTS["HDR_POWER"] = {
+        RemoteHDR::POWER
     };
 
-    ALL_ACTION_LISTS["HDD_DRIVE_SELECT"] = {
-        RemoteHDD::DRIVE_SELECT
+    ALL_ACTION_LISTS["HDR_DRIVE_SELECT"] = {
+        RemoteHDR::DRIVE_SELECT
     };
 
-    ALL_ACTION_LISTS["HDD_KEY_0"] = {
-        RemoteHDD::KEY_0
+    ALL_ACTION_LISTS["HDR_KEY_0"] = {
+        RemoteHDR::KEY_0
     };
 
-    ALL_ACTION_LISTS["HDD_KEY_1"] = {
-        RemoteHDD::KEY_1
+    ALL_ACTION_LISTS["HDR_KEY_1"] = {
+        RemoteHDR::KEY_1
     };
 
-    ALL_ACTION_LISTS["HDD_KEY_2"] = {
-        RemoteHDD::KEY_2
+    ALL_ACTION_LISTS["HDR_KEY_2"] = {
+        RemoteHDR::KEY_2
     };
 
-    ALL_ACTION_LISTS["HDD_KEY_3"] = {
-        RemoteHDD::KEY_3
+    ALL_ACTION_LISTS["HDR_KEY_3"] = {
+        RemoteHDR::KEY_3
     };
 
-    ALL_ACTION_LISTS["HDD_KEY_4"] = {
-        RemoteHDD::KEY_4
+    ALL_ACTION_LISTS["HDR_KEY_4"] = {
+        RemoteHDR::KEY_4
     };
 
-    ALL_ACTION_LISTS["HDD_KEY_5"] = {
-        RemoteHDD::KEY_5
+    ALL_ACTION_LISTS["HDR_KEY_5"] = {
+        RemoteHDR::KEY_5
     };
 
-    ALL_ACTION_LISTS["HDD_KEY_6"] = {
-        RemoteHDD::KEY_6
+    ALL_ACTION_LISTS["HDR_KEY_6"] = {
+        RemoteHDR::KEY_6
     };
 
-    ALL_ACTION_LISTS["HDD_KEY_7"] = {
-        RemoteHDD::KEY_7
+    ALL_ACTION_LISTS["HDR_KEY_7"] = {
+        RemoteHDR::KEY_7
     };
 
-    ALL_ACTION_LISTS["HDD_KEY_8"] = {
-        RemoteHDD::KEY_8
+    ALL_ACTION_LISTS["HDR_KEY_8"] = {
+        RemoteHDR::KEY_8
     };
 
-    ALL_ACTION_LISTS["HDD_KEY_9"] = {
-        RemoteHDD::KEY_9
+    ALL_ACTION_LISTS["HDR_KEY_9"] = {
+        RemoteHDR::KEY_9
     };
 
-    ALL_ACTION_LISTS["HDD_LAST_VIEW"] = {
-        RemoteHDD::LAST_VIEW
+    ALL_ACTION_LISTS["HDR_LAST_VIEW"] = {
+        RemoteHDR::LAST_VIEW
     };
 
-    ALL_ACTION_LISTS["HDD_NET"] = {
-        RemoteHDD::NET
+    ALL_ACTION_LISTS["HDR_NET"] = {
+        RemoteHDR::NET
     };
 
-    ALL_ACTION_LISTS["HDD_CHAN_UP"] = {
-        RemoteHDD::CHAN_UP
+    ALL_ACTION_LISTS["HDR_CHAN_UP"] = {
+        RemoteHDR::CHAN_UP
     };
 
-    ALL_ACTION_LISTS["HDD_CHAN_DOWN"] = {
-        RemoteHDD::CHAN_DOWN
+    ALL_ACTION_LISTS["HDR_CHAN_DOWN"] = {
+        RemoteHDR::CHAN_DOWN
     };
 
-    ALL_ACTION_LISTS["HDD_FREEVIEW_PLAY"] = {
-        RemoteHDD::FREEVIEW_PLAY
+    ALL_ACTION_LISTS["HDR_FREEVIEW_PLAY"] = {
+        RemoteHDR::FREEVIEW_PLAY
     };
 
-    ALL_ACTION_LISTS["HDD_NETFLIX"] = {
-        RemoteHDD::NETFLIX
+    ALL_ACTION_LISTS["HDR_NETFLIX"] = {
+        RemoteHDR::NETFLIX
     };
 
-    ALL_ACTION_LISTS["HDD_SKIP_BACK"] = {
-        RemoteHDD::SKIP_BACK
+    ALL_ACTION_LISTS["HDR_SKIP_BACK"] = {
+        RemoteHDR::SKIP_BACK
     };
 
-    ALL_ACTION_LISTS["HDD_SKIP_FORWARD"] = {
-        RemoteHDD::SKIP_FORWARD
+    ALL_ACTION_LISTS["HDR_SKIP_FORWARD"] = {
+        RemoteHDR::SKIP_FORWARD
     };
 
-    ALL_ACTION_LISTS["HDD_REWIND"] = {
-        RemoteHDD::REWIND
+    ALL_ACTION_LISTS["HDR_REWIND"] = {
+        RemoteHDR::REWIND
     };
 
-    ALL_ACTION_LISTS["HDD_FAST_FORWARD"] = {
-        RemoteHDD::FAST_FORWARD
+    ALL_ACTION_LISTS["HDR_FAST_FORWARD"] = {
+        RemoteHDR::FAST_FORWARD
     };
 
-    ALL_ACTION_LISTS["HDD_STOP"] = {
-        RemoteHDD::STOP
+    ALL_ACTION_LISTS["HDR_STOP"] = {
+        RemoteHDR::STOP
     };
 
-    ALL_ACTION_LISTS["HDD_PAUSE"] = {
-        RemoteHDD::PAUSE
+    ALL_ACTION_LISTS["HDR_PAUSE"] = {
+        RemoteHDR::PAUSE
     };
 
-    ALL_ACTION_LISTS["HDD_PLAY"] = {
-        RemoteHDD::PLAY
+    ALL_ACTION_LISTS["HDR_PLAY"] = {
+        RemoteHDR::PLAY
     };
 
-    ALL_ACTION_LISTS["HDD_INFO"] = {
-        RemoteHDD::INFO
+    ALL_ACTION_LISTS["HDR_INFO"] = {
+        RemoteHDR::INFO
     };
 
-    ALL_ACTION_LISTS["HDD_EXIT"] = {
-        RemoteHDD::EXIT
+    ALL_ACTION_LISTS["HDR_EXIT"] = {
+        RemoteHDR::EXIT
     };
 
-    ALL_ACTION_LISTS["HDD_OPTION"] = {
-        RemoteHDD::OPTION
+    ALL_ACTION_LISTS["HDR_OPTION"] = {
+        RemoteHDR::OPTION
     };
 
-    ALL_ACTION_LISTS["HDD_RETURN"] = {
-        RemoteHDD::RETURN
+    ALL_ACTION_LISTS["HDR_RETURN"] = {
+        RemoteHDR::RETURN
     };
 
-    ALL_ACTION_LISTS["HDD_VIDEO_MENU"] = {
-        RemoteHDD::VIDEO_MENU
+    ALL_ACTION_LISTS["HDR_VIDEO_MENU"] = {
+        RemoteHDR::VIDEO_MENU
     };
 
-    ALL_ACTION_LISTS["HDD_GUIDE"] = {
-        RemoteHDD::GUIDE
+    ALL_ACTION_LISTS["HDR_GUIDE"] = {
+        RemoteHDR::GUIDE
     };
 
-    ALL_ACTION_LISTS["HDD_FUNCITON_MENU"] = {
-        RemoteHDD::FUNCTION_MENU
+    ALL_ACTION_LISTS["HDR_FUNCITON_MENU"] = {
+        RemoteHDR::FUNCTION_MENU
     };
 
-    ALL_ACTION_LISTS["HDD_NAV_UP"] = {
-        RemoteHDD::NAV_UP
+    ALL_ACTION_LISTS["HDR_NAV_UP"] = {
+        RemoteHDR::NAV_UP
     };
 
-    ALL_ACTION_LISTS["HDD_NAV_DOWN"] = {
-        RemoteHDD::NAV_DOWN
+    ALL_ACTION_LISTS["HDR_NAV_DOWN"] = {
+        RemoteHDR::NAV_DOWN
     };
 
-    ALL_ACTION_LISTS["HDD_NAV_LEFT"] = {
-        RemoteHDD::NAV_LEFT
+    ALL_ACTION_LISTS["HDR_NAV_LEFT"] = {
+        RemoteHDR::NAV_LEFT
     };
 
-    ALL_ACTION_LISTS["HDD_NAV_RIGHT"] = {
-        RemoteHDD::NAV_RIGHT
+    ALL_ACTION_LISTS["HDR_NAV_RIGHT"] = {
+        RemoteHDR::NAV_RIGHT
     };
 
-    ALL_ACTION_LISTS["HDD_OK"] = {
-        RemoteHDD::OK
+    ALL_ACTION_LISTS["HDR_OK"] = {
+        RemoteHDR::OK
     };
 
-    ALL_ACTION_LISTS["HDD_RED"] = {
-        RemoteHDD::RED
+    ALL_ACTION_LISTS["HDR_RED"] = {
+        RemoteHDR::RED
     };
 
-    ALL_ACTION_LISTS["HDD_GREE"] = {
-        RemoteHDD::GREEN
+    ALL_ACTION_LISTS["HDR_GREE"] = {
+        RemoteHDR::GREEN
     };
 
-    ALL_ACTION_LISTS["HDD_YELLO"] = {
-        RemoteHDD::YELLOW
+    ALL_ACTION_LISTS["HDR_YELLO"] = {
+        RemoteHDR::YELLOW
     };
 
-    ALL_ACTION_LISTS["HDD_BLUE"] = {
-        RemoteHDD::BLUE
+    ALL_ACTION_LISTS["HDR_BLUE"] = {
+        RemoteHDR::BLUE
     };
 
-    ALL_ACTION_LISTS["HDD_REC"] = {
-        RemoteHDD::REC
+    ALL_ACTION_LISTS["HDR_RECORD"] = {
+        RemoteHDR::RECORD
     };
 
-    ALL_ACTION_LISTS["HDD_REC_MODE"] = {
-        RemoteHDD::REC_MODE
+    ALL_ACTION_LISTS["HDR_REC_MODE"] = {
+        RemoteHDR::REC_MODE
     };
 
-    ALL_ACTION_LISTS["HDD_TEXT"] = {
-        RemoteHDD::TEXT
+    ALL_ACTION_LISTS["HDR_TEXT"] = {
+        RemoteHDR::TEXT
     };
 
-    ALL_ACTION_LISTS["HDD_SUBTITLE"] = {
-        RemoteHDD::SUBTITLE
+    ALL_ACTION_LISTS["HDR_SUBTITLE"] = {
+        RemoteHDR::SUBTITLE
     };
 
-    ALL_ACTION_LISTS["HDD_PROG_CHECK"] = {
-        RemoteHDD::PROG_CHECK
+    ALL_ACTION_LISTS["HDR_PROG_CHECK"] = {
+        RemoteHDR::PROG_CHECK
     };
 
-    ALL_ACTION_LISTS["HDD_CHAPTER"] = {
-        RemoteHDD::CHAPTER
+    ALL_ACTION_LISTS["HDR_CHAPTER"] = {
+        RemoteHDR::CHAPTER
     };
 
-    ALL_ACTION_LISTS["HDD_DELETE"] = {
-        RemoteHDD::DELETE
+    ALL_ACTION_LISTS["HDR_DELETE"] = {
+        RemoteHDR::DELETE
     };
 
-    ALL_ACTION_LISTS["HDD_RADIO_TV"] = {
-        RemoteHDD::RADIO_TV
+    ALL_ACTION_LISTS["HDR_RADIO_TV"] = {
+        RemoteHDR::RADIO_TV
     };
 
-    ALL_ACTION_LISTS["HDD_AD"] = {
-        RemoteHDD::AD
+    ALL_ACTION_LISTS["HDR_AD"] = {
+        RemoteHDR::AD
     };
 
-    ALL_ACTION_LISTS["HDD_TIME_SLIP"] = {
-        RemoteHDD::TIME_SLIP
+    ALL_ACTION_LISTS["HDR_TIME_SLIP"] = {
+        RemoteHDR::TIME_SLIP
     };
 
-    ALL_ACTION_LISTS["HDD_MANUAL_SKIP_MINUS_10"] = {
-        RemoteHDD::MANUAL_SKIP_MINUS_10
+    ALL_ACTION_LISTS["HDR_MANUAL_SKIP_MINUS_10"] = {
+        RemoteHDR::MANUAL_SKIP_MINUS_10
     };
 
-    ALL_ACTION_LISTS["HDD_MANUAL_SKIP_PLUS_60"] = {
-        RemoteHDD::MANUAL_SKIP_PLUS_60
+    ALL_ACTION_LISTS["HDR_MANUAL_SKIP_PLUS_60"] = {
+        RemoteHDR::MANUAL_SKIP_PLUS_60
     };
 
 
