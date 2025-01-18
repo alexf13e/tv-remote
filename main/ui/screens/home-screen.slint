@@ -3,21 +3,26 @@ import { RemoteButton } from "../custom-components.slint";
 import { RemoteScreenID } from "../remote-screens-index.slint";
 
 export component HomeScreen {
+    property <length> btn_height: 40px;
+    
     VerticalLayout {
         spacing: 10px;
-
+        alignment: start;
 
         RemoteButton {
+            height: btn_height;
             text: "TV";
             action_list_id: "STARTUP_TV";
             screen_id: RemoteScreenID.TV_CHANNELS;
         }
 
         RemoteButton {
+            height: btn_height;
             text: "Radio";
         }
 
         RemoteButton {
+            height: btn_height;
             text: "Speaker Bluetooth";
         }
     }

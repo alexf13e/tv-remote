@@ -1,62 +1,95 @@
 
 import { RemoteButton } from "../custom-components.slint";
 import { RemoteScreenID } from "../remote-screens-index.slint";
+import { TabWidget, GroupBox } from "std-widgets.slint";
+import { RemoteButtonData, ScreenListButtonData } from "../custom-component-data.slint";
+import { ScreenListTabID } from "../globals.slint"; //tab id stored globally to be kept when changing screens
+
 
 export component ScreenListScreen {
-    VerticalLayout { //container for whole screen
+    
+    property <[[RemoteButtonData]]> all_tab_data: [
+        ScreenListButtonData.data_general,
+        ScreenListButtonData.data_tv,
+        ScreenListButtonData.data_speakers,
+        ScreenListButtonData.data_hdr,
+        ScreenListButtonData.data_youview
+    ];
+
+    VerticalLayout {
         spacing: 10px;
-        alignment: stretch;
+        alignment: center;
 
-        RemoteButton {
-            text: "Home";
-            screen_id: RemoteScreenID.HOME;
+        for datum in all_tab_data[ScreenListTabID.value]:
+            RemoteButton {
+                height: 40px;
+                text: datum.text;
+                screen_id: datum.screen_id;
+            }
+    }
+
+    VerticalLayout {
+        alignment: end;
+        spacing: 10px;
+
+        Text {
+            text: "Screen groups";
+            horizontal-alignment: center;
+            font-size: 14px;
         }
 
-        RemoteButton {
-            text: "TV All Buttons";
-            screen_id: RemoteScreenID.TV_ALL_BUTTONS;
-        }
+        HorizontalLayout {
+            spacing: 10px;
 
-        RemoteButton {
-            text: "TV Channels";
-            screen_id: RemoteScreenID.TV_CHANNELS;
-        }
+            RemoteButton {
+                height: 40px;
+                text: "General";
+                enabled: ScreenListTabID.value != 0;
+                
+                press_release => {
+                    ScreenListTabID.value = 0;
+                }
+            }
 
-        RemoteButton {
-            text: "TV Apps";
-            screen_id: RemoteScreenID.TV_APPS;
-        }
+            RemoteButton {
+                height: 40px;
+                text: "TV";
+                enabled: ScreenListTabID.value != 1;
+                
+                press_release => {
+                    ScreenListTabID.value = 1;
+                }
+            }
 
-        RemoteButton {
-            text: "NAS/Photo/Video";
-            screen_id: RemoteScreenID.NAS_PHOTO_VIDEO;
-        }
+            RemoteButton {
+                height: 40px;
+                text: "Speakers";
+                enabled: ScreenListTabID.value != 2;
+                
+                press_release => {
+                    ScreenListTabID.value = 2;
+                }
+            }
 
-        RemoteButton {
-            text: "Speakers All Buttons";
-            screen_id: RemoteScreenID.SPEAKERS_ALL_BUTTONS;
-        }
+            RemoteButton {
+                height: 40px;
+                text: "HDR";
+                enabled: ScreenListTabID.value != 3;
+                
+                press_release => {
+                    ScreenListTabID.value = 3;
+                }
+            }
 
-        RemoteButton {
-            text: "HDR All Buttons";
-            screen_id: RemoteScreenID.HDR_ALL_BUTTONS;
+            RemoteButton {
+                height: 40px;
+                text: "YouView";
+                enabled: ScreenListTabID.value != 4;
+                
+                press_release => {
+                    ScreenListTabID.value = 4;
+                }
+            }
         }
-
-        RemoteButton {
-            text: "YouView All Buttons";
-            screen_id: RemoteScreenID.YOUVIEW_ALL_BUTTONS;
-        }
-
-        RemoteButton {
-            text: "IR Code Learning";
-            screen_id: RemoteScreenID.IR_RECEIVE;
-        }
-
-        // Button {
-        //     text: "sleep test";
-        //     clicked => {
-        //         Logic.sleep();
-        //     }
-        // }
     }
 }

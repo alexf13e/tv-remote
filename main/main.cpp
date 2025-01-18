@@ -65,12 +65,6 @@ void create_callbacks(slint::ComponentHandle<AppWindow> main_window)
     });
 }
 
-void manage_sleep_wakeup(slint::ComponentHandle<AppWindow>* p_main_window)
-{
-    SleepMemory::p_main_window = p_main_window; //pass pointer to main window so sleep memory can access it when saving
-    SleepMemory::restore();
-}
-
 extern "C" void app_main(void)
 {
     Power::init();
@@ -85,7 +79,11 @@ extern "C" void app_main(void)
     auto main_window = AppWindow::create();
 
     create_callbacks(main_window);
-    manage_sleep_wakeup(&main_window);
+
+    SleepMemory::p_main_window = &main_window; //pass pointer to main window so sleep memory can access it when saving
+    SleepMemory::restore();
+
+    ActionListRunner::p_main_window = &main_window; //pass to allow disabling buttons
     
     main_window->run();
 }

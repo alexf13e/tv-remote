@@ -6,30 +6,28 @@ import { Button } from "std-widgets.slint";
 
 export component IRReceiveScreen {
     VerticalLayout {
-        VerticalLayout {
-            alignment: start;
-            spacing: 10px;
+        alignment: start;
+        spacing: 10px;
 
-            Text {
-                font-size: 20px;
-                color: white;
-                text: "Learn Mode";
-            }
-    
-            Text {
-                font-size: 16px;
-                text: "Connect usb to pc and begin monitoring\nPress button below to begin listening for signal, the remote will be stuck listening until a signal is received (or remote powered off)\nPoint remote at receiver and press a button\nThe code will be printed out in the monitor terminal\nThe code should be used for creating ACTIONs in remotes.h";
-                color: white;
-                wrap: word-wrap;
-            }
-    
-            Button {
-                height: 100px;
-                text: "Click to begin receiving";
-    
-                clicked => {
-                    Logic.begin_ir_receive();
-                }
+        Text {
+            font-size: 20px;
+            color: white;
+            text: "Learn Mode";
+        }
+
+        Text {
+            font-size: 16px;
+            text: "Connect usb to pc and begin monitoring\nPress button below to begin listening for signal, the remote will be stuck listening until a signal is received (or remote powered off)\nPoint remote at receiver and press a button\nThe code will be printed out in the monitor terminal\nThe code should be used for creating ACTIONs in remotes.h";
+            color: white;
+            wrap: word-wrap;
+        }
+
+        RemoteButton {
+            height: 100px;
+            text: "Click to begin receiving";
+
+            press_release => {
+                Logic.begin_ir_receive();
             }
         }
     }

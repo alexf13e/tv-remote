@@ -9,6 +9,8 @@
 #include <vector>
 #include <iostream>
 
+#include "app-window.h" //for setting button enable/disable
+
 #include "action.h"
 #include "power.h"
 #include "remotes.h"
@@ -39,7 +41,7 @@ void createActionLists()
     };
 
     ALL_ACTION_LISTS["SHUTDOWN_TV"] = {
-        RemoteTV::POWER,
+        REPEAT_SIGNAL_FOR_MS(RemoteTV::POWER, 500),
         RemoteSpeakers::POWER
     };
 
@@ -1122,6 +1124,8 @@ namespace ActionListRunner
 {
     constexpr std::chrono::milliseconds poll_interval = std::chrono::milliseconds(50);
     
+    slint::ComponentHandle<AppWindow>* p_main_window;
+
     std::string current_action_list_id;
     std::thread action_worker;
     bool action_list_running = false;
@@ -1141,12 +1145,13 @@ namespace ActionListRunner
             }
 
             Power::disable_sleep(); //prevent from sleeping in case of long action lists
+            (*p_main_window)->global<DisableIRButtons>().set_active(true);
             action_list_running = true;
 
             const std::vector<ActionBase*>& action_list = ALL_ACTION_LISTS[action_list_id];
             for (int i = 0; i < action_list.size(); i++)
             {
-                std::cout << "running action " << i << std::endl;
+                //std::cout << "running action " << i << std::endl;
                 action_list[i]->run();
 
                 //if two IR signals back to back, need a little time between them
@@ -1178,6 +1183,8 @@ namespace ActionListRunner
             }
 
             action_list_running = false;
+            (*p_main_window)->global<DisableIRButtons>().set_active(false);
+            (*p_main_window)->global<DisableIRButtons>().invoke_clear_permitted_screen_change();
             Power::enable_sleep();
         }
 

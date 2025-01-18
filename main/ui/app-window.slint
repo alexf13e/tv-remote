@@ -15,7 +15,7 @@ import { IRReceiveScreen } from "screens/ir-receive-screen.slint";
 import { TVChannelScreen } from "screens/tv/channel-screen.slint";
 import { TVAllButtonsScreen } from "screens/tv/tv-all-buttons-screen.slint";
 import { TVAppsScreen } from "screens/tv/tv-apps-screen.slint";
-import { NasPhotoVideoScreen } from "screens/tv/nas-photo-video-screen.slint";
+import { TVPlaybackScreen } from "screens/tv/tv-playback-screen.slint";
 
 import { SpeakersAllButtonsScreen } from "screens/speakers/speakers-all-buttons-screen.slint";
 
@@ -24,7 +24,7 @@ import { HDRAllButtonsScreen } from "screens/hdr/hdr-all-buttons-screen.slint";
 import { YouViewAllButtonsScreen } from "screens/youview/youview-all-buttons-screen.slint";
 
 
-export { Logic, ScreenHistory, CurrentDisplayedScreen } from "globals.slint"; //export Logic so it can be accessed by c++
+export { Logic, ScreenHistory, CurrentDisplayedScreen, DisableIRButtons } from "globals.slint"; //export Logic so it can be accessed by c++
 
 
 export component AppWindow inherits Window {
@@ -50,7 +50,7 @@ export component AppWindow inherits Window {
         if CurrentDisplayedScreen.id == RemoteScreenID.TV_ALL_BUTTONS: TVAllButtonsScreen {}
         if CurrentDisplayedScreen.id == RemoteScreenID.TV_CHANNELS: TVChannelScreen {}
         if CurrentDisplayedScreen.id == RemoteScreenID.TV_APPS: TVAppsScreen {}
-        if CurrentDisplayedScreen.id == RemoteScreenID.NAS_PHOTO_VIDEO: NasPhotoVideoScreen {}
+        if CurrentDisplayedScreen.id == RemoteScreenID.TV_PLAYBACK: TVPlaybackScreen {}
 
         if CurrentDisplayedScreen.id == RemoteScreenID.SPEAKERS_ALL_BUTTONS: SpeakersAllButtonsScreen {}
 

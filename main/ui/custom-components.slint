@@ -2,7 +2,7 @@
 import { Button } from "std-widgets.slint";
 import { RemoteButtonData } from "custom-component-data.slint";
 import { RemoteScreenID } from "remote-screens-index.slint";
-import { Logic, CurrentDisplayedScreen, Symbols, ScreenHistory } from "globals.slint";
+import { Logic, CurrentDisplayedScreen, Symbols, ScreenHistory, DisableIRButtons } from "globals.slint";
 
 
 export component RemoteButton { //custom button for sending remote signals and navigating the ui
@@ -17,6 +17,8 @@ export component RemoteButton { //custom button for sending remote signals and n
     //in property <string> path_shape: "";
 
     out property <bool> held: false;
+
+    property <bool> disable_override: DisableIRButtons.active && action_list_id != "" && DisableIRButtons.permitted_screen_change != root.screen_id;
 
     callback press_down();
     callback press_release();
@@ -53,18 +55,22 @@ export component RemoteButton { //custom button for sending remote signals and n
             color: black;
         }
 
-        if enabled: touch := TouchArea { //toucharea to detect the button being pressed (when enabled)
+    if enabled: touch := TouchArea { //toucharea to detect the button being pressed (when enabled)
             pointer-event(event) => {
                 if event.kind == PointerEventKind.down {
-                    root.press_down();
+                    DisableIRButtons._set_permitted_screen_change(root.screen_id);
                     Logic.remote_btn_press(root.action_list_id, root.repeat_on_hold);
+                    root.press_down();
                     held = true;
                 }
 
                 if event.kind == PointerEventKind.up && held == true {
+                    if !disable_override {
+                        CurrentDisplayedScreen.set_screen(root.screen_id);
+                    }
+                    
                     root.press_release();
                     Logic.remote_btn_release();
-                    CurrentDisplayedScreen.set_screen(root.screen_id);
                     held = false;
                 }
             }
@@ -654,6 +660,7 @@ export component MiscButtonPopup {
                         
                         RemoteButton {
                             width: 100%;
+                            height: 40px;
                             icon: Symbols.cross;
                             press_release => {
                                 hide_misc_buttons_popup();

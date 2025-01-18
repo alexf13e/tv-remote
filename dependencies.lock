@@ -39,7 +39,7 @@ dependencies:
       type: idf
     version: 5.4.0
   slint/slint:
-    component_hash: c0aa57c3dabb3eb1f6909bc68aa98698f8e7f38a1c1d29bace2b5a3d9d8f1181
+    component_hash: fed4e236d90f6e6addb0a594d17e7e89ed1bd2b1a470bccee49823adb3412b8a
     dependencies:
     - name: espressif/esp_lcd_touch
       registry_url: https://components.espressif.com/
@@ -51,12 +51,12 @@ dependencies:
     source:
       registry_url: https://components.espressif.com/
       type: service
-    version: 1.9.1
+    version: 1.9.2
 direct_dependencies:
 - espressif/esp32_io_expander
 - espressif/esp_lcd_touch_gt911
 - idf
 - slint/slint
-manifest_hash: 9d02ba90e1de3fd384e9c03b6ca69fe0ba7b9836cca0e63f9d631dfd402c7381
+manifest_hash: b5408663346b40484a1112b6943531b71d67b510d4873beeacd30b64b7e0949f
 target: esp32s3
 version: 2.0.0

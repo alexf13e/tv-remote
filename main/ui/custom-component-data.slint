@@ -5,7 +5,39 @@ export struct RemoteButtonData {
     icon: image,
     text: string,
     action_list_id: string,
+    screen_id: RemoteScreenID,
     repeat_on_hold: bool,
+}
+
+export global ScreenListButtonData {
+    out property <[RemoteButtonData]> data_general: [
+        { text: "Home",                 screen_id: RemoteScreenID.HOME,         },
+        { text: "IR Code Learning",     screen_id: RemoteScreenID.IR_RECEIVE,   },
+        
+    ];
+
+    out property <[RemoteButtonData]> data_tv: [
+        { text: "TV All Buttons",       screen_id: RemoteScreenID.TV_ALL_BUTTONS,   },
+        { text: "TV Channels",          screen_id: RemoteScreenID.TV_CHANNELS,      },
+        { text: "TV Apps",              screen_id: RemoteScreenID.TV_APPS,          },
+        { text: "NAS/Photo/Video",      screen_id: RemoteScreenID.TV_PLAYBACK,      },
+    
+    ];
+
+    out property <[RemoteButtonData]> data_speakers: [
+        { text: "Speakers All Buttons", screen_id: RemoteScreenID.SPEAKERS_ALL_BUTTONS, },
+
+    ];
+
+    out property <[RemoteButtonData]> data_hdr: [
+        { text: "HDR All Buttons",      screen_id: RemoteScreenID.HDR_ALL_BUTTONS,  },
+
+    ];
+
+    out property <[RemoteButtonData]> data_youview: [
+        { text: "YouView All Buttons",  screen_id: RemoteScreenID.YOUVIEW_ALL_BUTTONS,  },
+
+    ];
 }
 
 export global TVChannelButtonData { //list of data to generate tv channel buttons automatically

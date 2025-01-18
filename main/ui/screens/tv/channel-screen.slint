@@ -19,36 +19,50 @@ export component TVChannelScreen { //whole screen for tv channel selection
             grid_data: TVChannelButtonData.data;
         }
 
-        GridLayout {
+        VerticalLayout {
             spacing: 10px;
             height: 80px;
             
-            Row {
+            HorizontalLayout {
+                spacing: 10px;
+
                 RemoteButton {
                     bg_colour: red;
                     action_list_id: "TV_RED";
+                    horizontal-stretch: 0.45;
                 }
                 
                 RemoteButton {
                     bg_colour: green;
                     action_list_id: "TV_GREEN";
+                    horizontal-stretch: 0.45;
+                }
+
+                RemoteButton {
+                    text: "NAS";
+                    screen_id: RemoteScreenID.TV_PLAYBACK;
+                    horizontal-stretch: 1;
                 }
 
                 RemoteButton {
                     text: "Guide";
+                    horizontal-stretch: 1;
                     action_list_id: "TV_GUIDE";
                 }
     
                 RemoteButton {
                     text: "TV Apps";
+                    horizontal-stretch: 1;
                     screen_id: RemoteScreenID.TV_APPS;
                 }
             }
             
-            Row {
+            HorizontalLayout {
+                spacing: 10px;
+
                 RemoteButton {
-                    text: "NAS";
-                    screen_id: RemoteScreenID.NAS_PHOTO_VIDEO;
+                    text: "TV Playback";
+                    screen_id: RemoteScreenID.TV_PLAYBACK;
                 }
     
                 RemoteButton {

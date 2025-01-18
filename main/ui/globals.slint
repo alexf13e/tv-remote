@@ -20,6 +20,35 @@ export global Logic { //container for functions to interact with c++ from gui
 }
 
 
+export global Symbols { //general icon symbols which may want to be used on various screens
+    out property <image> arrow-left:    @image-url("icons/buttons/arrow-left.png");
+    out property <image> arrow-right:   @image-url("icons/buttons/arrow-right.png");
+    out property <image> arrow-up:      @image-url("icons/buttons/arrow-up.png");
+    out property <image> arrow-down:    @image-url("icons/buttons/arrow-down.png");
+
+    out property <image> home:          @image-url("icons/buttons/home.png");
+    out property <image> nav-back:      @image-url("icons/buttons/nav-back.png");
+    out property <image> nav-forward:   @image-url("icons/buttons/nav-forward.png");
+    out property <image> nav-list:      @image-url("icons/buttons/nav-list.png");
+
+    out property <image> plus:          @image-url("icons/buttons/plus.png");
+    out property <image> minus:         @image-url("icons/buttons/minus.png");
+    out property <image> cross:         @image-url("icons/buttons/cross.png");
+
+    out property <image> vol-plus:      @image-url("icons/buttons/volume-plus.png");
+    out property <image> vol-minus:     @image-url("icons/buttons/volume-minus.png");
+    out property <image> vol-mute:      @image-url("icons/buttons/volume-mute.png");
+
+    out property <image> play:          @image-url("icons/buttons/play.png");
+    out property <image> pause:         @image-url("icons/buttons/pause.png");
+    out property <image> stop:          @image-url("icons/buttons/stop.png");
+    out property <image> rewind:        @image-url("icons/buttons/rewind.png");
+    out property <image> fast-forward:  @image-url("icons/buttons/fast-forward.png");
+    out property <image> skip-back:     @image-url("icons/buttons/skip-back.png");
+    out property <image> skip-forward:  @image-url("icons/buttons/skip-forward.png");
+}
+
+
 export struct ScreenHistoryData { //history data separated to a struct to simplify saving in c++ through sleeps
     capacity: int, //maximum number of screens to remember
     screens: [RemoteScreenID], //the screens which have been visited recently
@@ -170,31 +199,50 @@ export global CurrentDisplayedScreen { //manage the currently displayed screen
 }
 
 
-export global Symbols { //general icon symbols which may want to be used on various screens
-    out property <image> arrow-left:    @image-url("icons/buttons/arrow-left.png");
-    out property <image> arrow-right:   @image-url("icons/buttons/arrow-right.png");
-    out property <image> arrow-up:      @image-url("icons/buttons/arrow-up.png");
-    out property <image> arrow-down:    @image-url("icons/buttons/arrow-down.png");
+export global DisableIRButtons {
+    in-out property <bool> active: false;
 
-    out property <image> home:          @image-url("icons/buttons/home.png");
-    out property <image> nav-back:      @image-url("icons/buttons/nav-back.png");
-    out property <image> nav-forward:   @image-url("icons/buttons/nav-forward.png");
-    out property <image> nav-list:      @image-url("icons/buttons/nav-list.png");
+    /*
+    desired behaviour is:
+    when a button is pressed that makes an ir code happen:
+        the release of that button should be allowed to change the screen.
+        the release of any other buttons should not.
+        the press of any other button should still be registered. the code that button would send (if any) will be
+        blocked in c++, and holding it should mean that as soon as ir codes are able to be sent again, it will start
+        repeating.
 
-    out property <image> plus:          @image-url("icons/buttons/plus.png");
-    out property <image> minus:         @image-url("icons/buttons/minus.png");
-    out property <image> cross:         @image-url("icons/buttons/cross.png");
+    when a button is pressed that only changes a screen:
+        always allow it to change the screen.
 
-    out property <image> vol-plus:      @image-url("icons/buttons/volume-plus.png");
-    out property <image> vol-minus:     @image-url("icons/buttons/volume-minus.png");
-    out property <image> vol-mute:      @image-url("icons/buttons/volume-mute.png");
 
-    out property <image> play:          @image-url("icons/buttons/play.png");
-    out property <image> pause:         @image-url("icons/buttons/pause.png");
-    out property <image> stop:          @image-url("icons/buttons/stop.png");
-    out property <image> rewind:        @image-url("icons/buttons/rewind.png");
-    out property <image> fast-forward:  @image-url("icons/buttons/fast-forward.png");
-    out property <image> skip-back:     @image-url("icons/buttons/skip-back.png");
-    out property <image> skip-forward:  @image-url("icons/buttons/skip-forward.png");
+    since the specific button cannot (easily) be tracked and allowed, instead note a specific screen which can be
+    changed to by a button that also sends an ir signal, with no effect on buttons that only change screen. this means
+    other buttons that send ir and change screen cannot run in a way that the screen is changed but the ir didnt run.
 
+    the permitted screen can only be changed when it is not currently valid, and is reset when the action list is
+    finished sending
+
+    it would still be possible to start an action list, have the screen change, move to another screen, then press
+    another button that would change to the same screen. the screen change would happen and the ir code wouldn't, but at
+    that point its beyond accidentally pressing a button too soon and wondering why the ir code didn't send...
+    */
+    out property <RemoteScreenID> permitted_screen_change: RemoteScreenID.SAME;
+    
+    callback _set_permitted_screen_change(RemoteScreenID);
+    callback clear_permitted_screen_change();
+
+    _set_permitted_screen_change(id) => {
+        if permitted_screen_change == RemoteScreenID.SAME {
+            permitted_screen_change = id;
+        }
+    }
+
+    clear_permitted_screen_change() => {
+        permitted_screen_change = RemoteScreenID.SAME;
+    }
+
+}
+
+export global ScreenListTabID {
+    in-out property <int> value: 0;
 }
