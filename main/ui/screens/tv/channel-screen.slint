@@ -3,7 +3,7 @@ import { Button } from "std-widgets.slint";
 
 import { TVRemoteNavPanel, RemoteButton, TVChannelGrid } from "../../custom-components.slint";
 import { TVChannelButtonData } from "../../custom-component-data.slint";
-import { Symbols } from "../../globals.slint";
+import { Symbols, Theme } from "../../globals.slint";
 import { RemoteScreenID } from "../../remote-screens-index.slint";
 
 
@@ -39,13 +39,13 @@ export component TVChannelScreen { //whole screen for tv channel selection
                 }
 
                 RemoteButton {
-                    text: "Guide";
+                    text: "GUIDE";
                     horizontal-stretch: 1;
                     action_list_id: "TV_GUIDE";
                 }
     
                 RemoteButton {
-                    text: "TV Apps";
+                    text: "TV APPS";
                     horizontal-stretch: 1;
                     screen_id: RemoteScreenID.TV_APPS;
                 }
@@ -55,25 +55,33 @@ export component TVChannelScreen { //whole screen for tv channel selection
                 spacing: 10px;
 
                 RemoteButton {
-                    text: "Pause TV";
+                    text: "PAUSE TV";
                     action_list_id: "TV_PAUSE";
                     screen_id: RemoteScreenID.TV_PLAYBACK;
+                    bg_colour: Theme.playback_bg_colour_3;
+                    text_colour: Theme.playback_fg_colour_3;
                 }
     
                 RemoteButton {
-                    text: "TV off";
+                    text: "TV OFF";
                     action_list_id: "SHUTDOWN_TV";
                     screen_id: RemoteScreenID.HOME;
+                    bg_colour: Theme.power_bg_colour;
+                    text_colour: Theme.power_fg_colour;
                 }
     
                 RemoteButton {
-                    text: "HDR on";
+                    text: "HDR";
                     action_list_id: "STARTUP_HDR";
                     screen_id: RemoteScreenID.HDR_HOME;
+                    bg_colour: Theme.power_bg_colour;
+                    text_colour: Theme.power_fg_colour;
                 }
     
                 RemoteButton {
-                    text: "YouView on";
+                    text: "YVIEW";
+                    bg_colour: Theme.power_bg_colour;
+                    text_colour: Theme.power_fg_colour;
                 }
             }
             

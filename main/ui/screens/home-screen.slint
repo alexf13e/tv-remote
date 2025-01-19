@@ -3,11 +3,12 @@ import { RemoteButton } from "../custom-components.slint";
 import { RemoteScreenID } from "../remote-screens-index.slint";
 
 export component HomeScreen {
-    property <length> btn_height: 40px;
+    property <length> btn_height: 80px;
     
     VerticalLayout {
         spacing: 10px;
-        alignment: start;
+        height: 50%;
+        alignment: space-around;
 
         RemoteButton {
             height: btn_height;

@@ -1,14 +1,15 @@
 
-import { Button, TextEdit } from "std-widgets.slint";
+import { Button, TextEdit, ProgressIndicator } from "std-widgets.slint";
 import { RemoteButtonData, TVChannelButtonData } from "custom-component-data.slint";
 import { RemoteScreenID } from "remote-screens-index.slint";
-import { Logic, CurrentDisplayedScreen, Symbols, ScreenHistory, DisableIRButtons } from "globals.slint";
+import { Logic, CurrentDisplayedScreen, Symbols, ScreenHistory, DisableIRButtons, IRProgress, Theme } from "globals.slint";
 
 
 export component RemoteButton { //custom button for sending remote signals and navigating the ui
-    in property <color> bg_colour: white;
-    in property <color> text_colour: black;
+    in property <color> bg_colour: Theme.btn_default_colour;
+    in property <color> text_colour: Theme.text_default_colour;
     in property <image> icon;                                   //image to show on button
+    in property <color> icon_colorize;
     in property <string> text;                                  //text to show on button
     in property <length> font_size: 18px;
     in property <string> action_list_id: "";                      //name of the "macro" to play when button is pressed
@@ -45,6 +46,7 @@ export component RemoteButton { //custom button for sending remote signals and n
             height: parent.height;
             image-fit: ImageFit.contain;
             source: icon;
+            colorize: icon_colorize;
         }
 
         Text {
@@ -132,12 +134,16 @@ component RemoteNavPanel { //panel with bottom navigation buttons to replicate p
                 icon: Symbols.arrow-up;
                 action_list_id: al_chan_up;
                 repeat_on_hold: true;
+                bg_colour: Theme.chan_bg_colour;
+                icon_colorize: Theme.chan_fg_colour;
             }
 
             RemoteButton {
                 icon: Symbols.arrow-down;
                 action_list_id: al_chan_down;
                 repeat_on_hold: true;
+                bg_colour: Theme.chan_bg_colour;
+                icon_colorize: Theme.chan_fg_colour;
             }
         }
 
@@ -147,19 +153,23 @@ component RemoteNavPanel { //panel with bottom navigation buttons to replicate p
 
             Row {
                 RemoteButton {
-                    text: "Exit";
-                    action_list_id: al_exit;
+                    text: "INFO";
+                    action_list_id: al_info;
+                    bg_colour: Theme.info_bg_colour;
+                    text_colour: Theme.info_fg_colour;
                 }
-    
+                
                 RemoteButton {
                     icon: Symbols.arrow-up;
                     action_list_id: al_navUp;
                     repeat_on_hold: true;
+                    bg_colour: Theme.nav_arrow_bg_colour;
+                    text_colour: Theme.nav_arrow_fg_colour;
                 }
     
                 RemoteButton {
-                    text: "Info";
-                    action_list_id: al_info;
+                    text: "EXIT";
+                    action_list_id: al_exit;
                 }
             }
             
@@ -168,10 +178,12 @@ component RemoteNavPanel { //panel with bottom navigation buttons to replicate p
                     icon: Symbols.arrow-left;
                     action_list_id: al_navLeft;
                     repeat_on_hold: true;
+                    bg_colour: Theme.nav_arrow_bg_colour;
+                    text_colour: Theme.nav_arrow_fg_colour;
                 }
 
                 RemoteButton {
-                    text: "Ok";
+                    text: "OK";
                     action_list_id: al_ok;
                 }
 
@@ -179,12 +191,14 @@ component RemoteNavPanel { //panel with bottom navigation buttons to replicate p
                     icon: Symbols.arrow-right;
                     action_list_id: al_navRight;
                     repeat_on_hold: true;
+                    bg_colour: Theme.nav_arrow_bg_colour;
+                    text_colour: Theme.nav_arrow_fg_colour;
                 }
             }
 
             Row {
                 RemoteButton {
-                    text: "Return";
+                    text: "RETN";
                     action_list_id: al_return;
                 }
 
@@ -192,11 +206,15 @@ component RemoteNavPanel { //panel with bottom navigation buttons to replicate p
                     icon: Symbols.arrow-down;
                     action_list_id: al_navDown;
                     repeat_on_hold: true;
+                    bg_colour: Theme.nav_arrow_bg_colour;
+                    text_colour: Theme.nav_arrow_fg_colour;
                 }
 
                 RemoteButton {
                     icon: Symbols.vol-mute;
                     action_list_id: al_mute;
+                    bg_colour: Theme.volume_bg_colour;
+                    icon_colorize: Theme.volume_fg_colour;
                 }
             }
         }
@@ -209,12 +227,16 @@ component RemoteNavPanel { //panel with bottom navigation buttons to replicate p
                 icon: Symbols.vol-plus;
                 action_list_id: al_vol_up;
                 repeat_on_hold: true;
+                bg_colour: Theme.volume_bg_colour;
+                icon_colorize: Theme.volume_fg_colour;
             }
 
             RemoteButton {
                 icon: Symbols.vol-minus;
                 action_list_id: al_vol_down;
                 repeat_on_hold: true;
+                bg_colour: Theme.volume_bg_colour;
+                icon_colorize: Theme.volume_fg_colour;
             }
         }
     }
@@ -285,50 +307,67 @@ component PlaybackControlPanel {
     in property <string> al_skip_back;
     in property <string> al_skip_forward;
 
+    in property <string> skip_text;
+    in property <image> skip_forward_icon: Symbols.skip-forward;
+
     GridLayout {
         spacing: 10px;
 
-        btn_pause := RemoteButton {
-            row: 0;
+        RemoteButton {
+            row: 1;
             col: 1;
             icon: Symbols.pause;
             action_list_id: al_pause;
+            bg_colour: Theme.playback_bg_colour_3;
+            icon_colorize: Theme.playback_fg_colour_3;
         }
 
-        btn_play := RemoteButton {
-            row: 1;
+        RemoteButton {
+            row: 2;
             col: 1;
-            rowspan: 2;
             icon: Symbols.play;
             action_list_id: al_play;
+            bg_colour: Theme.playback_bg_colour_1;
+            icon_colorize: Theme.playback_fg_colour_1;
         }
 
-        btn_rewind := RemoteButton {
-            row: 1;
+        RemoteButton {
+            row: 2;
             col: 0;
             icon: Symbols.rewind;
             action_list_id: al_rewind;
+            bg_colour: Theme.playback_bg_colour_3;
+            icon_colorize: Theme.playback_fg_colour_3;
         }
 
         RemoteButton {
-            row: 1;
+            row: 2;
             col: 2;
             icon: Symbols.fast-forward;
             action_list_id: al_fast_forward;
+            bg_colour: Theme.playback_bg_colour_3;
+            icon_colorize: Theme.playback_fg_colour_3;
         }
 
         RemoteButton {
-            row: 2;
+            row: 0;
             col: 0;
             icon: Symbols.skip-back;
             action_list_id: al_skip_back;
+            bg_colour: Theme.playback_bg_colour_4;
+            icon_colorize: Theme.playback_fg_colour_4;
         }
 
         RemoteButton {
-            row: 2;
+            row: 0;
             col: 2;
-            icon: Symbols.skip-forward;
+            icon: skip_forward_icon;
+            text: skip_text;
+            font_size: 30px;
+            text_colour: white;
             action_list_id: al_skip_forward;
+            bg_colour: Theme.playback_bg_colour_4;
+            icon_colorize: Theme.playback_fg_colour_4;
         }
 
         RemoteButton {
@@ -336,6 +375,8 @@ component PlaybackControlPanel {
             col: 1;
             icon: Symbols.stop;
             action_list_id: al_stop;
+            bg_colour: Theme.playback_bg_colour_2;
+            icon_colorize: Theme.playback_fg_colour_2;
         }
 
         @children
@@ -362,11 +403,16 @@ export component HDRPlaybackControlPanel inherits PlaybackControlPanel {
     al_fast_forward: "HDR_FAST_FORWARD";
     al_skip_forward: "HDR_MANUAL_SKIP_PLUS_60";
 
+    skip_forward_icon: @image-url("");
+    skip_text: "+60s";
+
     RemoteButton {
         row: 0;
         col: 0;
-        text: "Library";
+        z: 1;
+        text: "LIBRARY";
         action_list_id: "HDR_VIDEO_MENU";
+        font_size: 28px;
     }
 }
 
@@ -622,13 +668,13 @@ export component MiscButtonPopup {
     callback hide_misc_buttons_popup();
 
     Rectangle {
-        background: black; //outline rectangle
+        background: Theme.background_colour; //outline rectangle
 
         VerticalLayout { //layout just to get padding, as rectangle padding doesn't work
             padding: root.padding;
             
             Rectangle { //main background rectangle
-                background: black;
+                background: Theme.background_colour;
 
                 TouchArea {} //prevent touches on background from going through to buttons behind popup
                 
@@ -639,23 +685,31 @@ export component MiscButtonPopup {
                         spacing: root.spacing;
     
                         RemoteButton {
-                            text: "Speaker Power";
+                            text: "SPKR POWER";
                             action_list_id: "SPEAKERS_POWER";
+                            bg_colour: Theme.power_bg_colour;
+                            text_colour: Theme.power_fg_colour;
                         }
             
                         RemoteButton {
-                            text: "TV Power";
+                            text: "TV POWER";
                             action_list_id: "TV_POWER";
+                            bg_colour: Theme.power_bg_colour;
+                            text_colour: Theme.power_fg_colour;
                         }
             
                         RemoteButton {
-                            text: "HDR Power";
+                            text: "HDR POWER";
                             action_list_id: "HDR_POWER";
+                            bg_colour: Theme.power_bg_colour;
+                            text_colour: Theme.power_fg_colour;
                         }
             
                         RemoteButton {
-                            text: "YouView Power";
+                            text: "YOUVIEW POWER";
                             action_list_id: "YOUVIEW_POWER";
+                            bg_colour: Theme.power_bg_colour;
+                            text_colour: Theme.power_fg_colour;
                         }
                     }
     
@@ -663,28 +717,38 @@ export component MiscButtonPopup {
                         spacing: root.spacing;
     
                         RemoteButton {
-                            text: "Speakers: TV";
+                            text: "SPKR TV";
                             action_list_id: "SPEAKERS_TV_AUDIO";
+                            bg_colour: Theme.volume_bg_colour;
+                            icon_colorize: Theme.volume_fg_colour;
                         }
     
                         RemoteButton {
-                            text: "Speakers: HDR";
+                            text: "SPKR HDR";
                             action_list_id: "SPEAKERS_MEDIA_PLAYER";
+                            bg_colour: Theme.volume_bg_colour;
+                            icon_colorize: Theme.volume_fg_colour;
                         }
     
                         RemoteButton {
-                            text: "Speakers: YouView";
+                            text: "SPKR YVIEW";
                             action_list_id: "SPEAKERS_CBL_SAT";
+                            bg_colour: Theme.volume_bg_colour;
+                            icon_colorize: Theme.volume_fg_colour;
                         }
     
                         RemoteButton {
-                            text: "Speakers: Radio";
+                            text: "SPKR RADIO";
                             action_list_id: "SPEAKERS_TUNER";
+                            bg_colour: Theme.volume_bg_colour;
+                            icon_colorize: Theme.volume_fg_colour;
                         }
 
                         RemoteButton {
                             text: "TV AV";
                             action_list_id: "TV_AV";
+                            bg_colour: Theme.av_bg_colour;
+                            text_colour: Theme.av_fg_colour;
                         }
                     }
     
@@ -694,7 +758,8 @@ export component MiscButtonPopup {
                         RemoteButton {
                             width: 100%;
                             height: 40px;
-                            icon: Symbols.cross;
+                            text: "CLOSE";
+
                             press_release => {
                                 hide_misc_buttons_popup();
                             }
@@ -731,11 +796,42 @@ export component UINavPanel { //navigation buttons at bottom of screen for for g
             }
     
             RemoteButton {
-                text: "Power/AV/SPKR";
+                text: "RESET AV";
+                bg_colour: Theme.av_bg_colour;
+
                 press_release => {
                     //show popup containing helpful buttons that may want to be accessed from anywhere (power, av, etc.)
                     show_misc_buttons_popup();
                 }
+            }
+        }
+    }
+}
+
+export component IRProgressIndicator {    
+    visible: IRProgress.visible;
+
+    Rectangle {
+        background: Theme.background_colour;
+        
+        Text {
+            z: 1;
+            width: 100%;
+            height: 100%;
+            text: "Sending IR Code...";
+            font-size: 24px;
+            color: Theme.ir_progress_fg_colour;
+            horizontal-alignment: center;
+            vertical-alignment: center;
+        }
+
+        HorizontalLayout {
+            padding: 10px;
+            alignment: start;
+    
+            Rectangle {
+                background: Theme.ir_progress_bg_colour;
+                width: IRProgress.value * (parent.width - parent.padding * 2);
             }
         }
     }

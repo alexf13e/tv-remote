@@ -45,7 +45,7 @@ namespace Power
 
     constexpr gpio_num_t RTC_GPIO_NUM_WAKEUP = GPIO_NUM_19;
     constexpr uint8_t EXIO_DISPLAY = 2;
-    constexpr std::chrono::milliseconds INACTIVITY_SLEEP_TIMEOUT = std::chrono::milliseconds(20000);
+    constexpr std::chrono::milliseconds INACTIVITY_SLEEP_TIMEOUT = std::chrono::milliseconds(40000);
 
     ESP_IOExpander_CH422G* io_expander;
     QueueHandle_t gpio_event_queue = NULL;

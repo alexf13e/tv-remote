@@ -5,8 +5,8 @@
 //this file's contents are the only ones to be directly accessible from c++
 
 import { RemoteScreenID } from "remote-screens-index.slint";
-import { CurrentDisplayedScreen } from "globals.slint";
-import { RemoteButton, MiscButtonPopup, UINavPanel } from "custom-components.slint";
+import { CurrentDisplayedScreen, Theme } from "globals.slint";
+import { RemoteButton, MiscButtonPopup, UINavPanel, IRProgressIndicator } from "custom-components.slint";
 
 import { HomeScreen } from "screens/home-screen.slint";
 import { ScreenListScreen } from "screens/screen-list-screen.slint";
@@ -27,15 +27,23 @@ import { HDRPlayScreen } from "screens/hdr/hdr-play-screen.slint";
 import { YouViewAllButtonsScreen } from "screens/youview/youview-all-buttons-screen.slint";
 
 //export things to access them in c++
-export { Logic, ScreenHistory, CurrentDisplayedScreen, DisableIRButtons } from "globals.slint";
+export { Logic, ScreenHistory, CurrentDisplayedScreen, DisableIRButtons, ScreenListTabID, IRProgress } from "globals.slint";
 
 
 export component AppWindow inherits Window {
     width: 480px;
     height: 800px;
-    background: #000000;
+    background: Theme.background_colour;
 
     property <bool> show_misc_buttons: false;
+
+    IRProgressIndicator {
+        width: 100%;
+        height: 60px;
+        x: 0;
+        y: 0;
+        z: 100;
+    }
 
     VerticalLayout { //container rectangle for padding around edge for all screens
         padding: 10px;

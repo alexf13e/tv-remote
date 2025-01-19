@@ -46,6 +46,8 @@ export global Symbols { //general icon symbols which may want to be used on vari
     out property <image> fast-forward:  @image-url("icons/buttons/fast-forward.png");
     out property <image> skip-back:     @image-url("icons/buttons/skip-back.png");
     out property <image> skip-forward:  @image-url("icons/buttons/skip-forward.png");
+
+    out property <image> bin:           @image-url("icons/buttons/bin.jpg");
 }
 
 
@@ -154,7 +156,7 @@ export global ScreenHistory { //manage the previously visited screens
 
 
 export global CurrentDisplayedScreen { //manage the currently displayed screen
-    out property <RemoteScreenID> id: RemoteScreenID.TV_CHANNELS; //initialised by native code, placeholder for previewing
+    out property <RemoteScreenID> id: RemoteScreenID.HOME; //initialised by native code, placeholder for previewing
 
     function check_special_screen_changes(old_id: RemoteScreenID, new_id: RemoteScreenID) {
         if (new_id == RemoteScreenID.IR_RECEIVE) {
@@ -245,4 +247,44 @@ export global DisableIRButtons {
 
 export global ScreenListTabID {
     in-out property <int> value: 0;
+}
+
+export global IRProgress {
+    in-out property <float> value;
+    in-out property <bool> visible: false;
+}
+
+export global Theme {
+    out property <color> background_colour: black;
+
+    out property <color> btn_default_colour: white;
+    out property <color> text_default_colour: black;
+
+    out property <color> power_bg_colour: orange;
+    out property <color> av_bg_colour: yellow;
+    out property <color> record_bg_colour: red;
+    out property <color> info_bg_colour: lime;
+    out property <color> nav_arrow_bg_colour: gray;
+    out property <color> volume_bg_colour: cyan;
+    out property <color> chan_bg_colour: lightskyblue;
+    out property <color> ir_progress_bg_colour: green;
+
+    out property <color> power_fg_colour: black;
+    out property <color> av_fg_colour: black;
+    out property <color> record_fg_colour: white;
+    out property <color> info_fg_colour: black;
+    out property <color> nav_arrow_fg_colour: black;
+    out property <color> volume_fg_colour: black;
+    out property <color> chan_fg_colour: black;
+    out property <color> ir_progress_fg_colour: white;
+
+    out property <color> playback_bg_colour_1: lime;
+    out property <color> playback_bg_colour_2: red;
+    out property <color> playback_bg_colour_3: blue;
+    out property <color> playback_bg_colour_4: indigo;
+
+    out property <color> playback_fg_colour_1: black;
+    out property <color> playback_fg_colour_2: white;
+    out property <color> playback_fg_colour_3: white;
+    out property <color> playback_fg_colour_4: white;
 }

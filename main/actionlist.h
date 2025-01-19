@@ -925,12 +925,16 @@ namespace ActionListRunner
 
             Power::disable_sleep(); //prevent from sleeping in case of long action lists
             (*p_main_window)->global<DisableIRButtons>().set_active(true);
+            (*p_main_window)->global<IRProgress>().set_visible(true);
             action_list_running = true;
 
             const std::vector<ActionBase*>& action_list = ALL_ACTION_LISTS[action_list_id];
             for (int i = 0; i < action_list.size(); i++)
             {
                 //std::cout << "running action " << i << std::endl;
+
+                //+1 to i and action list size so there isnt just a black bar for the first action
+                (*p_main_window)->global<IRProgress>().set_value((float)(i + 1)/ action_list.size());
                 action_list[i]->run();
 
                 //if two IR signals back to back, need a little time between them
@@ -962,6 +966,7 @@ namespace ActionListRunner
             }
 
             action_list_running = false;
+            (*p_main_window)->global<IRProgress>().set_visible(false);
             (*p_main_window)->global<DisableIRButtons>().set_active(false);
             (*p_main_window)->global<DisableIRButtons>().invoke_clear_permitted_screen_change();
             Power::enable_sleep();

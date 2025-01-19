@@ -26,6 +26,8 @@ namespace SleepMemory {
     //instead, save the screens array manually and load it into ui_screen_history when restoring.
     RTC_NOINIT_ATTR RemoteScreenID ui_screen_history_screens[SCREEN_HISTORY_SIZE];
 
+    RTC_NOINIT_ATTR int ui_screen_list_tab_id;
+
 
     slint::ComponentHandle<AppWindow>* p_main_window; //a pointer to the main window so data can be accessed from ui
 
@@ -41,6 +43,8 @@ namespace SleepMemory {
         {
             ui_screen_history_screens[i] = temp_history.screens->row_data(i).value();
         }
+
+        ui_screen_list_tab_id = (*p_main_window)->global<ScreenListTabID>().get_value();
     }
 
     void restore()
@@ -63,6 +67,9 @@ namespace SleepMemory {
             ui_screen_history.screens = std::make_shared<slint::VectorModel<RemoteScreenID>>(temp_screen_ids);
             (*p_main_window)->global<ScreenHistory>().invoke_restore(ui_screen_history);
             std::cout << "screen history restored after sleep" << std::endl;
+
+            (*p_main_window)->global<ScreenListTabID>().set_value(ui_screen_list_tab_id);
+
         }
     }
 }

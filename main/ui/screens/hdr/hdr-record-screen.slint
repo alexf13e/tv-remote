@@ -1,6 +1,7 @@
 
 import { HDRChannelGrid, HDRRemoteNavPanel, RemoteButton } from "../../custom-components.slint";
 import { RemoteScreenID } from "../../remote-screens-index.slint";
+import { Symbols, Theme } from "../../globals.slint";
 
 export component HDRRecordScreen {
     VerticalLayout {
@@ -15,37 +16,37 @@ export component HDRRecordScreen {
             RemoteButton {
                 row: 0;
                 col: 0;
-                text: "Delete";
+                icon: Symbols.bin;
                 action_list_id: "HDR_DELETE";
             }
 
             RemoteButton {
                 row: 1;
                 col: 0;
-                text: "Play page";
+                text: "PLAY PAGE";
                 screen_id: RemoteScreenID.HDR_PLAY;
             }
 
             RemoteButton {
                 row: 0;
                 col: 1;
-                text: "Record";
-                bg_colour: red;
-                text_colour: white;
+                text: "RECORD";
+                bg_colour: Theme.record_bg_colour;
+                text_colour: Theme.record_fg_colour;
                 action_list_id: "HDR_RECORD";
             }
 
             RemoteButton {
                 row: 1;
                 col: 1;
-                text: "Check";
+                text: "CHECK";
                 action_list_id: "HDR_PROG_CHECK";
             }
 
             RemoteButton {
                 row: 0;
                 col: 2;
-                text: "Guide";
+                text: "GUIDE";
                 action_list_id: "HDR_GUIDE";
             }
             
@@ -53,9 +54,11 @@ export component HDRRecordScreen {
                 row: 1;
                 col: 2;
 
-                text: "HDR off";
+                text: "HDR OFF";
                 action_list_id: "SHUTDOWN_HDR";
                 screen_id: RemoteScreenID.TV_CHANNELS;
+                bg_colour: Theme.power_bg_colour;
+                text_colour: Theme.power_fg_colour;
             }
         }
         
