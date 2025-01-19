@@ -74,6 +74,8 @@ extern "C" void app_main(void)
     IRReceiver::init();
     ButtonHoldManager::init();
     ActionListRunner::init();
+
+    create_tv_channels();
     createActionLists();
     
     auto main_window = AppWindow::create();
