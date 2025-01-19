@@ -1,7 +1,7 @@
 
 import { Button } from "std-widgets.slint";
 
-import { MultiPageRemoteButtonGrid, TVRemoteNavPanel, RemoteButton } from "../../custom-components.slint";
+import { TVRemoteNavPanel, RemoteButton, TVChannelGrid } from "../../custom-components.slint";
 import { TVChannelButtonData } from "../../custom-component-data.slint";
 import { Symbols } from "../../globals.slint";
 import { RemoteScreenID } from "../../remote-screens-index.slint";
@@ -11,17 +11,11 @@ export component TVChannelScreen { //whole screen for tv channel selection
     VerticalLayout {
         spacing: 20px;
 
-        MultiPageRemoteButtonGrid { //display the grid of channels
-            num_cols: 5;
-            num_rows: 5;
-            button_width : 80px;
-            button_height : 70px;
-            grid_data: TVChannelButtonData.data;
-        }
+        TVChannelGrid {}
 
         VerticalLayout {
             spacing: 10px;
-            height: 80px;
+            height: 90px;
             
             HorizontalLayout {
                 spacing: 10px;
@@ -61,7 +55,8 @@ export component TVChannelScreen { //whole screen for tv channel selection
                 spacing: 10px;
 
                 RemoteButton {
-                    text: "TV Playback";
+                    text: "Pause TV";
+                    action_list_id: "TV_PAUSE";
                     screen_id: RemoteScreenID.TV_PLAYBACK;
                 }
     
@@ -73,6 +68,8 @@ export component TVChannelScreen { //whole screen for tv channel selection
     
                 RemoteButton {
                     text: "HDR on";
+                    action_list_id: "STARTUP_HDR";
+                    screen_id: RemoteScreenID.HDR_HOME;
                 }
     
                 RemoteButton {

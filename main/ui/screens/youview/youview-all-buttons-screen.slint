@@ -3,10 +3,7 @@ import { RemoteButtonDebugGrid } from "../../custom-components.slint";
 import { YouViewRemoteButtonData } from "../../custom-component-data.slint";
 
 export component YouViewAllButtonsScreen {
-    RemoteButtonDebugGrid {
-        preferred-width: 100%;
-        preferred-height: 100%;
-        
-        remote_data: YouViewRemoteButtonData.data;
+    RemoteButtonDebugGrid {        
+        grid_data: YouViewRemoteButtonData.data;
     }
 }

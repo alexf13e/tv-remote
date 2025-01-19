@@ -1,0 +1,50 @@
+
+import { HDRRemoteNavPanel, RemoteButton } from "../../custom-components.slint";
+import { RemoteScreenID } from "../../remote-screens-index.slint";
+
+
+export component HDRHomeScreen {
+    VerticalLayout {
+        spacing: 20px;
+
+        VerticalLayout {
+            spacing: 10px;
+            vertical-stretch: 1;
+    
+            RemoteButton {
+                text: "Record";
+                bg_colour: red;
+                text_colour: white;
+                action_list_id: "HDR_GUIDE";
+                screen_id: RemoteScreenID.HDR_RECORD;
+            }
+    
+            RemoteButton {
+                text: "DVD/CD";
+                bg_colour: blue;
+                text_colour: white;
+                action_list_id: "";
+            }
+    
+            RemoteButton {
+                text: "Recordings";
+                bg_colour: green;
+                text_colour: white;
+                action_list_id: "HDR_VIDEO_MENU";
+                screen_id: RemoteScreenID.HDR_PLAY;
+            }
+        }
+    
+        RemoteButton {
+            height: 40px;
+            text: "HDR off";
+            action_list_id: "SHUTDOWN_HDR";
+            screen_id: RemoteScreenID.TV_CHANNELS;
+        }
+    
+        VerticalLayout {
+            alignment: end;
+            HDRRemoteNavPanel {}
+        }
+    }
+}

@@ -1,0 +1,67 @@
+
+import { HDRChannelGrid, HDRRemoteNavPanel, RemoteButton } from "../../custom-components.slint";
+import { RemoteScreenID } from "../../remote-screens-index.slint";
+
+export component HDRRecordScreen {
+    VerticalLayout {
+        spacing: 20px;
+
+        HDRChannelGrid {}
+
+        GridLayout {
+            height: 90px;
+            spacing: 10px;
+
+            RemoteButton {
+                row: 0;
+                col: 0;
+                text: "Delete";
+                action_list_id: "HDR_DELETE";
+            }
+
+            RemoteButton {
+                row: 1;
+                col: 0;
+                text: "Play page";
+                screen_id: RemoteScreenID.HDR_PLAY;
+            }
+
+            RemoteButton {
+                row: 0;
+                col: 1;
+                text: "Record";
+                bg_colour: red;
+                text_colour: white;
+                action_list_id: "HDR_RECORD";
+            }
+
+            RemoteButton {
+                row: 1;
+                col: 1;
+                text: "Check";
+                action_list_id: "HDR_PROG_CHECK";
+            }
+
+            RemoteButton {
+                row: 0;
+                col: 2;
+                text: "Guide";
+                action_list_id: "HDR_GUIDE";
+            }
+            
+            RemoteButton {
+                row: 1;
+                col: 2;
+
+                text: "HDR off";
+                action_list_id: "SHUTDOWN_HDR";
+                screen_id: RemoteScreenID.TV_CHANNELS;
+            }
+        }
+        
+        VerticalLayout {
+            alignment: end;
+            HDRRemoteNavPanel {}
+        }
+    }
+}

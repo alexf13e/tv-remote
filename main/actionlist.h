@@ -3,6 +3,7 @@
 #define ACTIONLIST_H
 
 #include <chrono>
+#include <memory>
 #include <thread>
 #include <string>
 #include <unordered_map>
@@ -14,6 +15,7 @@
 #include "action.h"
 #include "power.h"
 #include "remotes.h"
+#include "channels.h"
 
 
 
@@ -36,7 +38,7 @@ void createActionLists()
         WAIT_FOR_MS(500),
         RemoteSpeakers::TV_AUDIO,
         REPEAT_SIGNAL_FOR_MS(RemoteTV::POWER, 500),
-        WAIT_FOR_MS(5000),
+        WAIT_FOR_MS(4000),
         RemoteTV::EXIT
     };
 
@@ -53,302 +55,81 @@ void createActionLists()
     };
 
 
+    ALL_ACTION_LISTS["STARTUP_HDR"] = {
+        RemoteSpeakers::MEDIA_PLAYER,
+        RemoteTV::INPUT_AV,
+        RemoteTV::NAV_DOWN,
+        RemoteTV::NAV_DOWN,
+        RemoteTV::OK
+    };
+
+    ALL_ACTION_LISTS["SHUTDOWN_HDR"] = {
+        RemoteHDR::POWER,
+        RemoteSpeakers::TV_AUDIO,
+        RemoteTV::INPUT_AV,
+        RemoteTV::NAV_UP,
+        RemoteTV::NAV_UP,
+        RemoteTV::OK
+    };
+
+    ALL_ACTION_LISTS["TV_GUIDE_DISMISS_MESSAGE"] = {
+        RemoteTV::GUIDE,
+        RemoteTV::NAV_LEFT,
+        RemoteTV::OK
+    };
+
+
 
     //////////////////////////////////////// CHANNELS ////////////////////////////////////////
 
-    ALL_ACTION_LISTS["BBC_ONE_HD"] = {
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_1
-    };
+    //automatically generate channel action lists for tv and hdr remotes
 
-    ALL_ACTION_LISTS["BBC_TWO_HD"] = {
-        RemoteTV::KEY_1,
+    ActionRemoteSignal* TV_NUMS[] = {
         RemoteTV::KEY_0,
-        RemoteTV::KEY_2
-    };
-
-    ALL_ACTION_LISTS["BBC_THREE_HD"] = {
         RemoteTV::KEY_1,
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_7
-    };
-
-    ALL_ACTION_LISTS["BBC_FOUR_HD"] = {
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_6
-    };
-
-    ALL_ACTION_LISTS["BBC_NEWS"] = {
         RemoteTV::KEY_2,
         RemoteTV::KEY_3,
-        RemoteTV::KEY_1
-    };
-
-    ALL_ACTION_LISTS["ITV1_HD"] = {
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_3
-    };
-
-    ALL_ACTION_LISTS["ITV1"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_3,
-    };
-
-    ALL_ACTION_LISTS["ITV2"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_6
-    };
-
-    ALL_ACTION_LISTS["ITV3"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_0
-    };
-
-    ALL_ACTION_LISTS["ITV4"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_2,
-        RemoteTV::KEY_6
-    };
-
-    ALL_ACTION_LISTS["CHANNEL_4_HD"] = {
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_4
-    };
-
-    ALL_ACTION_LISTS["CHANNEL_5_HD"] = {
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_5
-    };
-
-    ALL_ACTION_LISTS["FILM4"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_4
-    };
-
-    ALL_ACTION_LISTS["MORE4"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_8
-    };
-
-    ALL_ACTION_LISTS["E4"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_3
-    };
-
-    ALL_ACTION_LISTS["DAVE"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_9
-    };
-
-    ALL_ACTION_LISTS["YESTERDAY"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_2,
-        RemoteTV::KEY_7
-    };
-
-    ALL_ACTION_LISTS["QUEST"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_2
-    };
-
-    ALL_ACTION_LISTS["DMAX"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_3,
-        RemoteTV::KEY_9
-    };
-
-    ALL_ACTION_LISTS["ITV_BE"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_2,
-        RemoteTV::KEY_8
-    };
-
-    ALL_ACTION_LISTS["ITV1+1"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_3,
-        RemoteTV::KEY_5
-    };
-
-    ALL_ACTION_LISTS["ITV2+1"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_2,
-        RemoteTV::KEY_9
-    };
-
-    ALL_ACTION_LISTS["CHANNEL_4+1"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_5
-    };
-
-    ALL_ACTION_LISTS["CHANNEL_5+1"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_3,
-        RemoteTV::KEY_8
-    };
-
-    ALL_ACTION_LISTS["E4+1"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_3,
-        RemoteTV::KEY_0
-    };
-
-    ALL_ACTION_LISTS["5USA"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_2,
-        RemoteTV::KEY_1
-    };
-
-    ALL_ACTION_LISTS["5STAR"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_3,
-        RemoteTV::KEY_2
-    };
-
-    ALL_ACTION_LISTS["BLAZE"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_6,
-        RemoteTV::KEY_4
-    };
-
-    ALL_ACTION_LISTS["E4_EXTRA"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_3,
-        RemoteTV::KEY_1
-    };
-
-    ALL_ACTION_LISTS["FILM4+1"] = {
-        RemoteTV::KEY_0,
         RemoteTV::KEY_4,
-        RemoteTV::KEY_7
-    };
-
-    ALL_ACTION_LISTS["5SELECT"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_4,
-        RemoteTV::KEY_6
-    };
-
-    ALL_ACTION_LISTS["CBS_REALITY"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_6,
-        RemoteTV::KEY_7
-    };
-
-    ALL_ACTION_LISTS["THATS_TV"] = {
-        RemoteTV::KEY_0,
         RemoteTV::KEY_5,
-        RemoteTV::KEY_6
-    };
-
-    ALL_ACTION_LISTS["4SEVEN"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_4,
-        RemoteTV::KEY_9
-    };
-
-    ALL_ACTION_LISTS["HGTV"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_4,
-        RemoteTV::KEY_4
-    };
-
-    ALL_ACTION_LISTS["REALLY"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_7
-    };
-
-    ALL_ACTION_LISTS["DRAMA"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_2,
-        RemoteTV::KEY_0
-    };
-
-    ALL_ACTION_LISTS["TALKINGPICTURES_TV"] = {
-        RemoteTV::KEY_0,
+        RemoteTV::KEY_6,
+        RemoteTV::KEY_7,
         RemoteTV::KEY_8,
-        RemoteTV::KEY_2
+        RemoteTV::KEY_9,
     };
 
-    ALL_ACTION_LISTS["SKY_MIX"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_1
+    ActionRemoteSignal* HDR_NUMS[] = {
+        RemoteHDR::KEY_0,
+        RemoteHDR::KEY_1,
+        RemoteHDR::KEY_2,
+        RemoteHDR::KEY_3,
+        RemoteHDR::KEY_4,
+        RemoteHDR::KEY_5,
+        RemoteHDR::KEY_6,
+        RemoteHDR::KEY_7,
+        RemoteHDR::KEY_8,
+        RemoteHDR::KEY_9,
     };
 
-    ALL_ACTION_LISTS["SKY_ARTS"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_3,
-        RemoteTV::KEY_6
-    };
+    for (const auto& channel : TV_CHANNELS)
+    {
+        //want to create action list of channel numbers with keys on remote.
+        //channel number should be padded to 3 digits with leading 0
 
-    ALL_ACTION_LISTS["GREAT_MOVIES"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_3,
-        RemoteTV::KEY_4
-    };
+        std::string tv_action_list_id = "TV_" + channel.first;
+        std::string hdr_action_list_id = "HDR_" + channel.first;
+        
+        std::string digits = channel.second;
+        if (digits.size() < 3)
+        {
+            digits.insert(0, 3 - digits.size(), '0');
+        }
 
-    ALL_ACTION_LISTS["GREAT_ACTION"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_4,
-        RemoteTV::KEY_2
-    };
-
-    ALL_ACTION_LISTS["5ACTION"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_3,
-        RemoteTV::KEY_3
-    };
-
-    ALL_ACTION_LISTS["SKY_NEWS"] = {
-        RemoteTV::KEY_2,
-        RemoteTV::KEY_3,
-        RemoteTV::KEY_3
-    };
-
-    ALL_ACTION_LISTS["QUEST_RED"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_4,
-        RemoteTV::KEY_0
-    };
-
-    ALL_ACTION_LISTS["W"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_2,
-        RemoteTV::KEY_5
-    };
-
-    ALL_ACTION_LISTS["TOGETHER_TV"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_8,
-        RemoteTV::KEY_3
-    };
-
-    ALL_ACTION_LISTS["CHALLENGE"] = {
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_4,
-        RemoteTV::KEY_8
-    };
-
-    ALL_ACTION_LISTS["FREEVIEW"] = {
-        RemoteTV::KEY_1,
-        RemoteTV::KEY_0,
-        RemoteTV::KEY_0
-    };
+        for (const char& c : digits)
+        {
+            ALL_ACTION_LISTS[tv_action_list_id].push_back(TV_NUMS[c - '0']);
+            ALL_ACTION_LISTS[hdr_action_list_id].push_back(HDR_NUMS[c - '0']);
+        }
+    }
 
 
     //////////////////////////////////////// TV REMOTE SINGLE BUTTONS ////////////////////////////////////////
@@ -846,7 +627,7 @@ void createActionLists()
         RemoteHDR::GUIDE
     };
 
-    ALL_ACTION_LISTS["HDR_FUNCITON_MENU"] = {
+    ALL_ACTION_LISTS["HDR_FUNCTION_MENU"] = {
         RemoteHDR::FUNCTION_MENU
     };
 
@@ -874,11 +655,11 @@ void createActionLists()
         RemoteHDR::RED
     };
 
-    ALL_ACTION_LISTS["HDR_GREE"] = {
+    ALL_ACTION_LISTS["HDR_GREEN"] = {
         RemoteHDR::GREEN
     };
 
-    ALL_ACTION_LISTS["HDR_YELLO"] = {
+    ALL_ACTION_LISTS["HDR_YELLOW"] = {
         RemoteHDR::YELLOW
     };
 
@@ -993,7 +774,6 @@ void createActionLists()
         RemoteYouView::VOL_MUTE
     };
     
-    
     ALL_ACTION_LISTS["YOUVIEW_CHAN_UP"] = {
         RemoteYouView::CHAN_UP
     };
@@ -1001,7 +781,6 @@ void createActionLists()
     ALL_ACTION_LISTS["YOUVIEW_CHAN_DOWN"] = {
         RemoteYouView::CHAN_DOWN
     };
-    
     
     ALL_ACTION_LISTS["YOUVIEW_NAV_UP"] = {
         RemoteYouView::NAV_UP

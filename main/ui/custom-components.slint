@@ -1,15 +1,16 @@
 
-import { Button } from "std-widgets.slint";
-import { RemoteButtonData } from "custom-component-data.slint";
+import { Button, TextEdit } from "std-widgets.slint";
+import { RemoteButtonData, TVChannelButtonData } from "custom-component-data.slint";
 import { RemoteScreenID } from "remote-screens-index.slint";
 import { Logic, CurrentDisplayedScreen, Symbols, ScreenHistory, DisableIRButtons } from "globals.slint";
 
 
 export component RemoteButton { //custom button for sending remote signals and navigating the ui
     in property <color> bg_colour: white;
+    in property <color> text_colour: black;
     in property <image> icon;                                   //image to show on button
     in property <string> text;                                  //text to show on button
-    in property <length> font_size: 16px;
+    in property <length> font_size: 18px;
     in property <string> action_list_id: "";                      //name of the "macro" to play when button is pressed
     in property <RemoteScreenID> screen_id: RemoteScreenID.SAME; //the id of the screen which will be shown when this button is clicked
     in property <bool> repeat_on_hold: false;
@@ -52,13 +53,16 @@ export component RemoteButton { //custom button for sending remote signals and n
             wrap: word-wrap;
             horizontal-alignment: center;
             text: text;
-            color: black;
+            color: text_colour;
         }
 
     if enabled: touch := TouchArea { //toucharea to detect the button being pressed (when enabled)
             pointer-event(event) => {
                 if event.kind == PointerEventKind.down {
-                    DisableIRButtons._set_permitted_screen_change(root.screen_id);
+                    if root.action_list_id != "" {
+                        DisableIRButtons._set_permitted_screen_change(root.screen_id);
+                    }
+                    
                     Logic.remote_btn_press(root.action_list_id, root.repeat_on_hold);
                     root.press_down();
                     held = true;
@@ -76,8 +80,12 @@ export component RemoteButton { //custom button for sending remote signals and n
             }
         }
 
-        if held || !enabled: Rectangle { //when the button is pressed, shade it darker for visual feedback
+        if (held || !enabled) && !disable_override: Rectangle { //when the button is pressed, shade it darker for visual feedback
             background: #0000007f;
+        }
+
+        if held && disable_override: Rectangle {
+            background: #ff00007f;
         }
     }
 }
@@ -280,14 +288,14 @@ component PlaybackControlPanel {
     GridLayout {
         spacing: 10px;
 
-        RemoteButton {
+        btn_pause := RemoteButton {
             row: 0;
             col: 1;
             icon: Symbols.pause;
             action_list_id: al_pause;
         }
 
-        RemoteButton {
+        btn_play := RemoteButton {
             row: 1;
             col: 1;
             rowspan: 2;
@@ -295,7 +303,7 @@ component PlaybackControlPanel {
             action_list_id: al_play;
         }
 
-        RemoteButton {
+        btn_rewind := RemoteButton {
             row: 1;
             col: 0;
             icon: Symbols.rewind;
@@ -329,6 +337,8 @@ component PlaybackControlPanel {
             icon: Symbols.stop;
             action_list_id: al_stop;
         }
+
+        @children
     }
 }
 
@@ -350,8 +360,14 @@ export component HDRPlaybackControlPanel inherits PlaybackControlPanel {
 
     al_rewind: "HDR_REWIND";
     al_fast_forward: "HDR_FAST_FORWARD";
-    al_skip_back: "HDR_SKIP_BACK";
-    al_skip_forward: "HDR_SKIP_FORWARD";
+    al_skip_forward: "HDR_MANUAL_SKIP_PLUS_60";
+
+    RemoteButton {
+        row: 0;
+        col: 0;
+        text: "Library";
+        action_list_id: "HDR_VIDEO_MENU";
+    }
 }
 
 export component YouViewPlaybackControlPanel inherits PlaybackControlPanel {
@@ -485,13 +501,16 @@ export component YoUViewNumberGrid inherits NumberGrid {
 }
 
 
-export component MultiPageRemoteButtonGrid { //automatically populated grid spanning multiple pages
+component MultiPageRemoteButtonGrid { //automatically populated grid spanning multiple pages
     //properties for creating the grid page, to be passed in to it
     in property <int> num_cols;
     in property <int> num_rows;
     in property <length> button_width;
     in property <length> button_height;
     in property <[RemoteButtonData]> grid_data;
+
+    //cheat for per-remote channel action lists without making another very similar component
+    in property <string> action_list_id_prefix;
 
     //determine the range of buttons in grid_data to show based on the current page number and how many to show per page
     property <int> current_pagenum: 0;
@@ -524,7 +543,7 @@ export component MultiPageRemoteButtonGrid { //automatically populated grid span
 
                 icon: grid_data[i + iMin].icon;
                 text: grid_data[i + iMin].text;
-                action_list_id: grid_data[i + iMin].action_list_id;
+                action_list_id: action_list_id_prefix + grid_data[i + iMin].action_list_id;
                 repeat_on_hold: grid_data[i + iMin].repeat_on_hold;
             }
         }
@@ -564,20 +583,34 @@ export component MultiPageRemoteButtonGrid { //automatically populated grid span
     }
 }
 
+export component TVChannelGrid inherits MultiPageRemoteButtonGrid {
+    num_cols: 5;
+    num_rows: 5;
+    button_width : 80px;
+    button_height : 70px;
+    grid_data: TVChannelButtonData.data;
+    action_list_id_prefix: "TV_";
+}
 
-export component RemoteButtonDebugGrid {
-    in property <[RemoteButtonData]> remote_data;
-        
-    MultiPageRemoteButtonGrid {
-        preferred-width: 100%;
-        preferred-height: 100%;
-        
-        num_cols: 4;
-        num_rows: 8;
-        button_width: 80px;
-        button_height: 60px;
-        grid_data: remote_data;
-    }
+export component HDRChannelGrid inherits MultiPageRemoteButtonGrid {
+    num_cols: 5;
+    num_rows: 5;
+    button_width : 80px;
+    button_height : 70px;
+    grid_data: TVChannelButtonData.data;
+    action_list_id_prefix: "HDR_";
+}
+
+export component RemoteButtonDebugGrid inherits MultiPageRemoteButtonGrid {
+    in property <[RemoteButtonData]> data;
+    
+    preferred-width: 100%;
+    preferred-height: 100%;
+    
+    num_cols: 4;
+    num_rows: 8;
+    button_width: 80px;
+    button_height: 60px;
 }
 
 
@@ -698,9 +731,9 @@ export component UINavPanel { //navigation buttons at bottom of screen for for g
             }
     
             RemoteButton {
-                text: "Misc Buttons";
+                text: "Power/AV/SPKR";
                 press_release => {
-                    //show popup containing helpful buttons that may want to be accessed from anywhere (power, av)
+                    //show popup containing helpful buttons that may want to be accessed from anywhere (power, av, etc.)
                     show_misc_buttons_popup();
                 }
             }

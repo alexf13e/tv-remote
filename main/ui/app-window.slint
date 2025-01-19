@@ -20,11 +20,14 @@ import { TVPlaybackScreen } from "screens/tv/tv-playback-screen.slint";
 import { SpeakersAllButtonsScreen } from "screens/speakers/speakers-all-buttons-screen.slint";
 
 import { HDRAllButtonsScreen } from "screens/hdr/hdr-all-buttons-screen.slint";
+import { HDRHomeScreen } from "screens/hdr/hdr-home-screen.slint";
+import { HDRRecordScreen } from "screens/hdr/hdr-record-screen.slint";
+import { HDRPlayScreen } from "screens/hdr/hdr-play-screen.slint";
 
 import { YouViewAllButtonsScreen } from "screens/youview/youview-all-buttons-screen.slint";
 
-
-export { Logic, ScreenHistory, CurrentDisplayedScreen, DisableIRButtons } from "globals.slint"; //export Logic so it can be accessed by c++
+//export things to access them in c++
+export { Logic, ScreenHistory, CurrentDisplayedScreen, DisableIRButtons } from "globals.slint";
 
 
 export component AppWindow inherits Window {
@@ -55,6 +58,9 @@ export component AppWindow inherits Window {
         if CurrentDisplayedScreen.id == RemoteScreenID.SPEAKERS_ALL_BUTTONS: SpeakersAllButtonsScreen {}
 
         if CurrentDisplayedScreen.id == RemoteScreenID.HDR_ALL_BUTTONS: HDRAllButtonsScreen {}
+        if CurrentDisplayedScreen.id == RemoteScreenID.HDR_HOME: HDRHomeScreen {}
+        if CurrentDisplayedScreen.id == RemoteScreenID.HDR_RECORD: HDRRecordScreen {}
+        if CurrentDisplayedScreen.id == RemoteScreenID.HDR_PLAY: HDRPlayScreen {}
 
         if CurrentDisplayedScreen.id == RemoteScreenID.YOUVIEW_ALL_BUTTONS: YouViewAllButtonsScreen {}
 
