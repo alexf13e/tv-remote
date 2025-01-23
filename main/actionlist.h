@@ -78,6 +78,12 @@ void createActionLists()
         RemoteTV::OK
     };
 
+    ALL_ACTION_LISTS["STARTUP_NAS"] = {
+        RemoteTV::HOME,
+        WAIT_FOR_MS(2000),
+        RemoteTV::OK
+    };
+
 
 
     //////////////////////////////////////// CHANNELS ////////////////////////////////////////

@@ -46,6 +46,7 @@ namespace Power
     constexpr gpio_num_t RTC_GPIO_NUM_WAKEUP = GPIO_NUM_19;
     constexpr uint8_t EXIO_DISPLAY = 2;
     constexpr std::chrono::milliseconds INACTIVITY_SLEEP_TIMEOUT = std::chrono::milliseconds(40000);
+    constexpr uint32_t MOTION_DETECT_POLL_INTERVAL = 500;
 
     ESP_IOExpander_CH422G* io_expander;
     QueueHandle_t gpio_event_queue = NULL;
@@ -81,13 +82,14 @@ namespace Power
 
         io_expander->digitalWrite(EXIO_DISPLAY, 0); //turn the display backlight off to save power
         SleepMemory::save(); //save data which should be remembered through sleep
-        
-        std::this_thread::sleep_for(std::chrono::milliseconds(200)); //seems to prevent TG1WDT_SYS_RST from occurring
 
+        //std::this_thread::sleep_for(std::chrono::milliseconds(MOTION_DETECT_POLL_INTERVAL + 100));
+        
         //configure the pin with the motion switch to wake up the device when it goes high
         ESP_ERROR_CHECK(esp_sleep_enable_ext0_wakeup(RTC_GPIO_NUM_WAKEUP, 1));
         ESP_ERROR_CHECK(rtc_gpio_pulldown_en(RTC_GPIO_NUM_WAKEUP));
         ESP_ERROR_CHECK(rtc_gpio_pullup_dis(RTC_GPIO_NUM_WAKEUP));
+
 
         esp_deep_sleep_start();
     }
@@ -149,7 +151,7 @@ namespace Power
                 xQueueReset(gpio_event_queue);
 
                 //wait a bit before checking the queue again
-                vTaskDelay(500 / portTICK_PERIOD_MS);
+                vTaskDelay(MOTION_DETECT_POLL_INTERVAL / portTICK_PERIOD_MS);
             }
         }
     }

@@ -84,10 +84,10 @@ export component AppWindow inherits Window {
 
     if show_misc_buttons:
         MiscButtonPopup { //draw at a fixed position, separate from any layouts
-            width: parent.width;
-            height: 220px;
             x: 0px;
-            y: parent.height - self.height;
+            y: 0px;
+            width: parent.width;
+            height: parent.height;
 
             hide_misc_buttons_popup => {
                 show_misc_buttons = false;

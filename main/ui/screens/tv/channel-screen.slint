@@ -36,12 +36,13 @@ export component TVChannelScreen { //whole screen for tv channel selection
                     text: "NAS";
                     screen_id: RemoteScreenID.TV_PLAYBACK;
                     horizontal-stretch: 1;
+                    action_list_id: "STARTUP_NAS";
                 }
 
                 RemoteButton {
                     text: "GUIDE";
                     horizontal-stretch: 1;
-                    action_list_id: "TV_GUIDE";
+                    action_list_id: "TV_GUIDE_DISMISS_MESSAGE";
                 }
     
                 RemoteButton {

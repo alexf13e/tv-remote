@@ -667,101 +667,115 @@ export component MiscButtonPopup {
 
     callback hide_misc_buttons_popup();
 
-    Rectangle {
-        background: Theme.background_colour; //outline rectangle
+    VerticalLayout {
+        Rectangle {
+            TouchArea {
+                clicked => {
+                    hide_misc_buttons_popup();
+                }
+            }
 
-        VerticalLayout { //layout just to get padding, as rectangle padding doesn't work
-            padding: root.padding;
-            
-            Rectangle { //main background rectangle
-                background: Theme.background_colour;
+            background: #000000C0;
+            height: 580px;
+        }
 
-                TouchArea {} //prevent touches on background from going through to buttons behind popup
+
+        Rectangle {
+            background: Theme.background_colour; //outline rectangle
+    
+            VerticalLayout { //layout just to get padding, as rectangle padding doesn't work
+                padding: root.padding;
                 
-                VerticalLayout { //vertical layout for each row of buttons. rows may have different amounts, so not using grid layout
-                    spacing: root.spacing;
+                Rectangle { //main background rectangle
+                    background: Theme.background_colour;
     
-                    HorizontalLayout {
+                    TouchArea {} //prevent touches on background from going through to buttons behind popup
+                    
+                    VerticalLayout { //vertical layout for each row of buttons. rows may have different amounts, so not using grid layout
                         spacing: root.spacing;
+        
+                        HorizontalLayout {
+                            spacing: root.spacing;
+        
+                            RemoteButton {
+                                text: "SPKR POWER";
+                                action_list_id: "SPEAKERS_POWER";
+                                bg_colour: Theme.power_bg_colour;
+                                text_colour: Theme.power_fg_colour;
+                            }
+                
+                            RemoteButton {
+                                text: "TV POWER";
+                                action_list_id: "TV_POWER";
+                                bg_colour: Theme.power_bg_colour;
+                                text_colour: Theme.power_fg_colour;
+                            }
+                
+                            RemoteButton {
+                                text: "HDR POWER";
+                                action_list_id: "HDR_POWER";
+                                bg_colour: Theme.power_bg_colour;
+                                text_colour: Theme.power_fg_colour;
+                            }
+                
+                            RemoteButton {
+                                text: "YOUVIEW POWER";
+                                action_list_id: "YOUVIEW_POWER";
+                                bg_colour: Theme.power_bg_colour;
+                                text_colour: Theme.power_fg_colour;
+                            }
+                        }
+        
+                        HorizontalLayout {
+                            spacing: root.spacing;
+        
+                            RemoteButton {
+                                text: "SPKR TV";
+                                action_list_id: "SPEAKERS_TV_AUDIO";
+                                bg_colour: Theme.volume_bg_colour;
+                                icon_colorize: Theme.volume_fg_colour;
+                            }
+        
+                            RemoteButton {
+                                text: "SPKR HDR";
+                                action_list_id: "SPEAKERS_MEDIA_PLAYER";
+                                bg_colour: Theme.volume_bg_colour;
+                                icon_colorize: Theme.volume_fg_colour;
+                            }
+        
+                            RemoteButton {
+                                text: "SPKR YVIEW";
+                                action_list_id: "SPEAKERS_CBL_SAT";
+                                bg_colour: Theme.volume_bg_colour;
+                                icon_colorize: Theme.volume_fg_colour;
+                            }
+        
+                            RemoteButton {
+                                text: "SPKR RADIO";
+                                action_list_id: "SPEAKERS_TUNER";
+                                bg_colour: Theme.volume_bg_colour;
+                                icon_colorize: Theme.volume_fg_colour;
+                            }
     
-                        RemoteButton {
-                            text: "SPKR POWER";
-                            action_list_id: "SPEAKERS_POWER";
-                            bg_colour: Theme.power_bg_colour;
-                            text_colour: Theme.power_fg_colour;
+                            RemoteButton {
+                                text: "TV AV";
+                                action_list_id: "TV_AV";
+                                bg_colour: Theme.av_bg_colour;
+                                text_colour: Theme.av_fg_colour;
+                            }
                         }
-            
-                        RemoteButton {
-                            text: "TV POWER";
-                            action_list_id: "TV_POWER";
-                            bg_colour: Theme.power_bg_colour;
-                            text_colour: Theme.power_fg_colour;
-                        }
-            
-                        RemoteButton {
-                            text: "HDR POWER";
-                            action_list_id: "HDR_POWER";
-                            bg_colour: Theme.power_bg_colour;
-                            text_colour: Theme.power_fg_colour;
-                        }
-            
-                        RemoteButton {
-                            text: "YOUVIEW POWER";
-                            action_list_id: "YOUVIEW_POWER";
-                            bg_colour: Theme.power_bg_colour;
-                            text_colour: Theme.power_fg_colour;
-                        }
-                    }
+        
+                        HorizontalLayout {
+                            alignment: end;
+                            
+                            RemoteButton {
+                                width: 100%;
+                                height: 40px;
+                                text: "CLOSE";
     
-                    HorizontalLayout {
-                        spacing: root.spacing;
-    
-                        RemoteButton {
-                            text: "SPKR TV";
-                            action_list_id: "SPEAKERS_TV_AUDIO";
-                            bg_colour: Theme.volume_bg_colour;
-                            icon_colorize: Theme.volume_fg_colour;
-                        }
-    
-                        RemoteButton {
-                            text: "SPKR HDR";
-                            action_list_id: "SPEAKERS_MEDIA_PLAYER";
-                            bg_colour: Theme.volume_bg_colour;
-                            icon_colorize: Theme.volume_fg_colour;
-                        }
-    
-                        RemoteButton {
-                            text: "SPKR YVIEW";
-                            action_list_id: "SPEAKERS_CBL_SAT";
-                            bg_colour: Theme.volume_bg_colour;
-                            icon_colorize: Theme.volume_fg_colour;
-                        }
-    
-                        RemoteButton {
-                            text: "SPKR RADIO";
-                            action_list_id: "SPEAKERS_TUNER";
-                            bg_colour: Theme.volume_bg_colour;
-                            icon_colorize: Theme.volume_fg_colour;
-                        }
-
-                        RemoteButton {
-                            text: "TV AV";
-                            action_list_id: "TV_AV";
-                            bg_colour: Theme.av_bg_colour;
-                            text_colour: Theme.av_fg_colour;
-                        }
-                    }
-    
-                    HorizontalLayout {
-                        alignment: end;
-                        
-                        RemoteButton {
-                            width: 100%;
-                            height: 40px;
-                            text: "CLOSE";
-
-                            press_release => {
-                                hide_misc_buttons_popup();
+                                press_release => {
+                                    hide_misc_buttons_popup();
+                                }
                             }
                         }
                     }
@@ -769,6 +783,8 @@ export component MiscButtonPopup {
             }
         }
     }
+
+    
 }
 
 export component UINavPanel { //navigation buttons at bottom of screen for for going back/forward screens and to screen list
