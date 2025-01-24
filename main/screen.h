@@ -20,8 +20,8 @@
 #include "driver/gpio.h"
 #include "esp_err.h"
 #include "esp_lcd_touch_gt911.h"
+#include "freertos/projdefs.h"
 #include "hal/i2c_types.h"
-#include "portmacro.h"
 #include "soc/clk_tree_defs.h"
 #include "soc/gpio_num.h"
 #include "slint-esp.h"
@@ -155,14 +155,14 @@ namespace Screen
 
             //Reset the touch screen. It is recommended that you reset the touch screen before using it.
             uint8_t write_buf = 0x2C;
-            i2c_master_write_to_device(I2C_MASTER_NUM, 0x38, &write_buf, 1, I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
+            i2c_master_write_to_device(I2C_MASTER_NUM, 0x38, &write_buf, 1, pdMS_TO_TICKS(I2C_MASTER_TIMEOUT_MS));
             esp_rom_delay_us(100 * 1000);
 
             gpio_set_level(GPIO_NUM_LCD_INT, 0);
             esp_rom_delay_us(100 * 1000);
 
             write_buf = 0x2E;
-            i2c_master_write_to_device((i2c_port_t)I2C_MASTER_NUM, 0x38, &write_buf, 1, I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
+            i2c_master_write_to_device((i2c_port_t)I2C_MASTER_NUM, 0x38, &write_buf, 1, pdMS_TO_TICKS(I2C_MASTER_TIMEOUT_MS));
             esp_rom_delay_us(200 * 1000);
 
             esp_lcd_touch_handle_t touch_handle = NULL;

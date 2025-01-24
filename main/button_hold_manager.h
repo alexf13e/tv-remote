@@ -7,45 +7,44 @@
 #include <string>
 #include <thread>
 
+#include "freertos/timers.h"
+
 #include "actionlist.h"
 #include "clicker.h"
+#include "freertos/projdefs.h"
 
 namespace ButtonHoldManager {
 
-    constexpr std::chrono::milliseconds hold_repeat_delay = std::chrono::milliseconds(350);
-    constexpr std::chrono::milliseconds repeat_interval = std::chrono::milliseconds(200);
-    constexpr std::chrono::milliseconds clicker_reclick_delay = std::chrono::milliseconds(50);
-    constexpr std::chrono::milliseconds repeater_poll_interval = std::chrono::milliseconds(50);
+    constexpr uint32_t hold_repeat_delay = 350;
+    constexpr uint32_t hold_repeat_interval = 200;
+    constexpr uint32_t reclick_delay = 50;
 
-    std::string current_held_actionList;
-    std::thread thread_repeater;
+    std::string current_held_action_list;
+    TimerHandle_t timer_hold_repeat_delay, timer_hold_repeat_interval, timer_clicker_reclick;
 
     bool initialised = false;
 
-    void repeater()
+
+    void on_clicker_reclick(TimerHandle_t timer)
     {
-        while (true)
+        Clicker::up();
+    }
+
+    void begin_repeat(TimerHandle_t timer)
+    {
+        //button has been held for initial delay, begin a timer for repeating click
+        xTimerStart(timer_hold_repeat_interval, 0);
+    }
+
+    void on_repeat(TimerHandle_t timer)
+    {
+        if (ActionListRunner::request_run(current_held_action_list))
         {
-            std::this_thread::sleep_for(repeater_poll_interval);
-            if (current_held_actionList == "") continue;
-
-            //a button has been pressed, begin delay before repeating
-            const std::string desired_held_actionList = current_held_actionList;
-            std::this_thread::sleep_for(hold_repeat_delay);
-
-            while (current_held_actionList == desired_held_actionList)
-            {
-                //same button still being held, so repeat
-
-                bool success = ActionListRunner::request_run(desired_held_actionList);
-                if (success) Clicker::down(); //only click for feedback of action actually happening
-                
-                if (repeat_interval > clicker_reclick_delay) std::this_thread::sleep_for(repeat_interval - clicker_reclick_delay);
-                
-                if (success) Clicker::up();
-                std::this_thread::sleep_for(clicker_reclick_delay);
-            }
+            //only click for feedback of action actually happening
+            Clicker::down();
         }
+        
+        xTimerStart(timer_clicker_reclick, 0);
     }
 
     void init()
@@ -57,7 +56,15 @@ namespace ButtonHoldManager {
         }
 
         Clicker::init();
-        thread_repeater = std::thread(repeater);
+
+        timer_hold_repeat_delay = xTimerCreate("timer_hold_repeat_delay", pdMS_TO_TICKS(hold_repeat_delay), pdFALSE, 0,
+            begin_repeat);
+
+        timer_hold_repeat_interval = xTimerCreate("timer_hold_repeat_interval", pdMS_TO_TICKS(hold_repeat_interval),
+            pdTRUE, 0, on_repeat);
+
+        timer_clicker_reclick = xTimerCreate("timer_clicker_reclick", pdMS_TO_TICKS(hold_repeat_interval -
+            reclick_delay), pdFALSE, 0, on_clicker_reclick);
 
         initialised = true;
     }
@@ -81,7 +88,11 @@ namespace ButtonHoldManager {
 
             //even if the initial request couldnt be run, holding the button down should allow for the action to start
             //running as soon as possible
-            if (repeat_on_hold) current_held_actionList = action_list_id;
+            if (repeat_on_hold)
+            {
+                current_held_action_list = action_list_id;
+                xTimerStart(timer_hold_repeat_delay, 0);
+            }
         }
     }
 
@@ -93,8 +104,11 @@ namespace ButtonHoldManager {
             return;
         }
 
+        xTimerStop(timer_hold_repeat_delay, 0);
+        xTimerStop(timer_hold_repeat_interval, 0);
+
         Clicker::up();
-        current_held_actionList = "";
+        current_held_action_list = "";
     }
 }
 
