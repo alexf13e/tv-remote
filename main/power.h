@@ -57,19 +57,19 @@ namespace Power
 
     void refresh_sleep_timeout()
     {
-        xTimerReset(timer_enter_sleep, 0);
+        if (sleep_enabled) xTimerReset(timer_enter_sleep, 0);
     }
 
     void enable_sleep()
     {
-        refresh_sleep_timeout();
         sleep_enabled = true;
+        refresh_sleep_timeout();
     }
 
     void disable_sleep()
     {
-        xTimerStop(timer_enter_sleep, 0);
         sleep_enabled = false;
+        xTimerStop(timer_enter_sleep, 0);
     }
 
     void sleep()
