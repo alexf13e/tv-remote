@@ -11,10 +11,13 @@
 #include "driver/ledc.h"
 #include "driver/adc.h"
 #include "esp_err.h"
+#include "esp_log_level.h"
+#include "freertos/projdefs.h"
 #include "hal/adc_types.h"
 #include "hal/ledc_types.h"
 #include "soc/clk_tree_defs.h"
 #include "soc/gpio_num.h"
+#include "freertos/timers.h"
 
 
 namespace Backlight {
@@ -32,10 +35,12 @@ namespace Backlight {
 
     ledc_timer_config_t timer_config;
     ledc_channel_config_t channel_config;
-    std::thread thread_ldr_auto_brightness;
+    TimerHandle_t timer_poll_ldr;
+
     bool auto_brightness_enabled = true;
 
     bool initialised = false;
+
 
     uint32_t brightness_level_to_duty(float level)
     {
@@ -51,7 +56,7 @@ namespace Backlight {
         //https://www.desmos.com/calculator/6bflyfsp6w
 
         //adapted for screen by scaling between min_brightness and 1, as below around 5% duty the backlight turns off
-        //fully turning the backlight off for power saving is done just before sleep in power.h
+        //fully turning the backlight off for power saving is done just before sleep in power.h using EXIO pin
         const float min_brightness = 0.06;
         
         if (level < 0.08f)
@@ -91,7 +96,10 @@ namespace Backlight {
             return;
         }
 
-        if (apply_perception_scale) level = scale_perceived_brightness(level);
+        //no fade time, do it instantly
+        if (duration_ms == 0) set_brightness(level, apply_perception_scale);
+
+        if (apply_perception_scale) level = scale_perceived_brightness(level);      
 
         ESP_ERROR_CHECK(ledc_set_fade_with_time(SPEED_MODE, CHANNEL, brightness_level_to_duty(level), duration_ms));
         ESP_ERROR_CHECK(ledc_fade_start(SPEED_MODE, CHANNEL, LEDC_FADE_NO_WAIT));
@@ -111,28 +119,16 @@ namespace Backlight {
         return value;
     }
 
-    void update_brightness_from_ldr()
+    void update_brightness_from_ldr(TimerHandle_t timer)
     {
-        while (true)
-        {
-            int ldr_reading = read_ldr();
-            int max_reading = 1 << ADC_BIT_WIDTH_LDR;
-            float normalised_reading = (float)ldr_reading / max_reading;
-            float brightness_level = 1.0f - normalised_reading; //ldr reading is higher when darker
+        if (!auto_brightness_enabled) return;
 
-            //if target duty is close to the current duty (i.e. small/no brightness change), the fade will complete
-            //immediately when blocking.
-            //only want to adjust the brightness once every second with a smooth fade to reduce flickering.
-            //run the fade without waiting to stop, then sleep the thread for desired update interval to ensure the next
-            //brightness update is delayed. simpler this way than blocking, checking how long it actually took, then
-            //waiting the remainder
-            if (auto_brightness_enabled)
-            {
-                fade_brightness(brightness_level, BRIGHTNESS_UPDATE_INTERVAL_MS, true);
-            }
-            
-            std::this_thread::sleep_for(std::chrono::milliseconds(BRIGHTNESS_UPDATE_INTERVAL_MS + 50));
-        }
+        int ldr_reading = read_ldr();
+        int max_reading = 1 << ADC_BIT_WIDTH_LDR;
+        float normalised_reading = (float)ldr_reading / max_reading;
+        float brightness_level = 1.0f - normalised_reading; //ldr reading is higher when darker
+
+        fade_brightness(brightness_level, BRIGHTNESS_UPDATE_INTERVAL_MS, true);
     }
 
     void init()
@@ -142,6 +138,8 @@ namespace Backlight {
             std::cerr << "attempted to initialise backlight more than once" << std::endl;
             return;
         }
+
+        esp_log_level_set("ledc", ESP_LOG_ERROR); //prevent "fade too slow" warning messages
 
         timer_config = {
             .speed_mode = SPEED_MODE,
@@ -171,7 +169,10 @@ namespace Backlight {
         initialised = true;
 
         set_brightness(0.5, true);
-        thread_ldr_auto_brightness = std::thread(update_brightness_from_ldr);
+        timer_poll_ldr = xTimerCreate("timer_poll_ldr", pdMS_TO_TICKS(BRIGHTNESS_UPDATE_INTERVAL_MS), pdTRUE, 0,
+            update_brightness_from_ldr);
+        
+        xTimerStart(timer_poll_ldr, 0);
     }
 }
 

@@ -161,12 +161,10 @@ export global CurrentDisplayedScreen { //manage the currently displayed screen
     function check_special_screen_changes(old_id: RemoteScreenID, new_id: RemoteScreenID) {
         if (new_id == RemoteScreenID.IR_RECEIVE) {
             Logic.disable_sleep(); //when on this screen, disable sleep as device may not be touched for a few seconds while learning codes
-            Logic.disable_auto_brightness(); //disable auto brightness to prevent warnings about ledc fade too slow
         }
 
-        if (old_id == RemoteScreenID.IR_RECEIVE) { //leaving receive screen, re-enable sleep and auto brightness
+        if (old_id == RemoteScreenID.IR_RECEIVE) { //leaving receive screen, re-enable sleep
             Logic.enable_sleep();
-            Logic.enable_auto_brightness();
         }
     }
 
