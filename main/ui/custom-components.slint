@@ -60,6 +60,8 @@ export component RemoteButton { //custom button for sending remote signals and n
 
     if enabled: touch := TouchArea { //toucharea to detect the button being pressed (when enabled)
             pointer-event(event) => {
+                Logic.refresh_sleep_timeout();
+                
                 if event.kind == PointerEventKind.down {
                     if root.action_list_id != "" {
                         DisableIRButtons._set_permitted_screen_change(root.screen_id);

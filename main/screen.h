@@ -8,6 +8,7 @@
 
 
 #include <cstdint>
+#include <new>
 #include <slint-platform.h>
 #include <vector>
 #include <iostream>
@@ -68,13 +69,16 @@ namespace Screen
 
         constexpr gpio_num_t GPIO_NUM_LCD_INT = GPIO_NUM_4;
 
+        esp_lcd_panel_handle_t panel_handle;
+        esp_lcd_touch_handle_t touch_handle;
+
         
         bool initialised = false;
 
 
-        esp_lcd_panel_handle_t displaySetup()
+        void displaySetup()
         {
-            esp_lcd_panel_handle_t panel_handle = nullptr;
+            panel_handle = nullptr;
             esp_lcd_rgb_panel_config_t panel_config = {
                 .clk_src = LCD_CLK_SRC_DEFAULT,
                 .timings = {
@@ -90,10 +94,12 @@ namespace Screen
                     .vsync_front_porch = 8,
                     .flags = {
                         .pclk_active_neg = true,
+                        
                     }
                 },
                 
                 .data_width = 16,
+                .bits_per_pixel = 16,
                 .num_fbs = LCD_NUM_FB,
                 .hsync_gpio_num = PIN_NUM_HSYNC,
                 .vsync_gpio_num = PIN_NUM_VSYNC,
@@ -137,11 +143,9 @@ namespace Screen
 
             ESP_ERROR_CHECK(esp_lcd_panel_reset(panel_handle));
             ESP_ERROR_CHECK(esp_lcd_panel_init(panel_handle));
-
-            return panel_handle;
         }
 
-        esp_lcd_touch_handle_t touchSetup()
+        void touchSetup()
         {
             i2c_init(); //initialise i2c if nothing else has
 
@@ -165,7 +169,7 @@ namespace Screen
             i2c_master_write_to_device((i2c_port_t)I2C_MASTER_NUM, 0x38, &write_buf, 1, pdMS_TO_TICKS(I2C_MASTER_TIMEOUT_MS));
             esp_rom_delay_us(200 * 1000);
 
-            esp_lcd_touch_handle_t touch_handle = NULL;
+            touch_handle = NULL;
             esp_lcd_panel_io_handle_t tp_io_handle = NULL;
             esp_lcd_panel_io_i2c_config_t tp_io_config = ESP_LCD_TOUCH_IO_I2C_GT911_CONFIG();
             esp_lcd_new_panel_io_i2c(I2C_MASTER_NUM, &tp_io_config, &tp_io_handle);
@@ -185,11 +189,9 @@ namespace Screen
             };
             
             ESP_ERROR_CHECK(esp_lcd_touch_new_i2c_gt911(tp_io_handle, &tp_cfg, &touch_handle));
-
-            return touch_handle;
         }
 
-        void slintSetup(const esp_lcd_panel_handle_t panel_handle, const esp_lcd_touch_handle_t touch_handle)
+        void slintSetup()
         {
             /* Allocate a drawing buffer */
             static std::vector<slint::platform::Rgb565Pixel> fb1(LCD_H_RES * LCD_V_RES);
@@ -230,11 +232,17 @@ namespace Screen
             return;
         }
 
-        esp_lcd_panel_handle_t panel_handle = displaySetup();
-        esp_lcd_touch_handle_t touch_handle = touchSetup();
-        slintSetup(panel_handle, touch_handle);
+        displaySetup();
+        touchSetup();
+        slintSetup();
 
         initialised = true;
+    }
+
+    void destroy()
+    {
+        //seemingly must destroy screen before sleeping to prevent occasional TG1WDT_SYS_RST
+        ESP_ERROR_CHECK(esp_lcd_panel_del(panel_handle));
     }
 }
 

@@ -3,9 +3,7 @@
 #define BACKLIGHT_H
 
 #include <algorithm>
-#include <chrono>
 #include <iostream>
-#include <thread>
 
 #include "driver/adc_types_legacy.h"
 #include "driver/ledc.h"
@@ -18,6 +16,8 @@
 #include "soc/clk_tree_defs.h"
 #include "soc/gpio_num.h"
 #include "freertos/timers.h"
+
+#include "event_timers.h"
 
 
 namespace Backlight {
@@ -173,6 +173,8 @@ namespace Backlight {
             update_brightness_from_ldr);
         
         xTimerStart(timer_poll_ldr, 0);
+
+        Timers::store(timer_poll_ldr);
     }
 }
 

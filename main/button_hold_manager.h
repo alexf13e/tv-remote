@@ -2,16 +2,16 @@
 #ifndef BUTTON_HOLD_MANAGER_H
 #define BUTTON_HOLD_MANAGER_H
 
-#include <chrono>
 #include <iostream>
 #include <string>
-#include <thread>
 
+#include "freertos/projdefs.h"
 #include "freertos/timers.h"
 
 #include "actionlist.h"
 #include "clicker.h"
-#include "freertos/projdefs.h"
+#include "event_timers.h"
+
 
 namespace ButtonHoldManager {
 
@@ -65,6 +65,10 @@ namespace ButtonHoldManager {
 
         timer_clicker_reclick = xTimerCreate("timer_clicker_reclick", pdMS_TO_TICKS(hold_repeat_interval -
             reclick_delay), pdFALSE, 0, on_clicker_reclick);
+
+        Timers::store(timer_hold_repeat_delay);
+        Timers::store(timer_hold_repeat_interval);
+        Timers::store(timer_clicker_reclick);
 
         initialised = true;
     }

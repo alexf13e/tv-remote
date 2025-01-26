@@ -14,17 +14,19 @@
 void create_callbacks(slint::ComponentHandle<AppWindow> main_window)
 {
     main_window->global<Logic>().on_remote_btn_press([&](slint::SharedString action_list_id, bool repeat_on_hold) {
-        Power::refresh_sleep_timeout();
         ButtonHoldManager::press(action_list_id.data(), repeat_on_hold);
     });
 
     main_window->global<Logic>().on_remote_btn_release([]() {
-        Power::refresh_sleep_timeout();
         ButtonHoldManager::release();
     });
 
     main_window->global<Logic>().on_sleep([]() {
         Power::sleep();
+    });
+
+    main_window->global<Logic>().on_refresh_sleep_timeout([]() {
+        Power::refresh_sleep_timeout();
     });
 
     main_window->global<Logic>().on_disable_sleep([]() {

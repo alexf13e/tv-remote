@@ -23,6 +23,8 @@
 
 #include "i2c_init.h"
 #include "sleep_memory.h"
+#include "event_timers.h"
+#include "screen.h"
 
 
 namespace Power
@@ -80,17 +82,25 @@ namespace Power
             return;
         }
 
+        Timers::stop_all();
+        Screen::destroy();
+
         io_expander->digitalWrite(EXIO_DISPLAY, 0); //turn the display backlight off to save power
         SleepMemory::save(); //save data which should be remembered through sleep
 
-        xTimerStop(timer_poll_motion_detect, 0);
+        //clear isr and gpio setup for motion detect pin
         ESP_ERROR_CHECK(gpio_isr_handler_remove(RTC_GPIO_NUM_MOTION_DETECT));
+        ESP_ERROR_CHECK(gpio_reset_pin(RTC_GPIO_NUM_MOTION_DETECT));
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         
-        //configure the pin with the motion switch to wake up the device when it goes high
+        //configure the pin to wake up the device when it goes high
         ESP_ERROR_CHECK(esp_sleep_enable_ext0_wakeup(RTC_GPIO_NUM_MOTION_DETECT, 1));
         ESP_ERROR_CHECK(rtc_gpio_pulldown_en(RTC_GPIO_NUM_MOTION_DETECT));
         ESP_ERROR_CHECK(rtc_gpio_pullup_dis(RTC_GPIO_NUM_MOTION_DETECT));
 
+
+        std::cout << "sleep time" << std::endl;
         esp_deep_sleep_start();
     }
 
@@ -170,6 +180,9 @@ namespace Power
 
         xTimerStart(timer_poll_motion_detect, 0);
         xTimerStart(timer_enter_sleep, 0);
+
+        Timers::store(timer_poll_motion_detect);
+        Timers::store(timer_enter_sleep);
 
         initialised = true;
     }

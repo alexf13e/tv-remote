@@ -2,9 +2,7 @@
 #ifndef CLICKER_H
 #define CLICKER_H
 
-#include <chrono>
 #include <iostream>
-#include <thread>
 
 #include "driver/gpio.h"
 #include "hal/gpio_types.h"
