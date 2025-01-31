@@ -54,6 +54,18 @@ void createActionLists()
         RemoteTV::OK
     };
 
+    ALL_ACTION_LISTS["TV_GUIDE_DISMISS_MESSAGE"] = {
+        RemoteTV::GUIDE,
+        RemoteTV::NAV_LEFT,
+        RemoteTV::OK
+    };
+
+    ALL_ACTION_LISTS["STARTUP_NAS"] = {
+        RemoteTV::HOME,
+        WAIT_FOR_MS(2000),
+        RemoteTV::OK
+    };
+
 
     ALL_ACTION_LISTS["STARTUP_HDR"] = {
         RemoteSpeakers::MEDIA_PLAYER,
@@ -72,17 +84,13 @@ void createActionLists()
         RemoteTV::OK
     };
 
-    ALL_ACTION_LISTS["TV_GUIDE_DISMISS_MESSAGE"] = {
-        RemoteTV::GUIDE,
-        RemoteTV::NAV_LEFT,
-        RemoteTV::OK
+    ALL_ACTION_LISTS["STARTUP_RADIO"] = {
+        RemoteSpeakers::POWER,
+        WAIT_FOR_MS(500),
+        RemoteSpeakers::TUNER
     };
 
-    ALL_ACTION_LISTS["STARTUP_NAS"] = {
-        RemoteTV::HOME,
-        WAIT_FOR_MS(2000),
-        RemoteTV::OK
-    };
+    
 
 
 

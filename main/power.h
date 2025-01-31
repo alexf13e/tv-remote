@@ -2,11 +2,9 @@
 #ifndef POWER_H
 #define POWER_H
 
-#include <chrono>
 #include <cstdint>
 #include <iostream>
 #include <string>
-#include <thread>
 #include <unistd.h>
 
 #include "driver/gpio.h"
@@ -47,7 +45,7 @@ namespace Power
 
     constexpr gpio_num_t RTC_GPIO_NUM_MOTION_DETECT = GPIO_NUM_19;
     constexpr uint8_t EXIO_DISPLAY = 2;
-    constexpr uint32_t INACTIVITY_SLEEP_TIMEOUT = 5000;
+    constexpr uint32_t INACTIVITY_SLEEP_TIMEOUT = 40000;
     constexpr uint32_t MOTION_DETECT_POLL_INTERVAL = 500;
 
     ESP_IOExpander_CH422G* io_expander;
@@ -91,8 +89,6 @@ namespace Power
         //clear isr and gpio setup for motion detect pin
         ESP_ERROR_CHECK(gpio_isr_handler_remove(RTC_GPIO_NUM_MOTION_DETECT));
         ESP_ERROR_CHECK(gpio_reset_pin(RTC_GPIO_NUM_MOTION_DETECT));
-
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         
         //configure the pin to wake up the device when it goes high
         ESP_ERROR_CHECK(esp_sleep_enable_ext0_wakeup(RTC_GPIO_NUM_MOTION_DETECT, 1));

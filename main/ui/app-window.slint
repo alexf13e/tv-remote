@@ -12,17 +12,18 @@ import { HomeScreen } from "screens/home-screen.slint";
 import { ScreenListScreen } from "screens/screen-list-screen.slint";
 import { IRReceiveScreen } from "screens/ir-receive-screen.slint";
 
-import { TVChannelScreen } from "screens/tv/channel-screen.slint";
 import { TVAllButtonsScreen } from "screens/tv/tv-all-buttons-screen.slint";
 import { TVAppsScreen } from "screens/tv/tv-apps-screen.slint";
 import { TVPlaybackScreen } from "screens/tv/tv-playback-screen.slint";
+import { TVChannelScreen } from "screens/tv/channel-screen.slint";
 
+import { SpeakersRadioScreen } from "screens/speakers/speakers-radio-screen.slint";
 import { SpeakersAllButtonsScreen } from "screens/speakers/speakers-all-buttons-screen.slint";
 
-import { HDRAllButtonsScreen } from "screens/hdr/hdr-all-buttons-screen.slint";
 import { HDRHomeScreen } from "screens/hdr/hdr-home-screen.slint";
 import { HDRRecordScreen } from "screens/hdr/hdr-record-screen.slint";
 import { HDRPlayScreen } from "screens/hdr/hdr-play-screen.slint";
+import { HDRAllButtonsScreen } from "screens/hdr/hdr-all-buttons-screen.slint";
 
 import { YouViewAllButtonsScreen } from "screens/youview/youview-all-buttons-screen.slint";
 
@@ -58,17 +59,18 @@ export component AppWindow inherits Window {
         if CurrentDisplayedScreen.id == RemoteScreenID.SCREEN_LIST: ScreenListScreen {}
         if CurrentDisplayedScreen.id == RemoteScreenID.IR_RECEIVE: IRReceiveScreen {}
 
-        if CurrentDisplayedScreen.id == RemoteScreenID.TV_ALL_BUTTONS: TVAllButtonsScreen {}
         if CurrentDisplayedScreen.id == RemoteScreenID.TV_CHANNELS: TVChannelScreen {}
         if CurrentDisplayedScreen.id == RemoteScreenID.TV_APPS: TVAppsScreen {}
         if CurrentDisplayedScreen.id == RemoteScreenID.TV_PLAYBACK: TVPlaybackScreen {}
+        if CurrentDisplayedScreen.id == RemoteScreenID.TV_ALL_BUTTONS: TVAllButtonsScreen {}
 
+        if CurrentDisplayedScreen.id == RemoteScreenID.SPEAKERS-RADIO: SpeakersRadioScreen {}
         if CurrentDisplayedScreen.id == RemoteScreenID.SPEAKERS_ALL_BUTTONS: SpeakersAllButtonsScreen {}
 
-        if CurrentDisplayedScreen.id == RemoteScreenID.HDR_ALL_BUTTONS: HDRAllButtonsScreen {}
         if CurrentDisplayedScreen.id == RemoteScreenID.HDR_HOME: HDRHomeScreen {}
         if CurrentDisplayedScreen.id == RemoteScreenID.HDR_RECORD: HDRRecordScreen {}
         if CurrentDisplayedScreen.id == RemoteScreenID.HDR_PLAY: HDRPlayScreen {}
+        if CurrentDisplayedScreen.id == RemoteScreenID.HDR_ALL_BUTTONS: HDRAllButtonsScreen {}
 
         if CurrentDisplayedScreen.id == RemoteScreenID.YOUVIEW_ALL_BUTTONS: YouViewAllButtonsScreen {}
 

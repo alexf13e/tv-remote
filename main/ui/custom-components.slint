@@ -9,9 +9,9 @@ export component RemoteButton { //custom button for sending remote signals and n
     in property <color> bg_colour: Theme.btn_default_colour;
     in property <color> text_colour: Theme.text_default_colour;
     in property <image> icon;                                   //image to show on button
-    in property <color> icon_colorize;
+    in property <color> icon_colourize: Theme.icon_default_colourize;
     in property <string> text;                                  //text to show on button
-    in property <length> font_size: 18px;
+    in property <length> font_size: Theme.default_font_size;
     in property <string> action_list_id: "";                      //name of the "macro" to play when button is pressed
     in property <RemoteScreenID> screen_id: RemoteScreenID.SAME; //the id of the screen which will be shown when this button is clicked
     in property <bool> repeat_on_hold: false;
@@ -46,7 +46,7 @@ export component RemoteButton { //custom button for sending remote signals and n
             height: parent.height;
             image-fit: ImageFit.contain;
             source: icon;
-            colorize: icon_colorize;
+            colorize: icon_colourize;
         }
 
         Text {
@@ -137,7 +137,7 @@ component RemoteNavPanel { //panel with bottom navigation buttons to replicate p
                 action_list_id: al_chan_up;
                 repeat_on_hold: true;
                 bg_colour: Theme.chan_bg_colour;
-                icon_colorize: Theme.chan_fg_colour;
+                icon_colourize: Theme.chan_fg_colour;
             }
 
             RemoteButton {
@@ -145,7 +145,7 @@ component RemoteNavPanel { //panel with bottom navigation buttons to replicate p
                 action_list_id: al_chan_down;
                 repeat_on_hold: true;
                 bg_colour: Theme.chan_bg_colour;
-                icon_colorize: Theme.chan_fg_colour;
+                icon_colourize: Theme.chan_fg_colour;
             }
         }
 
@@ -216,7 +216,7 @@ component RemoteNavPanel { //panel with bottom navigation buttons to replicate p
                     icon: Symbols.vol-mute;
                     action_list_id: al_mute;
                     bg_colour: Theme.volume_bg_colour;
-                    icon_colorize: Theme.volume_fg_colour;
+                    icon_colourize: Theme.volume_fg_colour;
                 }
             }
         }
@@ -230,7 +230,7 @@ component RemoteNavPanel { //panel with bottom navigation buttons to replicate p
                 action_list_id: al_vol_up;
                 repeat_on_hold: true;
                 bg_colour: Theme.volume_bg_colour;
-                icon_colorize: Theme.volume_fg_colour;
+                icon_colourize: Theme.volume_fg_colour;
             }
 
             RemoteButton {
@@ -238,7 +238,7 @@ component RemoteNavPanel { //panel with bottom navigation buttons to replicate p
                 action_list_id: al_vol_down;
                 repeat_on_hold: true;
                 bg_colour: Theme.volume_bg_colour;
-                icon_colorize: Theme.volume_fg_colour;
+                icon_colourize: Theme.volume_fg_colour;
             }
         }
     }
@@ -316,12 +316,32 @@ component PlaybackControlPanel {
         spacing: 10px;
 
         RemoteButton {
+            row: 0;
+            col: 0;
+            icon: Symbols.skip-back;
+            action_list_id: al_skip_back;
+            bg_colour: Theme.playback_bg_colour_4;
+            icon_colourize: Theme.playback_fg_colour_4;
+        }
+
+        RemoteButton {
+            row: 0;
+            col: 2;
+            icon: skip_forward_icon;
+            text: skip_text;
+            text_colour: Theme.playback_fg_colour_4;
+            action_list_id: al_skip_forward;
+            bg_colour: Theme.playback_bg_colour_4;
+            icon_colourize: Theme.playback_fg_colour_4;
+        }
+
+        RemoteButton {
             row: 1;
             col: 1;
             icon: Symbols.pause;
             action_list_id: al_pause;
             bg_colour: Theme.playback_bg_colour_3;
-            icon_colorize: Theme.playback_fg_colour_3;
+            icon_colourize: Theme.playback_fg_colour_3;
         }
 
         RemoteButton {
@@ -330,7 +350,7 @@ component PlaybackControlPanel {
             icon: Symbols.play;
             action_list_id: al_play;
             bg_colour: Theme.playback_bg_colour_1;
-            icon_colorize: Theme.playback_fg_colour_1;
+            icon_colourize: Theme.playback_fg_colour_1;
         }
 
         RemoteButton {
@@ -339,7 +359,7 @@ component PlaybackControlPanel {
             icon: Symbols.rewind;
             action_list_id: al_rewind;
             bg_colour: Theme.playback_bg_colour_3;
-            icon_colorize: Theme.playback_fg_colour_3;
+            icon_colourize: Theme.playback_fg_colour_3;
         }
 
         RemoteButton {
@@ -348,28 +368,7 @@ component PlaybackControlPanel {
             icon: Symbols.fast-forward;
             action_list_id: al_fast_forward;
             bg_colour: Theme.playback_bg_colour_3;
-            icon_colorize: Theme.playback_fg_colour_3;
-        }
-
-        RemoteButton {
-            row: 0;
-            col: 0;
-            icon: Symbols.skip-back;
-            action_list_id: al_skip_back;
-            bg_colour: Theme.playback_bg_colour_4;
-            icon_colorize: Theme.playback_fg_colour_4;
-        }
-
-        RemoteButton {
-            row: 0;
-            col: 2;
-            icon: skip_forward_icon;
-            text: skip_text;
-            font_size: 30px;
-            text_colour: white;
-            action_list_id: al_skip_forward;
-            bg_colour: Theme.playback_bg_colour_4;
-            icon_colorize: Theme.playback_fg_colour_4;
+            icon_colourize: Theme.playback_fg_colour_3;
         }
 
         RemoteButton {
@@ -378,7 +377,7 @@ component PlaybackControlPanel {
             icon: Symbols.stop;
             action_list_id: al_stop;
             bg_colour: Theme.playback_bg_colour_2;
-            icon_colorize: Theme.playback_fg_colour_2;
+            icon_colourize: Theme.playback_fg_colour_2;
         }
 
         @children
@@ -414,7 +413,6 @@ export component HDRPlaybackControlPanel inherits PlaybackControlPanel {
         z: 1;
         text: "LIBRARY";
         action_list_id: "HDR_VIDEO_MENU";
-        font_size: 28px;
     }
 }
 
@@ -735,28 +733,28 @@ export component MiscButtonPopup {
                                 text: "SPKR TV";
                                 action_list_id: "SPEAKERS_TV_AUDIO";
                                 bg_colour: Theme.volume_bg_colour;
-                                icon_colorize: Theme.volume_fg_colour;
+                                icon_colourize: Theme.volume_fg_colour;
                             }
         
                             RemoteButton {
                                 text: "SPKR HDR";
                                 action_list_id: "SPEAKERS_MEDIA_PLAYER";
                                 bg_colour: Theme.volume_bg_colour;
-                                icon_colorize: Theme.volume_fg_colour;
+                                icon_colourize: Theme.volume_fg_colour;
                             }
         
                             RemoteButton {
                                 text: "SPKR YVIEW";
                                 action_list_id: "SPEAKERS_CBL_SAT";
                                 bg_colour: Theme.volume_bg_colour;
-                                icon_colorize: Theme.volume_fg_colour;
+                                icon_colourize: Theme.volume_fg_colour;
                             }
         
                             RemoteButton {
                                 text: "SPKR RADIO";
                                 action_list_id: "SPEAKERS_TUNER";
                                 bg_colour: Theme.volume_bg_colour;
-                                icon_colorize: Theme.volume_fg_colour;
+                                icon_colourize: Theme.volume_fg_colour;
                             }
     
                             RemoteButton {
@@ -792,35 +790,30 @@ export component MiscButtonPopup {
 export component UINavPanel { //navigation buttons at bottom of screen for for going back/forward screens and to screen list
     callback show_misc_buttons_popup();
     
-    VerticalLayout {
-        alignment: end;
-        
-        HorizontalLayout {
-            height: 100%;
-            spacing: 10px;
-        
-            RemoteButton {
-                icon: Symbols.nav-list;
-                press_release => {
-                    CurrentDisplayedScreen.set_without_history(RemoteScreenID.SCREEN_LIST);
-                }
-            }
+    HorizontalLayout {
+        spacing: 10px;
     
-            RemoteButton {
-                icon: Symbols.home;
-                press_release => {
-                    CurrentDisplayedScreen.set_screen(RemoteScreenID.HOME);
-                }
+        RemoteButton {
+            icon: Symbols.nav-list;
+            press_release => {
+                CurrentDisplayedScreen.set_without_history(RemoteScreenID.SCREEN_LIST);
             }
-    
-            RemoteButton {
-                text: "RESET AV";
-                bg_colour: Theme.av_bg_colour;
+        }
 
-                press_release => {
-                    //show popup containing helpful buttons that may want to be accessed from anywhere (power, av, etc.)
-                    show_misc_buttons_popup();
-                }
+        RemoteButton {
+            icon: Symbols.home;
+            press_release => {
+                CurrentDisplayedScreen.set_screen(RemoteScreenID.HOME);
+            }
+        }
+
+        RemoteButton {
+            text: "RESET AV";
+            bg_colour: Theme.av_bg_colour;
+
+            press_release => {
+                //show popup containing helpful buttons that may want to be accessed from anywhere (power, av, etc.)
+                show_misc_buttons_popup();
             }
         }
     }

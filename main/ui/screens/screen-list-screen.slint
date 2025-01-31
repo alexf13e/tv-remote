@@ -17,32 +17,28 @@ export component ScreenListScreen {
     ];
 
     VerticalLayout {
-        spacing: 10px;
+        spacing: 15px;
         alignment: center;
 
-        for datum in all_tab_data[ScreenListTabID.value]:
+        for d in all_tab_data[ScreenListTabID.value]:
             RemoteButton {
-                height: 40px;
-                text: datum.text;
-                screen_id: datum.screen_id;
+                height: 60px;
+                text: d.text;
+                screen_id: d.screen_id;
+                bg_colour: d.bg_colour;
+                text_colour: d.text_colour;
+                icon_colourize: d.icon_colourize;
             }
     }
 
     VerticalLayout {
         alignment: end;
-        spacing: 10px;
-
-        Text {
-            text: "Screen groups";
-            horizontal-alignment: center;
-            font-size: 14px;
-        }
 
         HorizontalLayout {
             spacing: 10px;
+            height: 40px;
 
             RemoteButton {
-                height: 40px;
                 text: "General";
                 enabled: ScreenListTabID.value != 0;
                 
@@ -52,7 +48,6 @@ export component ScreenListScreen {
             }
 
             RemoteButton {
-                height: 40px;
                 text: "TV";
                 enabled: ScreenListTabID.value != 1;
                 
@@ -62,7 +57,6 @@ export component ScreenListScreen {
             }
 
             RemoteButton {
-                height: 40px;
                 text: "Speakers";
                 enabled: ScreenListTabID.value != 2;
                 
@@ -72,7 +66,6 @@ export component ScreenListScreen {
             }
 
             RemoteButton {
-                height: 40px;
                 text: "HDR";
                 enabled: ScreenListTabID.value != 3;
                 
@@ -82,7 +75,6 @@ export component ScreenListScreen {
             }
 
             RemoteButton {
-                height: 40px;
                 text: "YouView";
                 enabled: ScreenListTabID.value != 4;
                 

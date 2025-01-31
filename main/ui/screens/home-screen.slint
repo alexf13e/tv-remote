@@ -1,12 +1,12 @@
 
 import { RemoteButton } from "../custom-components.slint";
 import { RemoteScreenID } from "../remote-screens-index.slint";
+import { Theme } from "../globals.slint";
 
 export component HomeScreen {
     property <length> btn_height: 80px;
     
     VerticalLayout {
-        spacing: 10px;
         height: 50%;
         alignment: space-around;
 
@@ -21,6 +21,8 @@ export component HomeScreen {
         RemoteButton {
             height: btn_height;
             text: "Radio";
+            action_list_id: "STARTUP_RADIO";
+            screen_id: RemoteScreenID.SPEAKERS-RADIO;
         }
 
         RemoteButton {
@@ -28,6 +30,31 @@ export component HomeScreen {
             text: "Speaker Bluetooth";
             bg_colour: blue;
             text_colour: white;
+        }
+    }
+
+    VerticalLayout {
+        alignment: end;
+        width: 50%;
+        x: 0;
+
+        HorizontalLayout {
+            height: 80px;
+            spacing: 10px;
+
+            RemoteButton {
+                text: "SPKR POWER";
+                action_list_id: "SPEAKERS_POWER";
+                bg_colour: Theme.power_bg_colour;
+                text_colour: Theme.power_fg_colour;
+            }
+    
+            RemoteButton {
+                text: "TV POWER";
+                action_list_id: "TV_POWER";
+                bg_colour: Theme.power_bg_colour;
+                text_colour: Theme.power_fg_colour;
+            }
         }
     }
 }

@@ -1,0 +1,74 @@
+
+import { RemoteButton } from "../../custom-components.slint";
+import { Symbols, Theme } from "../../globals.slint";
+import { ListView } from "std-widgets.slint";
+import { RemoteScreenID } from "../../remote-screens-index.slint";
+
+export component SpeakersRadioScreen {
+    VerticalLayout {
+        VerticalLayout {
+            alignment: LayoutAlignment.center;
+            spacing: 20px;
+
+            Text {
+                text: "Use arrows to scroll through station list";
+                font-size: 20px;
+                horizontal-alignment: center;
+                height: 20px;
+            }
+
+            HorizontalLayout {
+                spacing: 10px;
+        
+                VerticalLayout {
+                    alignment: center;
+        
+                    property <[string]> radio_stations: [
+                        "HEART 70s",
+                        "BBC RADIO 2",
+                        "BBC SUFFOLK",
+                        "GOLD",
+                        "GREATEST HITS",
+                        "ABSOLUTE 80s",
+                        "HEART 80s",
+                        "HEART SUFFOLK",
+                        "ABSOLUTE RADIO",
+                    ];
+        
+                    for i in radio_stations.length:
+                    Text {
+                        text: (i + 1) + " - " + radio_stations[i];
+                        font-size: 24px;
+                    }
+                }
+        
+                VerticalLayout {
+                    spacing: 10px;
+                    alignment: center;
+        
+                    RemoteButton {
+                        height: 100px;
+                        action_list_id: "SPEAKERS_NAV_UP";
+                        icon: Symbols.arrow-up;
+                    }
+        
+                    RemoteButton {
+                        height: 100px;
+                        action_list_id: "SPEAKERS_NAV_DOWN";
+                        icon: Symbols.arrow-down;
+                    }
+                }
+            }
+        }
+
+        RemoteButton {
+            height: 40px;
+            text: "Radio OFF";
+            action_list_id: "SPEAKERS_POWER";
+            screen_id: RemoteScreenID.HOME;
+            bg_colour: Theme.power_bg_colour;
+            text_colour: Theme.power_fg_colour;
+        }
+    }
+    
+}
