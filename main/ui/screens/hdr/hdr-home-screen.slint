@@ -24,7 +24,7 @@ export component HDRHomeScreen {
                 text: "DVD/CD";
                 bg_colour: blue;
                 text_colour: white;
-                action_list_id: "";
+                screen_id: RemoteScreenID.HDR_DVD_INFO;
             }
     
             RemoteButton {
@@ -38,7 +38,7 @@ export component HDRHomeScreen {
     
         RemoteButton {
             height: 40px;
-            text: "HDR off";
+            text: "HDR OFF";
             action_list_id: "SHUTDOWN_HDR";
             screen_id: RemoteScreenID.TV_CHANNELS;
             bg_colour: Theme.power_bg_colour;

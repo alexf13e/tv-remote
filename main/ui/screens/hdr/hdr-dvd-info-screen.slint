@@ -1,0 +1,33 @@
+
+import { RemoteButton } from "../../custom-components.slint";
+import { RemoteScreenID } from "../../remote-screens-index.slint";
+import { Theme } from "../../globals.slint";
+
+export component HDRDVDInfoScreen {
+    VerticalLayout {
+        spacing: 10px;
+        alignment: center;
+
+        Text {
+            text: "Open disc tray with \"OPEN/CLOSE\" button on top right of HDR box. Press \"Done\" on remote after inserting disc and closing tray.";
+            font-size: Theme.default_font_size;
+            height: 4 * self.font-size;
+        }
+
+        HorizontalLayout {
+            spacing: 10px;
+
+            RemoteButton {
+                height: 40px;
+                screen_id: RemoteScreenID.HDR_HOME;
+                text: "Back";
+            }
+
+            RemoteButton {
+                height: 40px;
+                screen_id: RemoteScreenID.HDR-DVD;
+                text: "Done";
+            }
+        }
+    }
+}

@@ -395,7 +395,7 @@ export component TVPlaybackControlPanel inherits PlaybackControlPanel {
     al_skip_forward: "TV_SKIP_FORWARD";
 }
 
-export component HDRPlaybackControlPanel inherits PlaybackControlPanel {
+export component HDRRecordingPlaybackControlPanel inherits PlaybackControlPanel {
     al_play: "HDR_PLAY";
     al_pause: "HDR_PAUSE";
     al_stop: "HDR_STOP";
@@ -414,6 +414,16 @@ export component HDRPlaybackControlPanel inherits PlaybackControlPanel {
         text: "LIBRARY";
         action_list_id: "HDR_VIDEO_MENU";
     }
+}
+
+export component HDRDVDPlaybackControlPanel inherits PlaybackControlPanel {
+    al_play: "HDR_PLAY";
+    al_pause: "HDR_PAUSE";
+    al_stop: "HDR_STOP";
+
+    al_rewind: "HDR_REWIND";
+    al_fast_forward: "HDR_FAST_FORWARD";
+    al_skip_forward: "HDR_MANUAL_SKIP_PLUS_60";
 }
 
 export component YouViewPlaybackControlPanel inherits PlaybackControlPanel {

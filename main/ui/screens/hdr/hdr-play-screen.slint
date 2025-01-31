@@ -1,5 +1,5 @@
 
-import { HDRChannelGrid, HDRRemoteNavPanel, RemoteButton, HDRPlaybackControlPanel } from "../../custom-components.slint";
+import { HDRChannelGrid, HDRRemoteNavPanel, RemoteButton, HDRRecordingPlaybackControlPanel } from "../../custom-components.slint";
 import { RemoteScreenID } from "../../remote-screens-index.slint";
 import { Symbols, Theme } from "../../globals.slint";
 
@@ -20,7 +20,7 @@ export component HDRPlayScreen {
             alignment: center;
             vertical-stretch: 1;
 
-            HDRPlaybackControlPanel{
+            HDRRecordingPlaybackControlPanel{
                 height: 70%;
             }
         }
@@ -42,8 +42,6 @@ export component HDRPlayScreen {
                 text_colour: Theme.power_fg_colour;
             }
         }
-
-        
         
         VerticalLayout {
             alignment: end;
