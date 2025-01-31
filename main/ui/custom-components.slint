@@ -6,10 +6,10 @@ import { Logic, CurrentDisplayedScreen, Symbols, ScreenHistory, DisableIRButtons
 
 
 export component RemoteButton { //custom button for sending remote signals and navigating the ui
-    in property <color> bg_colour: Theme.btn_default_colour;
-    in property <color> text_colour: Theme.text_default_colour;
+    in property <color> bg_colour: Theme.default_btn_bg_colour;
+    in property <color> text_colour: Theme.default_btn_text_colour;
     in property <image> icon;                                   //image to show on button
-    in property <color> icon_colourize: Theme.icon_default_colourize;
+    in property <color> icon_colourize: Theme.default_btn_icon_colourize;
     in property <string> text;                                  //text to show on button
     in property <length> font_size: Theme.default_font_size;
     in property <string> action_list_id: "";                      //name of the "macro" to play when button is pressed

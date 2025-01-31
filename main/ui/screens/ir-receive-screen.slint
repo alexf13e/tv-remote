@@ -1,6 +1,6 @@
 
 import { RemoteButton } from "../custom-components.slint";
-import { Logic, Symbols } from "../globals.slint";
+import { Logic, Symbols, Theme } from "../globals.slint";
 import { RemoteScreenID } from "../remote-screens-index.slint";
 import { Button } from "std-widgets.slint";
 
@@ -18,7 +18,7 @@ export component IRReceiveScreen {
         Text {
             font-size: 18px;
             text: "Connect usb to pc and begin monitoring\nPress button below to begin listening for signal, the remote will be stuck listening until a signal is received (or remote powered off)\nPoint original remote at front of this one and press a button\nThe code will be printed out in the monitor terminal\nThe code should be used for creating ACTIONs in remotes.h";
-            color: white;
+            color: Theme.default_general_text_colour;
             wrap: word-wrap;
         }
 

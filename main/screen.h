@@ -8,7 +8,6 @@
 
 
 #include <cstdint>
-#include <new>
 #include <slint-platform.h>
 #include <vector>
 #include <iostream>
@@ -86,6 +85,7 @@ namespace Screen
                     .h_res = LCD_H_RES,
                     .v_res = LCD_V_RES,
                     // The following parameters should refer to LCD spec
+                    //https://www.orientdisplay.com/pdf/ST7262.pdf#page=52
                     .hsync_pulse_width = 4,
                     .hsync_back_porch = 8,
                     .hsync_front_porch = 8,

@@ -15,37 +15,37 @@ export struct RemoteButtonData {
 
 export global ScreenListButtonData {
     out property <[RemoteButtonData]> data_general: [
-        { text: "Home",                 screen_id: RemoteScreenID.HOME,         bg_colour: Theme.btn_default_colour,    text_colour: Theme.text_default_colour, icon_colourize: Theme.icon_default_colourize,  },
-        { text: "IR Code Learning",     screen_id: RemoteScreenID.IR_RECEIVE,   bg_colour: Theme.btn_default_colour,    text_colour: Theme.text_default_colour, icon_colourize: Theme.icon_default_colourize,  },
+        { text: "Home",                 screen_id: RemoteScreenID.HOME,         bg_colour: Theme.default_btn_bg_colour,    text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,  },
+        { text: "IR Code Learning",     screen_id: RemoteScreenID.IR_RECEIVE,   bg_colour: Theme.default_btn_bg_colour,    text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,  },
         
     ];
 
     out property <[RemoteButtonData]> data_tv: [
-        { text: "TV Channels",          screen_id: RemoteScreenID.TV_CHANNELS,      bg_colour: Colors.lime,                 text_colour: Theme.text_default_colour, icon_colourize: Theme.icon_default_colourize,  },
-        { text: "TV Apps",              screen_id: RemoteScreenID.TV_APPS,          bg_colour: Theme.btn_default_colour,    text_colour: Theme.text_default_colour, icon_colourize: Theme.icon_default_colourize,  },
-        { text: "NAS/Photo/Video",      screen_id: RemoteScreenID.TV_PLAYBACK,      bg_colour: Theme.btn_default_colour,    text_colour: Theme.text_default_colour, icon_colourize: Theme.icon_default_colourize,  },
-        { text: "TV All Buttons",       screen_id: RemoteScreenID.TV_ALL_BUTTONS,   bg_colour: Theme.btn_default_colour,    text_colour: Theme.text_default_colour, icon_colourize: Theme.icon_default_colourize,  },
+        { text: "TV Channels",          screen_id: RemoteScreenID.TV_CHANNELS,      bg_colour: Colors.lime,                 text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,  },
+        { text: "TV Apps",              screen_id: RemoteScreenID.TV_APPS,          bg_colour: Theme.default_btn_bg_colour,    text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,  },
+        { text: "NAS/Photo/Video",      screen_id: RemoteScreenID.TV_PLAYBACK,      bg_colour: Theme.default_btn_bg_colour,    text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,  },
+        { text: "TV All Buttons",       screen_id: RemoteScreenID.TV_ALL_BUTTONS,   bg_colour: Theme.default_btn_bg_colour,    text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,  },
     
     ];
 
     out property <[RemoteButtonData]> data_speakers: [
-        { text: "Speakers All Buttons", screen_id: RemoteScreenID.SPEAKERS_ALL_BUTTONS, bg_colour: Theme.btn_default_colour,    text_colour: Theme.text_default_colour, icon_colourize: Theme.icon_default_colourize,  },
-        { text: "Radio",                screen_id: RemoteScreenID.SPEAKERS_RADIO, bg_colour: Theme.btn_default_colour,    text_colour: Theme.text_default_colour, icon_colourize: Theme.icon_default_colourize,  },
+        { text: "Speakers All Buttons", screen_id: RemoteScreenID.SPEAKERS_ALL_BUTTONS, bg_colour: Theme.default_btn_bg_colour,    text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,  },
+        { text: "Radio",                screen_id: RemoteScreenID.SPEAKERS_RADIO, bg_colour: Theme.default_btn_bg_colour,    text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,  },
 
     ];
 
     out property <[RemoteButtonData]> data_hdr: [
-        { text: "HDR Home",         screen_id: RemoteScreenID.HDR_HOME,         bg_colour: Theme.btn_default_colour,    text_colour: Theme.text_default_colour, icon_colourize: Theme.icon_default_colourize,  },
-        { text: "HDR Record",       screen_id: RemoteScreenID.HDR_RECORD,       bg_colour: Theme.btn_default_colour,    text_colour: Theme.text_default_colour, icon_colourize: Theme.icon_default_colourize,  },
-        { text: "HDR DVD Info",     screen_id: RemoteScreenID.HDR_DVD_INFO,     bg_colour: Theme.btn_default_colour,    text_colour: Theme.text_default_colour, icon_colourize: Theme.icon_default_colourize,  },
-        { text: "HDR DVD",          screen_id: RemoteScreenID.HDR_DVD,          bg_colour: Theme.btn_default_colour,    text_colour: Theme.text_default_colour, icon_colourize: Theme.icon_default_colourize,  },
-        { text: "HDR Play",         screen_id: RemoteScreenID.HDR_PLAY,         bg_colour: Theme.btn_default_colour,    text_colour: Theme.text_default_colour, icon_colourize: Theme.icon_default_colourize,  },
-        { text: "HDR All Buttons",  screen_id: RemoteScreenID.HDR_ALL_BUTTONS,  bg_colour: Theme.btn_default_colour,    text_colour: Theme.text_default_colour, icon_colourize: Theme.icon_default_colourize,  },
+        { text: "HDR Home",         screen_id: RemoteScreenID.HDR_HOME,         bg_colour: Theme.default_btn_bg_colour,    text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,  },
+        { text: "HDR Record",       screen_id: RemoteScreenID.HDR_RECORD,       bg_colour: Theme.default_btn_bg_colour,    text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,  },
+        { text: "HDR DVD Info",     screen_id: RemoteScreenID.HDR_DVD_INFO,     bg_colour: Theme.default_btn_bg_colour,    text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,  },
+        { text: "HDR DVD",          screen_id: RemoteScreenID.HDR_DVD,          bg_colour: Theme.default_btn_bg_colour,    text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,  },
+        { text: "HDR Play",         screen_id: RemoteScreenID.HDR_PLAY,         bg_colour: Theme.default_btn_bg_colour,    text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,  },
+        { text: "HDR All Buttons",  screen_id: RemoteScreenID.HDR_ALL_BUTTONS,  bg_colour: Theme.default_btn_bg_colour,    text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,  },
 
     ];
 
     out property <[RemoteButtonData]> data_youview: [
-        { text: "YouView All Buttons",  screen_id: RemoteScreenID.YOUVIEW_ALL_BUTTONS,  bg_colour: Theme.btn_default_colour,    text_colour: Theme.text_default_colour, icon_colourize: Theme.icon_default_colourize,  },
+        { text: "YouView All Buttons",  screen_id: RemoteScreenID.YOUVIEW_ALL_BUTTONS,  bg_colour: Theme.default_btn_bg_colour,    text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,  },
 
     ];
 }
