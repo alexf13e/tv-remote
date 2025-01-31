@@ -1,6 +1,6 @@
 
 import { Button, TextEdit, ProgressIndicator } from "std-widgets.slint";
-import { RemoteButtonData, TVChannelButtonData } from "custom-component-data.slint";
+import { RemoteButtonData, ChannelButtonData } from "custom-component-data.slint";
 import { RemoteScreenID } from "remote-screens-index.slint";
 import { Logic, CurrentDisplayedScreen, Symbols, ScreenHistory, DisableIRButtons, IRProgress, Theme } from "globals.slint";
 
@@ -644,7 +644,7 @@ export component TVChannelGrid inherits MultiPageRemoteButtonGrid {
     num_rows: 5;
     button_width : 80px;
     button_height : 70px;
-    grid_data: TVChannelButtonData.data;
+    grid_data: ChannelButtonData.data;
     action_list_id_prefix: "TV_";
 }
 
@@ -653,9 +653,19 @@ export component HDRChannelGrid inherits MultiPageRemoteButtonGrid {
     num_rows: 5;
     button_width : 80px;
     button_height : 70px;
-    grid_data: TVChannelButtonData.data;
+    grid_data: ChannelButtonData.data;
     action_list_id_prefix: "HDR_";
 }
+
+export component YouViewChannelGrid inherits MultiPageRemoteButtonGrid {
+    num_cols: 5;
+    num_rows: 5;
+    button_width : 80px;
+    button_height : 70px;
+    grid_data: ChannelButtonData.data;
+    action_list_id_prefix: "YOUVIEW_";
+}
+
 
 export component RemoteButtonDebugGrid inherits MultiPageRemoteButtonGrid {
     in property <[RemoteButtonData]> data;

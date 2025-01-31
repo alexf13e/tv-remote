@@ -1,15 +1,15 @@
 
-import { HDRRemoteNavPanel, RemoteButton, HDRRecordingPlaybackControlPanel } from "../../custom-components.slint";
+import { YouViewRemoteNavPanel, RemoteButton, YouViewPlaybackControlPanel } from "../../custom-components.slint";
 import { RemoteScreenID } from "../../remote-screens-index.slint";
 import { Symbols, Theme } from "../../globals.slint";
 
-export component HDRPlayScreen {
+export component YouViewPlayScreen {
     RemoteButton {
         x: 0;
         y: 400px;
         width: 80px;
         height: 80px;
-        action_list_id: "HDR_DELETE";
+        action_list_id: "YOUVIEW_DELETE";
         icon: Symbols.bin;
     }
 
@@ -20,8 +20,17 @@ export component HDRPlayScreen {
             alignment: center;
             vertical-stretch: 1;
 
-            HDRRecordingPlaybackControlPanel{
+            YouViewPlaybackControlPanel{
                 height: 70%;
+
+                RemoteButton {
+                    row: 0;
+                    col: 1;
+                    action_list_id: "YOUVIEW_HOME";
+                    text: "YOUVIEW";
+                    bg_colour: blue;
+                    text_colour: white;
+                }
             }
         }
         
@@ -31,12 +40,12 @@ export component HDRPlayScreen {
             RemoteButton {
                 height: 40px;
                 text: "RECORD PAGE";
-                screen_id: RemoteScreenID.HDR_RECORD;
+                screen_id: RemoteScreenID.YOUVIEW_RECORD;
             }
 
             RemoteButton {
-                text: "HDR OFF";
-                action_list_id: "SHUTDOWN_HDR";
+                text: "YouView OFF";
+                action_list_id: "SHUTDOWN_YOUVIEW";
                 screen_id: RemoteScreenID.TV_CHANNELS;
                 bg_colour: Theme.power_bg_colour;
                 text_colour: Theme.power_fg_colour;
@@ -45,7 +54,7 @@ export component HDRPlayScreen {
         
         VerticalLayout {
             alignment: end;
-            HDRRemoteNavPanel {}
+            YouViewRemoteNavPanel {}
         }
     }
 }

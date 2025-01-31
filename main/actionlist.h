@@ -90,6 +90,25 @@ void createActionLists()
         RemoteSpeakers::TUNER
     };
 
+    ALL_ACTION_LISTS["STARTUP_YOUVIEW"] = {
+        RemoteYouView::POWER,
+        RemoteSpeakers::CBL_SAT
+    };
+
+    ALL_ACTION_LISTS["SHUTDOWN_YOUVIEW"] = {
+        RemoteYouView::POWER,
+        RemoteSpeakers::TV_AUDIO
+    };
+
+    ALL_ACTION_LISTS["YOUVIEW_RECORDINGS"] = {
+        RemoteYouView::CLOSE,
+        WAIT_FOR_MS(1000),
+        RemoteYouView::HOME,
+        WAIT_FOR_MS(1000),
+        RemoteYouView::NAV_DOWN,
+        RemoteYouView::NAV_DOWN,
+        RemoteYouView::OK
+    };
     
 
 
@@ -124,6 +143,19 @@ void createActionLists()
         RemoteHDR::KEY_9,
     };
 
+    ActionRemoteSignal* YOUVIEW_NUMS[] = {
+        RemoteYouView::KEY_0,
+        RemoteYouView::KEY_1,
+        RemoteYouView::KEY_2,
+        RemoteYouView::KEY_3,
+        RemoteYouView::KEY_4,
+        RemoteYouView::KEY_5,
+        RemoteYouView::KEY_6,
+        RemoteYouView::KEY_7,
+        RemoteYouView::KEY_8,
+        RemoteYouView::KEY_9,
+    };
+
     for (const auto& channel : TV_CHANNELS)
     {
         //want to create action list of channel numbers with keys on remote.
@@ -131,6 +163,7 @@ void createActionLists()
 
         std::string tv_action_list_id = "TV_" + channel.first;
         std::string hdr_action_list_id = "HDR_" + channel.first;
+        std::string youview_action_list_id = "YOUVIEW_" + channel.first;
         
         std::string digits = channel.second;
         if (digits.size() < 3)
@@ -142,6 +175,7 @@ void createActionLists()
         {
             ALL_ACTION_LISTS[tv_action_list_id].push_back(TV_NUMS[c - '0']);
             ALL_ACTION_LISTS[hdr_action_list_id].push_back(HDR_NUMS[c - '0']);
+            ALL_ACTION_LISTS[youview_action_list_id].push_back(YOUVIEW_NUMS[c - '0']);
         }
     }
 

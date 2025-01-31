@@ -13,9 +13,13 @@ export component TVAppsScreen {
             spacing: 20px;
             vertical-stretch: 1;
 
-            TVPlaybackControlPanel {}
+            TVPlaybackControlPanel {
+                vertical-stretch: 1;
+            }
 
             TVNumberGrid {
+                vertical-stretch: 0.5;
+
                 RemoteButton {
                     col: 0;
                     icon: @image-url("../../icons/channels/Freeview.png");

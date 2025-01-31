@@ -1,0 +1,63 @@
+
+import { YouViewChannelGrid, YouViewRemoteNavPanel, RemoteButton } from "../../custom-components.slint";
+import { RemoteScreenID } from "../../remote-screens-index.slint";
+import { Symbols, Theme } from "../../globals.slint";
+
+export component YouViewRecordScreen {
+    VerticalLayout {
+        spacing: 20px;
+
+        YouViewChannelGrid {}
+
+        GridLayout {
+            height: 90px;
+            spacing: 10px;
+
+            RemoteButton {
+                row: 0;
+                col: 0;
+                icon: Symbols.bin;
+                action_list_id: "YOUVIEW_DELETE";
+            }
+
+            RemoteButton {
+                row: 1;
+                col: 0;
+                text: "PLAY PAGE";
+                screen_id: RemoteScreenID.YOUVIEW_PLAY;
+            }
+
+            RemoteButton {
+                row: 0;
+                col: 1;
+                text: "RECORD";
+                bg_colour: Theme.record_bg_colour;
+                text_colour: Theme.record_fg_colour;
+                action_list_id: "YOUVIEW_RECORD";
+            }
+
+            RemoteButton {
+                row: 0;
+                col: 2;
+                text: "GUIDE";
+                action_list_id: "YOUVIEW_GUIDE";
+            }
+            
+            RemoteButton {
+                row: 1;
+                col: 2;
+
+                text: "YouView OFF";
+                action_list_id: "SHUTDOWN_YOUVIEW";
+                screen_id: RemoteScreenID.TV_CHANNELS;
+                bg_colour: Theme.power_bg_colour;
+                text_colour: Theme.power_fg_colour;
+            }
+        }
+        
+        VerticalLayout {
+            alignment: end;
+            YouViewRemoteNavPanel {}
+        }
+    }
+}

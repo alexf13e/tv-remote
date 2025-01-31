@@ -3,7 +3,7 @@
 #include "app-window.h"
 
 #include "power.h"
-#include "screen.h"
+//#include "screen.h"
 #include "backlight.h"
 #include "actionlist.h"
 #include "button_hold_manager.h"
@@ -70,7 +70,7 @@ void create_callbacks(slint::ComponentHandle<AppWindow> main_window)
 extern "C" void app_main(void)
 {
     Power::init();
-    Screen::init();
+    //Screen::init();
     Backlight::init();
     IRTransmitter::init();
     IRReceiver::init();

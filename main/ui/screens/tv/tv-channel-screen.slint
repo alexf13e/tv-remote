@@ -2,7 +2,7 @@
 import { Button } from "std-widgets.slint";
 
 import { TVRemoteNavPanel, RemoteButton, TVChannelGrid } from "../../custom-components.slint";
-import { TVChannelButtonData } from "../../custom-component-data.slint";
+import { ChannelButtonData } from "../../custom-component-data.slint";
 import { Symbols, Theme } from "../../globals.slint";
 import { RemoteScreenID } from "../../remote-screens-index.slint";
 
@@ -81,6 +81,8 @@ export component TVChannelScreen { //whole screen for tv channel selection
     
                 RemoteButton {
                     text: "YVIEW";
+                    action_list_id: "STARTUP_YOUVIEW";
+                    screen_id: RemoteScreenID.YOUVIEW_HOME;
                     bg_colour: Theme.power_bg_colour;
                     text_colour: Theme.power_fg_colour;
                 }

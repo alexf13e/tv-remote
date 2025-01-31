@@ -1,0 +1,54 @@
+
+import { YouViewRemoteNavPanel, RemoteButton } from "../../custom-components.slint";
+import { RemoteScreenID } from "../../remote-screens-index.slint";
+import { Theme } from "../../globals.slint";
+
+
+export component YouViewHomeScreen {
+    VerticalLayout {
+        spacing: 20px;
+
+        VerticalLayout {
+            spacing: 10px;
+            vertical-stretch: 1;
+    
+            RemoteButton {
+                text: "Record";
+                bg_colour: red;
+                text_colour: white;
+                action_list_id: "YOUVIEW_GUIDE";
+                screen_id: RemoteScreenID.YOUVIEW_RECORD;
+            }
+    
+            RemoteButton {
+                text: "YouView";
+                bg_colour: blue;
+                text_colour: white;
+                action_list_id: "YOUVIEW_HOME";
+                screen_id: RemoteScreenID.YOUVIEW_PLAY;
+            }
+    
+            RemoteButton {
+                text: "Recordings";
+                bg_colour: green;
+                text_colour: white;
+                action_list_id: "YOUVIEW_RECORDINGS";
+                screen_id: RemoteScreenID.YOUVIEW_PLAY;
+            }
+        }
+    
+        RemoteButton {
+            height: 40px;
+            text: "YouView OFF";
+            action_list_id: "SHUTDOWN_YOUVIEW";
+            screen_id: RemoteScreenID.TV_CHANNELS;
+            bg_colour: Theme.power_bg_colour;
+            icon_colourize: Theme.power_fg_colour;
+        }
+    
+        VerticalLayout {
+            alignment: end;
+            YouViewRemoteNavPanel {}
+        }
+    }
+}

@@ -5,8 +5,6 @@
 #include <string>
 #include <unordered_map>
 
-#include "remotes.h"
-
 #define CHANNEL(NAME, NUMBER) TV_CHANNELS[NAME] = std::to_string(NUMBER)
 
 std::unordered_map<std::string, std::string> TV_CHANNELS;
