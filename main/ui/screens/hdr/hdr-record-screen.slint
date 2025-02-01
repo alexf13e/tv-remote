@@ -21,19 +21,26 @@ export component HDRRecordScreen {
             }
 
             RemoteButton {
-                row: 1;
-                col: 0;
-                text: "PLAY PAGE";
-                screen_id: RemoteScreenID.HDR_PLAY;
-            }
-
-            RemoteButton {
                 row: 0;
                 col: 1;
                 text: "RECORD";
                 bg_colour: Theme.record_bg_colour;
                 text_colour: Theme.record_fg_colour;
                 action_list_id: "HDR_RECORD";
+            }
+            
+            RemoteButton {
+                row: 0;
+                col: 2;
+                text: "GUIDE";
+                action_list_id: "HDR_GUIDE";
+            }
+
+            RemoteButton {
+                row: 1;
+                col: 0;
+                text: "PLAY PAGE";
+                screen_id: RemoteScreenID.HDR_PLAY;
             }
 
             RemoteButton {
@@ -44,16 +51,8 @@ export component HDRRecordScreen {
             }
 
             RemoteButton {
-                row: 0;
-                col: 2;
-                text: "GUIDE";
-                action_list_id: "HDR_GUIDE";
-            }
-            
-            RemoteButton {
                 row: 1;
                 col: 2;
-
                 text: "HDR OFF";
                 action_list_id: "SHUTDOWN_HDR";
                 screen_id: RemoteScreenID.TV_CHANNELS;

@@ -21,13 +21,6 @@ export component YouViewRecordScreen {
             }
 
             RemoteButton {
-                row: 1;
-                col: 0;
-                text: "PLAY PAGE";
-                screen_id: RemoteScreenID.YOUVIEW_PLAY;
-            }
-
-            RemoteButton {
                 row: 0;
                 col: 1;
                 text: "RECORD";
@@ -42,11 +35,26 @@ export component YouViewRecordScreen {
                 text: "GUIDE";
                 action_list_id: "YOUVIEW_GUIDE";
             }
-            
+
+            RemoteButton {
+                row: 1;
+                col: 0;
+                text: "PLAY PAGE";
+                screen_id: RemoteScreenID.YOUVIEW_PLAY;
+            }
+
+            RemoteButton {
+                row: 1;
+                col: 1;
+                action_list_id: "YOUVIEW_HOME";
+                text: "YOUVIEW";
+                bg_colour: blue;
+                text_colour: white;
+            }
+
             RemoteButton {
                 row: 1;
                 col: 2;
-
                 text: "YouView OFF";
                 action_list_id: "SHUTDOWN_YOUVIEW";
                 screen_id: RemoteScreenID.TV_CHANNELS;
