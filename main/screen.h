@@ -8,7 +8,6 @@
 
 
 #include <cstdint>
-#include <slint-platform.h>
 #include <vector>
 #include <iostream>
 
@@ -25,6 +24,7 @@
 #include "soc/clk_tree_defs.h"
 #include "soc/gpio_num.h"
 #include "slint-esp.h"
+#include "slint-platform.h"
 
 
 #include "i2c_init.h"
