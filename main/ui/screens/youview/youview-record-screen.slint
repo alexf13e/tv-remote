@@ -32,8 +32,15 @@ export component YouViewRecordScreen {
             RemoteButton {
                 row: 0;
                 col: 2;
-                text: "GUIDE";
-                action_list_id: "YOUVIEW_GUIDE";
+                text: "DAY -";
+                action_list_id: "YOUVIEW_REWIND";
+            }
+
+            RemoteButton {
+                row: 0;
+                col: 3;
+                text: "DAY +";
+                action_list_id: "YOUVIEW_FAST_FORWARD";
             }
 
             RemoteButton {
@@ -55,12 +62,21 @@ export component YouViewRecordScreen {
             RemoteButton {
                 row: 1;
                 col: 2;
-                text: "YouView OFF";
+                text: "GUIDE";
+                action_list_id: "YOUVIEW_GUIDE";
+            }
+
+            RemoteButton {
+                row: 1;
+                col: 3;
+                text: "YVIEW OFF";
                 action_list_id: "SHUTDOWN_YOUVIEW";
                 screen_id: RemoteScreenID.TV_CHANNELS;
                 bg_colour: Theme.power_bg_colour;
                 text_colour: Theme.power_fg_colour;
             }
+
+            
         }
         
         VerticalLayout {

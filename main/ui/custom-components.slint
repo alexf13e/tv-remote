@@ -850,7 +850,7 @@ export component IRProgressIndicator {
             width: 100%;
             height: 100%;
             text: "Sending IR Code...";
-            font-size: 24px;
+            font-size: Theme.larger_font_size;
             color: Theme.ir_progress_fg_colour;
             horizontal-alignment: center;
             vertical-alignment: center;
@@ -864,6 +864,37 @@ export component IRProgressIndicator {
                 background: Theme.ir_progress_bg_colour;
                 width: IRProgress.value * (parent.width - parent.padding * 2);
             }
+        }
+    }
+}
+
+export component SpeakerVolumePanel {
+    HorizontalLayout {
+        spacing: 10px;
+        height: 80px;
+
+        RemoteButton {
+            icon: Symbols.vol-minus;
+            action_list_id: "SPEAKERS_VOL_DOWN";
+            repeat_on_hold: true;
+            bg_colour: Theme.volume_bg_colour;
+            icon_colourize: Theme.volume_fg_colour;
+        }
+
+        RemoteButton {
+            icon: Symbols.vol-mute;
+            action_list_id: "SPEAKERS_MUTE";
+            repeat_on_hold: true;
+            bg_colour: Theme.volume_bg_colour;
+            icon_colourize: Theme.volume_fg_colour;
+        }
+
+        RemoteButton {
+            icon: Symbols.vol-plus;
+            action_list_id: "SPEAKERS_VOL_UP";
+            repeat_on_hold: true;
+            bg_colour: Theme.volume_bg_colour;
+            icon_colourize: Theme.volume_fg_colour;
         }
     }
 }

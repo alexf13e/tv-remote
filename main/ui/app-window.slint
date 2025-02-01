@@ -31,6 +31,7 @@ import { YouViewHomeScreen } from "screens/youview/youview-home-screen.slint";
 import { YouViewRecordScreen } from "screens/youview/youview-record-screen.slint";
 import { YouViewPlayScreen } from "screens/youview/youview-play-screen.slint";
 import { YouViewAllButtonsScreen } from "screens/youview/youview-all-buttons-screen.slint";
+import { SpeakersBluetoothScreen } from "screens/speakers/speakers-bluetooth-screen.slint";
 
 //export things to access them in c++
 export { Logic, ScreenHistory, CurrentDisplayedScreen, DisableIRButtons, ScreenListTabID, IRProgress } from "globals.slint";
@@ -69,7 +70,8 @@ export component AppWindow inherits Window {
         if CurrentDisplayedScreen.id == RemoteScreenID.TV_PLAYBACK: TVPlaybackScreen {}
         if CurrentDisplayedScreen.id == RemoteScreenID.TV_ALL_BUTTONS: TVAllButtonsScreen {}
 
-        if CurrentDisplayedScreen.id == RemoteScreenID.SPEAKERS-RADIO: SpeakersRadioScreen {}
+        if CurrentDisplayedScreen.id == RemoteScreenID.SPEAKERS_RADIO: SpeakersRadioScreen {}
+        if CurrentDisplayedScreen.id == RemoteScreenID.SPEAKERS_BLUETOOTH: SpeakersBluetoothScreen {}
         if CurrentDisplayedScreen.id == RemoteScreenID.SPEAKERS_ALL_BUTTONS: SpeakersAllButtonsScreen {}
 
         if CurrentDisplayedScreen.id == RemoteScreenID.HDR_HOME: HDRHomeScreen {}

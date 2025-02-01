@@ -1,0 +1,32 @@
+
+import { RemoteButton, SpeakerVolumePanel } from "../../custom-components.slint";
+import { Theme, Symbols } from "../../globals.slint";
+import { RemoteScreenID } from "../../remote-screens-index.slint";
+
+export component SpeakersBluetoothScreen {
+    VerticalLayout {
+        spacing: 30px;
+
+        VerticalLayout {
+            alignment: center;
+            
+            Text {
+                text: "Speakers in pairing mode, ensure phone bluetooth is on and speakers are selected.";
+                wrap: word-wrap;
+                font-size: Theme.larger_font_size;
+                color: Theme.default_general_text_colour;
+            }
+        }
+
+        SpeakerVolumePanel {}
+
+        RemoteButton {
+            height: 40px;
+            text: "Speakers OFF";
+            action_list_id: "SPEAKERS_POWER";
+            screen_id: RemoteScreenID.HOME;
+            bg_colour: Theme.power_bg_colour;
+            text_colour: Theme.power_fg_colour;
+        }
+    }
+}

@@ -1,7 +1,6 @@
 
-import { RemoteButton } from "../../custom-components.slint";
+import { RemoteButton, SpeakerVolumePanel } from "../../custom-components.slint";
 import { Symbols, Theme } from "../../globals.slint";
-import { ListView } from "std-widgets.slint";
 import { RemoteScreenID } from "../../remote-screens-index.slint";
 
 export component SpeakersRadioScreen {
@@ -14,7 +13,6 @@ export component SpeakersRadioScreen {
                 text: "Use arrows to scroll through station list";
                 font-size: 20px;
                 horizontal-alignment: center;
-                height: 20px;
             }
 
             HorizontalLayout {
@@ -38,7 +36,8 @@ export component SpeakersRadioScreen {
                     for i in radio_stations.length:
                     Text {
                         text: (i + 1) + " - " + radio_stations[i];
-                        font-size: 24px;
+                        font-size: Theme.larger_font_size;
+                        color: Theme.default_general_text_colour;
                     }
                 }
         
@@ -48,18 +47,20 @@ export component SpeakersRadioScreen {
         
                     RemoteButton {
                         height: 100px;
-                        action_list_id: "SPEAKERS_NAV_UP";
+                        action_list_id: "SPEAKERS_NAV_LEFT";
                         icon: Symbols.arrow-up;
                     }
         
                     RemoteButton {
                         height: 100px;
-                        action_list_id: "SPEAKERS_NAV_DOWN";
+                        action_list_id: "SPEAKERS_NAV_RIGHT";
                         icon: Symbols.arrow-down;
                     }
                 }
             }
         }
+
+        SpeakerVolumePanel {}
 
         RemoteButton {
             height: 40px;

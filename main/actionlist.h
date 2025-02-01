@@ -84,20 +84,39 @@ void createActionLists()
         RemoteTV::OK
     };
 
+    ALL_ACTION_LISTS["SHUTDOWN_HDR_NO_POWER"] = {
+        RemoteSpeakers::TV_AUDIO,
+        RemoteTV::INPUT_AV,
+        RemoteTV::NAV_UP,
+        RemoteTV::NAV_UP,
+        RemoteTV::OK
+    };
+
     ALL_ACTION_LISTS["STARTUP_RADIO"] = {
         RemoteSpeakers::POWER,
         WAIT_FOR_MS(500),
         RemoteSpeakers::TUNER
     };
 
+    ALL_ACTION_LISTS["STARTUP_BLUETOOTH"] = {
+        RemoteSpeakers::POWER,
+        WAIT_FOR_MS(5000),
+        REPEAT_SIGNAL_FOR_MS(RemoteSpeakers::BLUETOOTH, 5000)
+    };
+
     ALL_ACTION_LISTS["STARTUP_YOUVIEW"] = {
         RemoteYouView::POWER,
-        RemoteSpeakers::CBL_SAT
+        RemoteSpeakers::CBL_SAT,
+        WAIT_FOR_MS(5000)
     };
 
     ALL_ACTION_LISTS["SHUTDOWN_YOUVIEW"] = {
         RemoteYouView::POWER,
-        RemoteSpeakers::TV_AUDIO
+        RemoteSpeakers::TV_AUDIO,
+        RemoteTV::INPUT_AV,
+        RemoteTV::NAV_UP,
+        RemoteTV::NAV_UP,
+        RemoteTV::OK
     };
 
     ALL_ACTION_LISTS["YOUVIEW_RECORDINGS"] = {
@@ -949,7 +968,7 @@ void createActionLists()
 
 namespace ActionListRunner
 {
-    constexpr std::chrono::milliseconds poll_interval = std::chrono::milliseconds(50);
+    constexpr std::chrono::milliseconds poll_interval = std::chrono::milliseconds(100);
     
     slint::ComponentHandle<AppWindow>* p_main_window;
 
