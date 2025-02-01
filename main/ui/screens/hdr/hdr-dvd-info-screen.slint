@@ -5,30 +5,32 @@ import { Theme } from "../../globals.slint";
 
 export component HDRDVDInfoScreen {
     VerticalLayout {
-        spacing: 10px;
-        alignment: center;
+        VerticalLayout {
+            spacing: 30px;
+            alignment: center;
 
-        Text {
-            text: "Open disc tray with \"OPEN/CLOSE\" button on top right of HDR box. Press \"Done\" on remote after inserting disc and closing tray.";
-            wrap: word-wrap;
-            font-size: Theme.default_font_size;
-            color: Theme.default_general_text_colour;
-            height: 4 * self.font-size;
+            Text {
+                text: "Open disc tray with \"OPEN/CLOSE\" button on top right of HDR box. Insert disc and close tray, then press \"Done\" on remote.";
+                wrap: word-wrap;
+                font-size: 24px;
+                color: Theme.default_general_text_colour;
+            }
+
+            RemoteButton {
+                height: 80px;
+                screen_id: RemoteScreenID.HDR-DVD;
+                bg_colour: lime;
+                text: "Done";
+            }
         }
-
-        HorizontalLayout {
-            spacing: 10px;
+        
+        VerticalLayout {
+            alignment: end;
 
             RemoteButton {
                 height: 40px;
                 screen_id: RemoteScreenID.HDR_HOME;
                 text: "Back";
-            }
-
-            RemoteButton {
-                height: 40px;
-                screen_id: RemoteScreenID.HDR-DVD;
-                text: "Done";
             }
         }
     }
