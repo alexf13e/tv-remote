@@ -6,4 +6,6 @@ GUI implemented with Slint: https://slint.dev
 
 Vectors and icons by https://www.svgrepo.com
 
+User guide currently work in progress but available [here](/user_guide/guide.pdf).
+
 TV Channel icons have been removed from github upload in case of copyright issues.
