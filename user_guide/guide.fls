@@ -1,0 +1,209 @@
+PWD /media/alex/OS/Users/Alex/Documents/Programming/esp32/remote_esp/user_guide
+INPUT /home/alex/.miktex/texmfs/data/miktex/data/le/pdftex/pdflatex.fmt
+INPUT /home/alex/Documents/Link to Documents/Programming/esp32/remote_esp/user_guide/guide.tex
+OUTPUT guide.log
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/base/article.cls
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/base/article.cls
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/base/size10.clo
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/base/size10.clo
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/base/size10.clo
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/hyperref/hyperref.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/hyperref/hyperref.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/iftex/iftex.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/iftex/iftex.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/graphics/keyval.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/graphics/keyval.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/kvsetkeys/kvsetkeys.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/kvsetkeys/kvsetkeys.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/kvdefinekeys/kvdefinekeys.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/kvdefinekeys/kvdefinekeys.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/pdfescape/pdfescape.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/pdfescape/pdfescape.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/ltxcmds/ltxcmds.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/ltxcmds/ltxcmds.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/pdftexcmds/pdftexcmds.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/pdftexcmds/pdftexcmds.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/infwarerr/infwarerr.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/infwarerr/infwarerr.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/hycolor/hycolor.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/hycolor/hycolor.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/hyperref/nameref.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/hyperref/nameref.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/refcount/refcount.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/refcount/refcount.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/gettitlestring/gettitlestring.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/gettitlestring/gettitlestring.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/kvoptions/kvoptions.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/kvoptions/kvoptions.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/etoolbox/etoolbox.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/etoolbox/etoolbox.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/stringenc/stringenc.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/stringenc/stringenc.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/hyperref/pd1enc.def
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/hyperref/pd1enc.def
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/hyperref/pd1enc.def
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/intcalc/intcalc.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/intcalc/intcalc.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/hyperref/puenc.def
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/hyperref/puenc.def
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/hyperref/puenc.def
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/url/url.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/url/url.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/bitset/bitset.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/bitset/bitset.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/bigintcalc/bigintcalc.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/bigintcalc/bigintcalc.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/atbegshi/atbegshi.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/base/atbegshi-ltx.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/base/atbegshi-ltx.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/hyperref/hpdftex.def
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/hyperref/hpdftex.def
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/hyperref/hpdftex.def
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/atveryend/atveryend.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/base/atveryend-ltx.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/base/atveryend-ltx.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/rerunfilecheck/rerunfilecheck.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/rerunfilecheck/rerunfilecheck.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/uniquecounter/uniquecounter.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/uniquecounter/uniquecounter.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/graphics/graphicx.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/graphics/graphicx.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/graphics/graphics.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/graphics/graphics.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/graphics/trig.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/graphics/trig.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/graphics-cfg/graphics.cfg
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/graphics-cfg/graphics.cfg
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/graphics-cfg/graphics.cfg
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/graphics-def/pdftex.def
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/graphics-def/pdftex.def
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/graphics-def/pdftex.def
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/amsmath/amsmath.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/amsmath/amsmath.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/amsmath/amsopn.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/amsmath/amstext.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/amsmath/amstext.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/amsmath/amsgen.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/amsmath/amsgen.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/amsmath/amsbsy.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/amsmath/amsbsy.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/amsmath/amsopn.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/geometry/geometry.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/geometry/geometry.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/iftex/ifvtex.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/generic/iftex/ifvtex.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/geometry/geometry.cfg
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/geometry/geometry.cfg
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/geometry/geometry.cfg
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/l3backend/l3backend-pdftex.def
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/l3backend/l3backend-pdftex.def
+INPUT ./guide.aux
+INPUT ./guide.aux
+INPUT guide.aux
+OUTPUT guide.aux
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/graphics/color.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/graphics/color.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/graphics-cfg/color.cfg
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/graphics-cfg/color.cfg
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/graphics-cfg/color.cfg
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/graphics/mathcolor.ltx
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/graphics/mathcolor.ltx
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/graphics/mathcolor.ltx
+INPUT ./guide.out
+INPUT ./guide.out
+INPUT guide.out
+INPUT guide.out
+OUTPUT guide.pdf
+INPUT ./guide.out
+INPUT ./guide.out
+OUTPUT guide.out
+INPUT /home/alex/.miktex/texmfs/install/tex/context/base/mkii/supp-pdf.mkii
+INPUT /home/alex/.miktex/texmfs/install/tex/context/base/mkii/supp-pdf.mkii
+INPUT /home/alex/.miktex/texmfs/install/tex/context/base/mkii/supp-pdf.mkii
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/epstopdf-pkg/epstopdf-base.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/epstopdf-pkg/epstopdf-base.sty
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/00miktex/epstopdf-sys.cfg
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/00miktex/epstopdf-sys.cfg
+INPUT /home/alex/.miktex/texmfs/install/tex/latex/00miktex/epstopdf-sys.cfg
+INPUT /home/alex/.miktex/texmfs/install/fonts/tfm/public/cm/cmss10.tfm
+INPUT /home/alex/.miktex/texmfs/install/fonts/tfm/public/cm/cmss12.tfm
+INPUT /home/alex/.miktex/texmfs/install/fonts/tfm/public/cm/cmr12.tfm
+INPUT /home/alex/.miktex/texmfs/install/fonts/tfm/public/cm/cmr12.tfm
+INPUT /home/alex/.miktex/texmfs/install/fonts/tfm/public/cm/cmbx12.tfm
+INPUT ./guide.toc
+INPUT ./guide.toc
+INPUT guide.toc
+INPUT /home/alex/.miktex/texmfs/install/fonts/tfm/public/cm/cmssbx10.tfm
+INPUT /home/alex/.miktex/texmfs/install/fonts/tfm/public/cm/cmr8.tfm
+INPUT /home/alex/.miktex/texmfs/install/fonts/tfm/public/cm/cmr6.tfm
+INPUT /home/alex/.miktex/texmfs/install/fonts/tfm/public/cm/cmmi12.tfm
+INPUT /home/alex/.miktex/texmfs/install/fonts/tfm/public/cm/cmmi8.tfm
+INPUT /home/alex/.miktex/texmfs/install/fonts/tfm/public/cm/cmmi6.tfm
+INPUT /home/alex/.miktex/texmfs/install/fonts/tfm/public/cm/cmsy10.tfm
+INPUT /home/alex/.miktex/texmfs/install/fonts/tfm/public/cm/cmsy8.tfm
+INPUT /home/alex/.miktex/texmfs/install/fonts/tfm/public/cm/cmsy6.tfm
+INPUT /home/alex/.miktex/texmfs/install/fonts/tfm/public/cm/cmex10.tfm
+INPUT /home/alex/.miktex/texmfs/install/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm
+INPUT /home/alex/.miktex/texmfs/install/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
+OUTPUT guide.toc
+INPUT /home/alex/.miktex/texmfs/data/fonts/map/pdftex/pdftex.map
+INPUT /home/alex/.miktex/texmfs/install/fonts/tfm/public/cm/cmbx12.tfm
+INPUT /home/alex/.miktex/texmfs/install/fonts/tfm/public/cm/cmbx10.tfm
+INPUT /home/alex/.miktex/texmfs/install/fonts/tfm/public/cm/cmtt12.tfm
+INPUT ./images/example channels.png
+INPUT ./images/example channels.png
+INPUT ./images/example channels.png
+INPUT ./images/example channels.png
+INPUT ./images/example channels.png
+INPUT ./images/example channels.png
+INPUT ./images/example channels.png
+INPUT ./images/channel button data.png
+INPUT ./images/channel button data.png
+INPUT ./images/channel button data.png
+INPUT ./images/channel button data.png
+INPUT ./images/channel button data.png
+INPUT ./images/channel button data.png
+INPUT ./images/channel button data.png
+INPUT /home/alex/.miktex/texmfs/install/fonts/tfm/jknappen/ec/tcrm1200.tfm
+INPUT ./images/ir learn 1.png
+INPUT ./images/ir learn 1.png
+INPUT ./images/ir learn 1.png
+INPUT ./images/ir learn 1.png
+INPUT ./images/ir learn 1.png
+INPUT ./images/ir learn 1.png
+INPUT ./images/ir learn 1.png
+INPUT ./images/ir learn 2.png
+INPUT ./images/ir learn 2.png
+INPUT ./images/ir learn 2.png
+INPUT ./images/ir learn 2.png
+INPUT ./images/ir learn 2.png
+INPUT ./images/ir learn 2.png
+INPUT ./images/ir learn 2.png
+INPUT ./images/ir learn 3.png
+INPUT ./images/ir learn 3.png
+INPUT ./images/ir learn 3.png
+INPUT ./images/ir learn 3.png
+INPUT ./images/ir learn 3.png
+INPUT ./images/ir learn 3.png
+INPUT ./images/ir learn 3.png
+INPUT guide.aux
+INPUT ./guide.out
+INPUT ./guide.out
+INPUT /home/alex/.miktex/texmfs/data/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1200.pk
+INPUT /home/alex/.miktex/texmfs/data/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1200.pk
+INPUT /home/alex/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmbx10.pfb
+INPUT /home/alex/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmbx10.pfb
+INPUT /home/alex/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmbx12.pfb
+INPUT /home/alex/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmbx12.pfb
+INPUT /home/alex/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmr10.pfb
+INPUT /home/alex/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmr10.pfb
+INPUT /home/alex/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmr12.pfb
+INPUT /home/alex/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmr12.pfb
+INPUT /home/alex/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmss12.pfb
+INPUT /home/alex/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmss12.pfb
+INPUT /home/alex/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmssbx10.pfb
+INPUT /home/alex/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmssbx10.pfb
+INPUT /home/alex/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy10.pfb
+INPUT /home/alex/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy10.pfb
+INPUT /home/alex/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmtt12.pfb
+INPUT /home/alex/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmtt12.pfb
