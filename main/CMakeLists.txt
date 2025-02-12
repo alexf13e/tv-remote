@@ -1,6 +1,6 @@
 idf_component_register(SRCS "main.cpp"
     INCLUDE_DIRS "."
-    REQUIRES slint esp32_io_expander esp_lcd_touch_gt911)
+    REQUIRES slint)
 
 slint_target_sources(${COMPONENT_LIB} ui/app-window.slint)
 

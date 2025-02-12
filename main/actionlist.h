@@ -92,6 +92,42 @@ void createActionLists()
         RemoteTV::OK
     };
 
+    ALL_ACTION_LISTS["HDR_SKIP_2_MINS"] = {
+        RemoteHDR::MANUAL_SKIP_PLUS_60,
+        WAIT_FOR_MS(300),
+        RemoteHDR::MANUAL_SKIP_PLUS_60,
+    };
+
+    ALL_ACTION_LISTS["HDR_SKIP_3_MINS"] = {
+        RemoteHDR::MANUAL_SKIP_PLUS_60,
+        WAIT_FOR_MS(300),
+        RemoteHDR::MANUAL_SKIP_PLUS_60,
+        WAIT_FOR_MS(300),
+        RemoteHDR::MANUAL_SKIP_PLUS_60,
+    };
+
+    ALL_ACTION_LISTS["HDR_SKIP_4_MINS"] = {
+        RemoteHDR::MANUAL_SKIP_PLUS_60,
+        WAIT_FOR_MS(300),
+        RemoteHDR::MANUAL_SKIP_PLUS_60,
+        WAIT_FOR_MS(300),
+        RemoteHDR::MANUAL_SKIP_PLUS_60,
+        WAIT_FOR_MS(300),
+        RemoteHDR::MANUAL_SKIP_PLUS_60,
+    };
+
+    ALL_ACTION_LISTS["HDR_SKIP_5_MINS"] = {
+        RemoteHDR::MANUAL_SKIP_PLUS_60,
+        WAIT_FOR_MS(300),
+        RemoteHDR::MANUAL_SKIP_PLUS_60,
+        WAIT_FOR_MS(300),
+        RemoteHDR::MANUAL_SKIP_PLUS_60,
+        WAIT_FOR_MS(300),
+        RemoteHDR::MANUAL_SKIP_PLUS_60,
+        WAIT_FOR_MS(300),
+        RemoteHDR::MANUAL_SKIP_PLUS_60,
+    };
+
     ALL_ACTION_LISTS["STARTUP_RADIO"] = {
         RemoteSpeakers::POWER,
         WAIT_FOR_MS(500),
@@ -105,6 +141,10 @@ void createActionLists()
     };
 
     ALL_ACTION_LISTS["STARTUP_YOUVIEW"] = {
+        RemoteTV::INPUT_AV,
+        RemoteTV::NAV_DOWN,
+        RemoteTV::NAV_DOWN,
+        RemoteTV::OK,
         RemoteYouView::POWER,
         RemoteSpeakers::CBL_SAT,
         WAIT_FOR_MS(5000)

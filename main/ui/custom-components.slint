@@ -1,6 +1,6 @@
 
 import { Button, TextEdit, ProgressIndicator } from "std-widgets.slint";
-import { RemoteButtonData, ChannelButtonData } from "custom-component-data.slint";
+import { RemoteButtonData, ChannelButtonData, YouViewRemoteButtonData } from "custom-component-data.slint";
 import { RemoteScreenID } from "remote-screens-index.slint";
 import { Logic, CurrentDisplayedScreen, Symbols, ScreenHistory, DisableIRButtons, IRProgress, Theme } from "globals.slint";
 
@@ -309,8 +309,7 @@ component PlaybackControlPanel {
     in property <string> al_skip_back;
     in property <string> al_skip_forward;
 
-    in property <string> skip_text;
-    in property <image> skip_forward_icon: Symbols.skip-forward;
+    in property <RemoteScreenID> sc_on_stop: RemoteScreenID.SAME; //tv wants to go to channels page when stop pressed
 
     GridLayout {
         spacing: 10px;
@@ -327,9 +326,7 @@ component PlaybackControlPanel {
         RemoteButton {
             row: 0;
             col: 2;
-            icon: skip_forward_icon;
-            text: skip_text;
-            text_colour: Theme.playback_fg_colour_4;
+            icon: Symbols.skip-forward;
             action_list_id: al_skip_forward;
             bg_colour: Theme.playback_bg_colour_4;
             icon_colourize: Theme.playback_fg_colour_4;
@@ -376,6 +373,7 @@ component PlaybackControlPanel {
             col: 1;
             icon: Symbols.stop;
             action_list_id: al_stop;
+            screen_id: sc_on_stop;
             bg_colour: Theme.playback_bg_colour_2;
             icon_colourize: Theme.playback_fg_colour_2;
         }
@@ -393,26 +391,150 @@ export component TVPlaybackControlPanel inherits PlaybackControlPanel {
     al_fast_forward: "TV_FAST_FORWARD";
     al_skip_back: "TV_SKIP_BACK";
     al_skip_forward: "TV_SKIP_FORWARD";
+
+    sc_on_stop: RemoteScreenID.TV_CHANNELS;
 }
 
-export component HDRRecordingPlaybackControlPanel inherits PlaybackControlPanel {
-    al_play: "HDR_PLAY";
-    al_pause: "HDR_PAUSE";
-    al_stop: "HDR_STOP";
+export component HDRRecordingPlaybackControlPanel {
+    //this playback screen wanted to be different from the others
 
-    al_rewind: "HDR_REWIND";
-    al_fast_forward: "HDR_FAST_FORWARD";
-    al_skip_forward: "HDR_MANUAL_SKIP_PLUS_60";
+    property <string> al_play: "HDR_PLAY";
+    property <string> al_pause: "HDR_PAUSE";
+    property <string> al_stop: "HDR_STOP";
 
-    skip_forward_icon: @image-url("");
-    skip_text: "+60s";
+    property <string> al_rewind: "HDR_REWIND";
+    property <string> al_fast_forward: "HDR_FAST_FORWARD";
+    property <string> al_skip_back;
+    property <string> al_skip_forward: "HDR_MANUAL_SKIP_PLUS_60";
 
-    RemoteButton {
-        row: 0;
-        col: 0;
-        z: 1;
-        text: "LIBRARY";
-        action_list_id: "HDR_VIDEO_MENU";
+    property <RemoteScreenID> sc_on_stop: RemoteScreenID.SAME; //tv wants to go to channels page when stop pressed
+
+    VerticalLayout {
+        spacing: 5px;
+
+        Rectangle {
+            background: Theme.playback_bg_colour_4;
+            height: Theme.larger_font_size * 1.5;
+
+            Text {
+                font-size: Theme.larger_font_size;
+                horizontal-alignment: center;
+                vertical-alignment: center;
+                text: "Skip-forward minutes";
+            }
+        }
+    
+        GridLayout {
+            spacing: 10px;
+    
+            HorizontalLayout {
+                spacing: 10px;
+                col: 0;
+                row: 0;
+                colspan: 3;
+        
+                RemoteButton {
+                    text: "+1";
+                    action_list_id: "HDR_MANUAL_SKIP_PLUS_60";
+                    bg_colour: Theme.playback_bg_colour_4;
+                    text_colour: Theme.playback_fg_colour_4;
+                    font_size: Theme.larger_font_size;
+                }
+        
+                RemoteButton {
+                    text: "+2";
+                    action_list_id: "HDR_SKIP_2_MINS";
+                    bg_colour: Theme.playback_bg_colour_4;
+                    text_colour: Theme.playback_fg_colour_4;
+                    font_size: Theme.larger_font_size;
+                }
+        
+                RemoteButton {
+                    text: "+3";
+                    action_list_id: "HDR_SKIP_3_MINS";
+                    bg_colour: Theme.playback_bg_colour_4;
+                    text_colour: Theme.playback_fg_colour_4;
+                    font_size: Theme.larger_font_size;
+                }
+        
+                RemoteButton {
+                    text: "+4";
+                    action_list_id: "HDR_SKIP_4_MINS";
+                    bg_colour: Theme.playback_bg_colour_4;
+                    text_colour: Theme.playback_fg_colour_4;
+                    font_size: Theme.larger_font_size;
+                }
+        
+                RemoteButton {
+                    text: "+5";
+                    action_list_id: "HDR_SKIP_5_MINS";
+                    bg_colour: Theme.playback_bg_colour_4;
+                    text_colour: Theme.playback_fg_colour_4;
+                    font_size: Theme.larger_font_size;
+                }
+            }
+    
+            RemoteButton {
+                col: 1;
+                row: 1;
+                icon: Symbols.pause;
+                action_list_id: al_pause;
+                bg_colour: Theme.playback_bg_colour_3;
+                icon_colourize: Theme.playback_fg_colour_3;
+            }
+    
+            RemoteButton {
+                col: 1;
+                row: 2;
+                icon: Symbols.play;
+                action_list_id: al_play;
+                bg_colour: Theme.playback_bg_colour_1;
+                icon_colourize: Theme.playback_fg_colour_1;
+            }
+    
+            RemoteButton {
+                col: 0;
+                row: 2;
+                icon: Symbols.rewind;
+                action_list_id: al_rewind;
+                bg_colour: Theme.playback_bg_colour_3;
+                icon_colourize: Theme.playback_fg_colour_3;
+            }
+    
+            RemoteButton {
+                col: 2;
+                row: 2;
+                icon: Symbols.fast-forward;
+                action_list_id: al_fast_forward;
+                bg_colour: Theme.playback_bg_colour_3;
+                icon_colourize: Theme.playback_fg_colour_3;
+            }
+    
+            RemoteButton {
+                col: 0;
+                row: 3;
+                action_list_id: "HDR_DELETE";
+                icon: Symbols.bin;
+            }
+    
+            RemoteButton {
+                col: 1;
+                row: 3;
+                icon: Symbols.stop;
+                action_list_id: al_stop;
+                screen_id: sc_on_stop;
+                bg_colour: Theme.playback_bg_colour_2;
+                icon_colourize: Theme.playback_fg_colour_2;
+            }
+    
+            RemoteButton {
+                col: 2;
+                row: 3;
+                text: "Library";
+                action_list_id: "HDR_VIDEO_MENU";
+                font_size: Theme.larger_font_size;
+            }
+        }
     }
 }
 

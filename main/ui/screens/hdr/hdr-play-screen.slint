@@ -4,15 +4,6 @@ import { RemoteScreenID } from "../../remote-screens-index.slint";
 import { Symbols, Theme } from "../../globals.slint";
 
 export component HDRPlayScreen {
-    RemoteButton {
-        x: 0;
-        y: 400px;
-        width: 80px;
-        height: 80px;
-        action_list_id: "HDR_DELETE";
-        icon: Symbols.bin;
-    }
-
     VerticalLayout {
         spacing: 20px;
 
@@ -21,7 +12,7 @@ export component HDRPlayScreen {
             vertical-stretch: 1;
 
             HDRRecordingPlaybackControlPanel{
-                height: 70%;
+                height: 80%;
             }
         }
         

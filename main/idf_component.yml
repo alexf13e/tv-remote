@@ -1,9 +1,9 @@
 ## IDF Component Manager Manifest File
 dependencies:
-  #espressif/esp32_display_panel: "*"
   slint/slint: "^1.9.2"
   espressif/esp32_io_expander: "^0.1.0"
   espressif/esp_lcd_touch_gt911: "^1.1.1~1"
+  #espressif/esp32_display_panel: "*"
   ## Required IDF version
   idf:
     version: ">=4.1.0"
