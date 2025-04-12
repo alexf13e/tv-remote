@@ -421,6 +421,7 @@ export component HDRRecordingPlaybackControlPanel {
                 horizontal-alignment: center;
                 vertical-alignment: center;
                 text: "Skip-forward minutes";
+                color: Theme.playback_fg_colour_4;
             }
         }
     
@@ -873,21 +874,21 @@ export component MiscButtonPopup {
         
                             RemoteButton {
                                 text: "SPKR TV";
-                                action_list_id: "SPEAKERS_TV_AUDIO";
+                                action_list_id: "SPEAKERS_TV";
                                 bg_colour: Theme.volume_bg_colour;
                                 icon_colourize: Theme.volume_fg_colour;
                             }
         
                             RemoteButton {
                                 text: "SPKR HDR";
-                                action_list_id: "SPEAKERS_MEDIA_PLAYER";
+                                action_list_id: "SPEAKERS_HDR";
                                 bg_colour: Theme.volume_bg_colour;
                                 icon_colourize: Theme.volume_fg_colour;
                             }
         
                             RemoteButton {
                                 text: "SPKR YVIEW";
-                                action_list_id: "SPEAKERS_CBL_SAT";
+                                action_list_id: "SPEAKERS_YOUVIEW";
                                 bg_colour: Theme.volume_bg_colour;
                                 icon_colourize: Theme.volume_fg_colour;
                             }
@@ -943,10 +944,10 @@ export component UINavPanel { //navigation buttons at bottom of screen for for g
         }
 
         RemoteButton {
-            icon: Symbols.home;
-            press_release => {
-                CurrentDisplayedScreen.set_screen(RemoteScreenID.HOME);
-            }
+            text: "Exit Amazon";
+            action_list_id: "SHUTDOWN_AMAZON";
+            bg_colour: Theme.amazon_dark_blue;
+            text_colour: Theme.amazon_yellow;
         }
 
         RemoteButton {

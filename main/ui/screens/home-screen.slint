@@ -1,7 +1,7 @@
 
 import { RemoteButton } from "../custom-components.slint";
 import { RemoteScreenID } from "../remote-screens-index.slint";
-import { Theme } from "../globals.slint";
+import { Theme, Symbols } from "../globals.slint";
 
 export component HomeScreen {
     property <length> btn_height: 80px;
@@ -9,6 +9,14 @@ export component HomeScreen {
     VerticalLayout {
         height: 50%;
         alignment: space-around;
+
+        RemoteButton {
+            height: btn_height;
+            action_list_id: "STARTUP_AMAZON";
+            screen_id: RemoteScreenID.AMAZON;
+            icon: Symbols.amazon;
+            bg_colour: Theme.amazon_dark_blue;
+        }
 
         RemoteButton {
             height: btn_height;

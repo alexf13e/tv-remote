@@ -1,6 +1,6 @@
 
 import { RemoteScreenID } from "remote-screens-index.slint";
-import { Theme } from "globals.slint";
+import { Theme, Symbols } from "globals.slint";
 
 export struct RemoteButtonData {
     icon: image,
@@ -72,16 +72,17 @@ export global ChannelButtonData { //list of data to generate tv channel buttons 
 
 export global ScreenListButtonData {
     out property <[RemoteButtonData]> data_general: [
-        { text: "Home",                 screen_id: RemoteScreenID.HOME,         bg_colour: Theme.default_btn_bg_colour,    text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,  },
-        { text: "IR Code Learning",     screen_id: RemoteScreenID.IR_RECEIVE,   bg_colour: Theme.default_btn_bg_colour,    text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,  },
+        { text: "Home",                 screen_id: RemoteScreenID.HOME,         bg_colour: Theme.default_btn_bg_colour,    text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,    },
+        { text: "IR Code Learning",     screen_id: RemoteScreenID.IR_RECEIVE,   bg_colour: Theme.default_btn_bg_colour,    text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,    },
         
     ];
 
     out property <[RemoteButtonData]> data_tv: [
-        { text: "TV Channels",          screen_id: RemoteScreenID.TV_CHANNELS,      bg_colour: Colors.lime,                 text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,  },
-        { text: "TV Apps",              screen_id: RemoteScreenID.TV_APPS,          bg_colour: Theme.default_btn_bg_colour,    text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,  },
-        { text: "NAS/Photo/Video",      screen_id: RemoteScreenID.TV_PLAYBACK,      bg_colour: Theme.default_btn_bg_colour,    text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,  },
-        { text: "TV All Buttons",       screen_id: RemoteScreenID.TV_ALL_BUTTONS,   bg_colour: Theme.default_btn_bg_colour,    text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,  },
+        { text: "Amazon Firestick",     screen_id: RemoteScreenID.AMAZON,           bg_colour: Theme.amazon_dark_blue,      text_colour: Theme.amazon_yellow,           icon_colourize: Theme.default_btn_icon_colourize    },
+        { text: "TV Channels",          screen_id: RemoteScreenID.TV_CHANNELS,      bg_colour: Colors.lime,                 text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,   },
+        { text: "TV Apps",              screen_id: RemoteScreenID.TV_APPS,          bg_colour: Theme.default_btn_bg_colour, text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,   },
+        { text: "NAS/Photo/Video",      screen_id: RemoteScreenID.TV_PLAYBACK,      bg_colour: Theme.default_btn_bg_colour, text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,   },
+        { text: "TV All Buttons",       screen_id: RemoteScreenID.TV_ALL_BUTTONS,   bg_colour: Theme.default_btn_bg_colour, text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,   },
     
     ];
 
@@ -170,14 +171,14 @@ export global SpeakersRemoteButtonData {
     out property <[RemoteButtonData]> data: [
         { text: "POWER",              action_list_id: "SPEAKERS_POWER",          },
         { text: "SLEEP",              action_list_id: "SPEAKERS_SLEEP",          },
-        { text: "CBL SAT",            action_list_id: "SPEAKERS_CBL_SAT",        },
-        { text: "MEDIA PLAYER",       action_list_id: "SPEAKERS_MEDIA_PLAYER",   },
+        { text: "CBL SAT",            action_list_id: "SPEAKERS_YOUVIEW",        },
+        { text: "MEDIA PLAYER",       action_list_id: "SPEAKERS_HDR",   },
         { text: "BLU RAY",            action_list_id: "SPEAKERS_BLU_RAY",        },
         { text: "GAME",               action_list_id: "SPEAKERS_GAME",           },
         { text: "AUX1",               action_list_id: "SPEAKERS_AUX1",           },
         { text: "AUX2",               action_list_id: "SPEAKERS_AUX2",           },
         { text: "PHONO",              action_list_id: "SPEAKERS_PHONO",          },
-        { text: "TV AUDIO",           action_list_id: "SPEAKERS_TV_AUDIO",       },
+        { text: "TV AUDIO",           action_list_id: "SPEAKERS_TV",       },
         { text: "TUNER",              action_list_id: "SPEAKERS_TUNER",          },
         { text: "USB",                action_list_id: "SPEAKERS_USB",            },
         { text: "BLUETOOTH",          action_list_id: "SPEAKERS_BLUETOOTH",      },

@@ -33,10 +33,29 @@ void createActionLists()
 {
     //////////////////////////////////////// GENERAL MACROS ////////////////////////////////////////
 
+    ALL_ACTION_LISTS["STARTUP_AMAZON"] = {
+        RemoteSpeakers::POWER,
+        WAIT_FOR_MS(500),
+        RemoteSpeakers::TV,
+        REPEAT_SIGNAL_FOR_MS(RemoteTV::POWER, 500),
+        WAIT_FOR_MS(4000),
+        RemoteTV::EXIT,
+        WAIT_FOR_MS(3000),
+        RemoteTV::INPUT_AV,
+        RemoteTV::NAV_DOWN,
+        RemoteTV::OK
+    };
+
+    ALL_ACTION_LISTS["SHUTDOWN_AMAZON"] = {
+        RemoteTV::INPUT_AV,
+        RemoteTV::NAV_UP,
+        RemoteTV::OK
+    };
+
     ALL_ACTION_LISTS["STARTUP_TV"] = {
         RemoteSpeakers::POWER,
         WAIT_FOR_MS(500),
-        RemoteSpeakers::TV_AUDIO,
+        RemoteSpeakers::TV,
         REPEAT_SIGNAL_FOR_MS(RemoteTV::POWER, 500),
         WAIT_FOR_MS(4000),
         RemoteTV::EXIT
@@ -68,7 +87,7 @@ void createActionLists()
 
 
     ALL_ACTION_LISTS["STARTUP_HDR"] = {
-        RemoteSpeakers::MEDIA_PLAYER,
+        RemoteSpeakers::HDR,
         RemoteTV::INPUT_AV,
         RemoteTV::NAV_DOWN,
         RemoteTV::NAV_DOWN,
@@ -77,7 +96,7 @@ void createActionLists()
 
     ALL_ACTION_LISTS["SHUTDOWN_HDR"] = {
         RemoteHDR::POWER,
-        RemoteSpeakers::TV_AUDIO,
+        RemoteSpeakers::TV,
         RemoteTV::INPUT_AV,
         RemoteTV::NAV_UP,
         RemoteTV::NAV_UP,
@@ -85,7 +104,7 @@ void createActionLists()
     };
 
     ALL_ACTION_LISTS["SHUTDOWN_HDR_NO_POWER"] = {
-        RemoteSpeakers::TV_AUDIO,
+        RemoteSpeakers::TV,
         RemoteTV::INPUT_AV,
         RemoteTV::NAV_UP,
         RemoteTV::NAV_UP,
@@ -146,13 +165,13 @@ void createActionLists()
         RemoteTV::NAV_DOWN,
         RemoteTV::OK,
         RemoteYouView::POWER,
-        RemoteSpeakers::CBL_SAT,
+        RemoteSpeakers::YOUVIEW,
         WAIT_FOR_MS(5000)
     };
 
     ALL_ACTION_LISTS["SHUTDOWN_YOUVIEW"] = {
         RemoteYouView::POWER,
-        RemoteSpeakers::TV_AUDIO,
+        RemoteSpeakers::TV,
         RemoteTV::INPUT_AV,
         RemoteTV::NAV_UP,
         RemoteTV::NAV_UP,
@@ -451,12 +470,12 @@ void createActionLists()
         RemoteSpeakers::SLEEP
     };
 
-    ALL_ACTION_LISTS["SPEAKERS_CBL_SAT"] = { //YouView
-        RemoteSpeakers::CBL_SAT
+    ALL_ACTION_LISTS["SPEAKERS_YOUVIEW"] = { //YouView
+        RemoteSpeakers::YOUVIEW
     };
 
-    ALL_ACTION_LISTS["SPEAKERS_MEDIA_PLAYER"] = { //HDR
-        RemoteSpeakers::MEDIA_PLAYER
+    ALL_ACTION_LISTS["SPEAKERS_HDR"] = { //HDR
+        RemoteSpeakers::HDR
     };
 
     ALL_ACTION_LISTS["SPEAKERS_BLU_RAY"] = {
@@ -479,8 +498,8 @@ void createActionLists()
         RemoteSpeakers::PHONO
     };
 
-    ALL_ACTION_LISTS["SPEAKERS_TV_AUDIO"] = { //TV
-        RemoteSpeakers::TV_AUDIO
+    ALL_ACTION_LISTS["SPEAKERS_TV"] = { //TV
+        RemoteSpeakers::TV
     };
 
     ALL_ACTION_LISTS["SPEAKERS_TUNER"] = { //Radio

@@ -37,7 +37,7 @@ dependencies:
   idf:
     source:
       type: idf
-    version: 5.4.0
+    version: 5.4.1
   slint/slint:
     component_hash: fed4e236d90f6e6addb0a594d17e7e89ed1bd2b1a470bccee49823adb3412b8a
     dependencies:

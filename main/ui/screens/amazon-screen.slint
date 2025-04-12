@@ -1,0 +1,30 @@
+
+import { RemoteButton, SpeakerVolumePanel } from "../custom-components.slint";
+import { RemoteScreenID } from "../remote-screens-index.slint";
+import { Theme } from "../globals.slint";
+
+export component AmazonScreen {
+    VerticalLayout {  
+        alignment: center;
+        spacing: 80px;
+
+        Text {
+            font-size: 18px;
+            text: "Use the fire remote or phone app for watching Amazon stuff, return to TV when done";
+            color: Theme.default_general_text_colour;
+            wrap: word-wrap;
+            height: 50px;
+        }
+        
+        RemoteButton {
+            height: 80px;
+            text: "Return to TV";
+            screen_id: RemoteScreenID.TV_CHANNELS;
+            action_list_id: "SHUTDOWN_AMAZON";
+            bg_colour: Theme.info_bg_colour;
+            text_colour: Theme.info_fg_colour;
+        }
+
+        SpeakerVolumePanel {}
+    }
+}
