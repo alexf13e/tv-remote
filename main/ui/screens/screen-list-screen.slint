@@ -3,7 +3,7 @@ import { RemoteButton } from "../custom-components.slint";
 import { RemoteScreenID } from "../remote-screens-index.slint";
 import { TabWidget, GroupBox } from "std-widgets.slint";
 import { RemoteButtonData, ScreenListButtonData } from "../custom-component-data.slint";
-import { ScreenListTabID } from "../globals.slint"; //tab id stored globally to be kept when changing screens
+import { ScreenListTabID, Theme } from "../globals.slint"; //tab id stored globally to be kept when changing screens
 
 
 export component ScreenListScreen {
@@ -28,6 +28,7 @@ export component ScreenListScreen {
                 bg_colour: d.bg_colour;
                 text_colour: d.text_colour;
                 icon_colourize: d.icon_colourize;
+                font_size: Theme.larger_font_size;
             }
     }
 

@@ -16,6 +16,7 @@ export component HomeScreen {
             screen_id: RemoteScreenID.AMAZON;
             icon: Symbols.amazon;
             bg_colour: Theme.amazon_dark_blue;
+            font_size: Theme.larger_font_size;
         }
 
         RemoteButton {
@@ -24,6 +25,7 @@ export component HomeScreen {
             action_list_id: "STARTUP_TV";
             screen_id: RemoteScreenID.TV_CHANNELS;
             bg_colour: lime;
+            font_size: Theme.larger_font_size;
         }
 
         RemoteButton {
@@ -31,6 +33,7 @@ export component HomeScreen {
             text: "Radio";
             action_list_id: "STARTUP_RADIO";
             screen_id: RemoteScreenID.SPEAKERS_RADIO;
+            font_size: Theme.larger_font_size;
         }
 
         RemoteButton {
@@ -40,6 +43,7 @@ export component HomeScreen {
             screen_id: RemoteScreenID.SPEAKERS_BLUETOOTH;
             bg_colour: blue;
             text_colour: white;
+            font_size: Theme.larger_font_size;
         }
     }
 
@@ -57,6 +61,7 @@ export component HomeScreen {
                 action_list_id: "SPEAKERS_POWER";
                 bg_colour: Theme.power_bg_colour;
                 text_colour: Theme.power_fg_colour;
+                font_size: Theme.larger_font_size;
             }
     
             RemoteButton {
@@ -64,6 +69,7 @@ export component HomeScreen {
                 action_list_id: "TV_POWER";
                 bg_colour: Theme.power_bg_colour;
                 text_colour: Theme.power_fg_colour;
+                font_size: Theme.larger_font_size;
             }
         }
     }
