@@ -102,14 +102,6 @@ export global ScreenListButtonData {
         { text: "HDR All Buttons",  screen_id: RemoteScreenID.HDR_ALL_BUTTONS,  bg_colour: Theme.default_btn_bg_colour,    text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,  },
 
     ];
-
-    out property <[RemoteButtonData]> data_youview: [
-        { text: "YouView Home",         screen_id: RemoteScreenID.YOUVIEW-HOME,         bg_colour: Theme.default_btn_bg_colour,    text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,  },
-        { text: "YouView Play",         screen_id: RemoteScreenID.YOUVIEW-PLAY,         bg_colour: Theme.default_btn_bg_colour,    text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,  },
-        { text: "YouView Record",       screen_id: RemoteScreenID.YOUVIEW-RECORD,       bg_colour: Theme.default_btn_bg_colour,    text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,  },
-        { text: "YouView All Buttons",  screen_id: RemoteScreenID.YOUVIEW-ALL-BUTTONS,  bg_colour: Theme.default_btn_bg_colour,    text_colour: Theme.default_btn_text_colour, icon_colourize: Theme.default_btn_icon_colourize,  },
-
-    ];
 }
 
 export global TVRemoteButtonData {
@@ -171,14 +163,14 @@ export global SpeakersRemoteButtonData {
     out property <[RemoteButtonData]> data: [
         { text: "POWER",              action_list_id: "SPEAKERS_POWER",          },
         { text: "SLEEP",              action_list_id: "SPEAKERS_SLEEP",          },
-        { text: "CBL SAT",            action_list_id: "SPEAKERS_YOUVIEW",        },
-        { text: "MEDIA PLAYER",       action_list_id: "SPEAKERS_HDR",   },
+        { text: "CBL SAT",            action_list_id: "SPEAKERS_CBL_SAT",        },
+        { text: "MEDIA PLAYER",       action_list_id: "SPEAKERS_HDR",            },
         { text: "BLU RAY",            action_list_id: "SPEAKERS_BLU_RAY",        },
         { text: "GAME",               action_list_id: "SPEAKERS_GAME",           },
         { text: "AUX1",               action_list_id: "SPEAKERS_AUX1",           },
         { text: "AUX2",               action_list_id: "SPEAKERS_AUX2",           },
         { text: "PHONO",              action_list_id: "SPEAKERS_PHONO",          },
-        { text: "TV AUDIO",           action_list_id: "SPEAKERS_TV",       },
+        { text: "TV AUDIO",           action_list_id: "SPEAKERS_TV",             },
         { text: "TUNER",              action_list_id: "SPEAKERS_TUNER",          },
         { text: "USB",                action_list_id: "SPEAKERS_USB",            },
         { text: "BLUETOOTH",          action_list_id: "SPEAKERS_BLUETOOTH",      },
@@ -268,55 +260,5 @@ export global HDRRemoteButtonData {
         { text: "TIME SLIP",            action_list_id: "HDR_TIME_SLIP",            },
         { text: "MANUAL SKIP MINUS 10", action_list_id: "HDR_MANUAL_SKIP_MINUS_10", },
         { text: "MANUAL SKIP PLUS 60",  action_list_id: "HDR_MANUAL_SKIP_PLUS_60",  },
-    ];
-}
-
-export global YouViewRemoteButtonData {
-    out property <[RemoteButtonData]> data: [
-        { text: "POWER",            action_list_id: "YOUVIEW_POWER",        },
-        { text: "ZOOM",             action_list_id: "YOUVIEW_ZOOM",         },
-        { text: "TEXT",             action_list_id: "YOUVIEW_TEXT",         },
-        { text: "HELP",             action_list_id: "YOUVIEW_HELP",         },
-        { text: "BT PLAYER",        action_list_id: "YOUVIEW_BT_PLAYER",    },
-        { text: "HOME",             action_list_id: "YOUVIEW_HOME",         },
-        { text: "RED",              action_list_id: "YOUVIEW_RED",          },
-        { text: "GREEN",            action_list_id: "YOUVIEW_GREEN",        },
-        { text: "YELLOW",           action_list_id: "YOUVIEW_YELLOW",       },
-        { text: "BLUE",             action_list_id: "YOUVIEW_BLUE",         },
-        { text: "INFO",             action_list_id: "YOUVIEW_INFO",         },
-        { text: "VOL UP",           action_list_id: "YOUVIEW_VOL_UP",       },
-        { text: "VOL DOWN",         action_list_id: "YOUVIEW_VOL_DOWN",     },
-        { text: "VOL MUTE",         action_list_id: "YOUVIEW_VOL_MUTE",     },
-        { text: "CHAN UP",          action_list_id: "YOUVIEW_CHAN_UP",      },
-        { text: "CHAN DOWN",        action_list_id: "YOUVIEW_CHAN_DOWN",    },
-        { text: "NAV UP",           action_list_id: "YOUVIEW_NAV_UP",       },
-        { text: "NAV DOWN",         action_list_id: "YOUVIEW_NAV_DOWN",     },
-        { text: "NAV LEFT",         action_list_id: "YOUVIEW_NAV_LEFT",     },
-        { text: "NAV RIGHT",        action_list_id: "YOUVIEW_NAV_RIGHT",    },
-        { text: "OK",               action_list_id: "YOUVIEW_OK",           },
-        { text: "BACK",             action_list_id: "YOUVIEW_BACK",         },
-        { text: "REWIND",           action_list_id: "YOUVIEW_REWIND",       },
-        { text: "PLAY",             action_list_id: "YOUVIEW_PLAY",         },
-        { text: "PAUSE",            action_list_id: "YOUVIEW_PAUSE",        },
-        { text: "FAST FORWARD",     action_list_id: "YOUVIEW_FAST_FORWARD", },
-        { text: "SKIP BACK",        action_list_id: "YOUVIEW_SKIP_BACK",    },
-        { text: "RECORD",           action_list_id: "YOUVIEW_RECORD",       },
-        { text: "STOP",             action_list_id: "YOUVIEW_STOP",         },
-        { text: "SKIP FORWARD",     action_list_id: "YOUVIEW_SKIP_FORWARD", },
-        { text: "GUIDE",            action_list_id: "YOUVIEW_GUIDE",        },
-        { text: "SEARCH",           action_list_id: "YOUVIEW_SEARCH",       },
-        { text: "CLOSE",            action_list_id: "YOUVIEW_CLOSE",        },
-        { text: "0",                action_list_id: "YOUVIEW_KEY_0",        },
-        { text: "1",                action_list_id: "YOUVIEW_KEY_1",        },
-        { text: "2",                action_list_id: "YOUVIEW_KEY_2",        },
-        { text: "3",                action_list_id: "YOUVIEW_KEY_3",        },
-        { text: "4",                action_list_id: "YOUVIEW_KEY_4",        },
-        { text: "5",                action_list_id: "YOUVIEW_KEY_5",        },
-        { text: "6",                action_list_id: "YOUVIEW_KEY_6",        },
-        { text: "7",                action_list_id: "YOUVIEW_KEY_7",        },
-        { text: "8",                action_list_id: "YOUVIEW_KEY_8",        },
-        { text: "9",                action_list_id: "YOUVIEW_KEY_9",        },
-        { text: "AD",               action_list_id: "YOUVIEW_AD",           },
-        { text: "DELETE SUB",       action_list_id: "YOUVIEW_DELETE_SUB",   },
-    ];  
+    ]; 
 }

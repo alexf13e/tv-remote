@@ -1,6 +1,6 @@
 
 import { Button, TextEdit, ProgressIndicator } from "std-widgets.slint";
-import { RemoteButtonData, ChannelButtonData, YouViewRemoteButtonData } from "custom-component-data.slint";
+import { RemoteButtonData, ChannelButtonData } from "custom-component-data.slint";
 import { RemoteScreenID } from "remote-screens-index.slint";
 import { Logic, CurrentDisplayedScreen, Symbols, ScreenHistory, DisableIRButtons, IRProgress, Theme } from "globals.slint";
 
@@ -280,24 +280,6 @@ export component HDRRemoteNavPanel inherits RemoteNavPanel {
     al_info: "HDR_INFO";
 }
 
-export component YouViewRemoteNavPanel inherits RemoteNavPanel {
-    al_chan_up: "YOUVIEW_CHAN_UP";
-    al_chan_down: "YOUVIEW_CHAN_DOWN";
-    al_mute: "SPEAKERS_MUTE";
-    al_vol_up: "SPEAKERS_VOL_UP";
-    al_vol_down: "SPEAKERS_VOL_DOWN";
-
-    al_navLeft: "YOUVIEW_NAV_LEFT";
-    al_navRight: "YOUVIEW_NAV_RIGHT";
-    al_navUp: "YOUVIEW_NAV_UP";
-    al_navDown: "YOUVIEW_NAV_DOWN";
-
-    al_ok: "YOUVIEW_OK";
-    al_return: "YOUVIEW_BACK";
-    al_exit: "YOUVIEW_CLOSE";
-    al_info: "YOUVIEW_INFO";
-}
-
 
 component PlaybackControlPanel {
     in property <string> al_play;
@@ -549,17 +531,6 @@ export component HDRDVDPlaybackControlPanel inherits PlaybackControlPanel {
     al_skip_forward: "HDR_MANUAL_SKIP_PLUS_60";
 }
 
-export component YouViewPlaybackControlPanel inherits PlaybackControlPanel {
-    al_play: "YOUVIEW_PLAY";
-    al_pause: "YOUVIEW_PAUSE";
-    al_stop: "YOUVIEW_STOP";
-
-    al_rewind: "YOUVIEW_REWIND";
-    al_fast_forward: "YOUVIEW_FAST_FORWARD";
-    al_skip_back: "YOUVIEW_SKIP_BACK";
-    al_skip_forward: "YOUVIEW_SKIP_FORWARD";
-}
-
 
 export component NumberGrid {
     in property <string> al_0;
@@ -666,19 +637,6 @@ export component HDRNumberGrid inherits NumberGrid {
     al_9: "HDR_KEY_9";
 }
 
-export component YoUViewNumberGrid inherits NumberGrid {
-    al_0: "YOUVIEW_KEY_0";
-    al_1: "YOUVIEW_KEY_1";
-    al_2: "YOUVIEW_KEY_2";
-    al_3: "YOUVIEW_KEY_3";
-    al_4: "YOUVIEW_KEY_4";
-    al_5: "YOUVIEW_KEY_5";
-    al_6: "YOUVIEW_KEY_6";
-    al_7: "YOUVIEW_KEY_7";
-    al_8: "YOUVIEW_KEY_8";
-    al_9: "YOUVIEW_KEY_9";
-}
-
 
 component MultiPageRemoteButtonGrid { //automatically populated grid spanning multiple pages
     //properties for creating the grid page, to be passed in to it
@@ -780,15 +738,6 @@ export component HDRChannelGrid inherits MultiPageRemoteButtonGrid {
     action_list_id_prefix: "HDR_";
 }
 
-export component YouViewChannelGrid inherits MultiPageRemoteButtonGrid {
-    num_cols: 5;
-    num_rows: 5;
-    button_width : 80px;
-    button_height : 70px;
-    grid_data: ChannelButtonData.data;
-    action_list_id_prefix: "YOUVIEW_";
-}
-
 
 export component RemoteButtonDebugGrid inherits MultiPageRemoteButtonGrid {
     in property <[RemoteButtonData]> data;
@@ -860,13 +809,6 @@ export component MiscButtonPopup {
                                 bg_colour: Theme.power_bg_colour;
                                 text_colour: Theme.power_fg_colour;
                             }
-                
-                            RemoteButton {
-                                text: "YOUVIEW POWER";
-                                action_list_id: "YOUVIEW_POWER";
-                                bg_colour: Theme.power_bg_colour;
-                                text_colour: Theme.power_fg_colour;
-                            }
                         }
         
                         HorizontalLayout {
@@ -887,8 +829,8 @@ export component MiscButtonPopup {
                             }
         
                             RemoteButton {
-                                text: "SPKR YVIEW";
-                                action_list_id: "SPEAKERS_YOUVIEW";
+                                text: "SPKR CBL SAT";
+                                action_list_id: "SPEAKERS_CBL_SAT";
                                 bg_colour: Theme.volume_bg_colour;
                                 icon_colourize: Theme.volume_fg_colour;
                             }
@@ -936,12 +878,20 @@ export component UINavPanel { //navigation buttons at bottom of screen for for g
     HorizontalLayout {
         spacing: 10px;
     
-        RemoteButton {
+        if (CurrentDisplayedScreen.id != RemoteScreenID.SCREEN-LIST): RemoteButton {
             icon: Symbols.nav-list;
             press_release => {
                 CurrentDisplayedScreen.set_without_history(RemoteScreenID.SCREEN_LIST);
             }
         }
+
+        if (CurrentDisplayedScreen.id == RemoteScreenID.SCREEN-LIST): RemoteButton {
+            icon: Symbols.nav-list;
+            press_release => {
+                CurrentDisplayedScreen.set_without_history(ScreenHistory.history.screens[ScreenHistory.history.front]);
+            }
+        }
+        
 
         RemoteButton {
             text: "Exit Amazon";

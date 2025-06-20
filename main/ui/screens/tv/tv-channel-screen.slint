@@ -23,25 +23,18 @@ export component TVChannelScreen { //whole screen for tv channel selection
                 RemoteButton {
                     bg_colour: red;
                     action_list_id: "TV_RED";
-                    horizontal-stretch: 0.45;
-                }
-                
-                RemoteButton {
-                    bg_colour: green;
-                    action_list_id: "TV_GREEN";
-                    horizontal-stretch: 0.45;
                 }
 
                 RemoteButton {
-                    text: "NAS";
+                    text: "PAUSE TV";
+                    action_list_id: "TV_PAUSE";
                     screen_id: RemoteScreenID.TV_PLAYBACK;
-                    horizontal-stretch: 1;
-                    action_list_id: "STARTUP_NAS";
+                    bg_colour: Theme.playback_bg_colour_3;
+                    text_colour: Theme.playback_fg_colour_3;
                 }
 
                 RemoteButton {
                     text: "GUIDE";
-                    horizontal-stretch: 1;
                     action_list_id: "TV_GUIDE_DISMISS_MESSAGE";
                     bg_colour: Theme.info_bg_colour;
                     text_colour: Theme.info_fg_colour;
@@ -49,7 +42,6 @@ export component TVChannelScreen { //whole screen for tv channel selection
     
                 RemoteButton {
                     text: "TV APPS";
-                    horizontal-stretch: 1;
                     screen_id: RemoteScreenID.TV_APPS;
                 }
             }
@@ -58,11 +50,8 @@ export component TVChannelScreen { //whole screen for tv channel selection
                 spacing: 10px;
 
                 RemoteButton {
-                    text: "PAUSE TV";
-                    action_list_id: "TV_PAUSE";
-                    screen_id: RemoteScreenID.TV_PLAYBACK;
-                    bg_colour: Theme.playback_bg_colour_3;
-                    text_colour: Theme.playback_fg_colour_3;
+                    bg_colour: green;
+                    action_list_id: "TV_GREEN";
                 }
     
                 RemoteButton {
@@ -82,11 +71,9 @@ export component TVChannelScreen { //whole screen for tv channel selection
                 }
     
                 RemoteButton {
-                    text: "YVIEW";
-                    action_list_id: "STARTUP_YOUVIEW";
-                    screen_id: RemoteScreenID.YOUVIEW_HOME;
-                    bg_colour: Theme.power_bg_colour;
-                    text_colour: Theme.power_fg_colour;
+                    text: "NAS";
+                    screen_id: RemoteScreenID.TV_PLAYBACK;
+                    action_list_id: "STARTUP_NAS";
                 }
             }
             

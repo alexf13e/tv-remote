@@ -13,7 +13,6 @@ export component ScreenListScreen {
         ScreenListButtonData.data_tv,
         ScreenListButtonData.data_speakers,
         ScreenListButtonData.data_hdr,
-        ScreenListButtonData.data_youview
     ];
 
     VerticalLayout {
@@ -72,15 +71,6 @@ export component ScreenListScreen {
                 
                 press_release => {
                     ScreenListTabID.value = 3;
-                }
-            }
-
-            RemoteButton {
-                text: "YouView";
-                enabled: ScreenListTabID.value != 4;
-                
-                press_release => {
-                    ScreenListTabID.value = 4;
                 }
             }
         }

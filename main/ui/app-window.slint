@@ -29,10 +29,6 @@ import { HDRDVDScreen } from "screens/hdr/hdr-dvd-screen.slint";
 import { HDRPlayScreen } from "screens/hdr/hdr-play-screen.slint";
 import { HDRAllButtonsScreen } from "screens/hdr/hdr-all-buttons-screen.slint";
 
-import { YouViewHomeScreen } from "screens/youview/youview-home-screen.slint";
-import { YouViewRecordScreen } from "screens/youview/youview-record-screen.slint";
-import { YouViewPlayScreen } from "screens/youview/youview-play-screen.slint";
-import { YouViewAllButtonsScreen } from "screens/youview/youview-all-buttons-screen.slint";
 import { SpeakersBluetoothScreen } from "screens/speakers/speakers-bluetooth-screen.slint";
 
 //export things to access them in c++
@@ -84,11 +80,6 @@ export component AppWindow inherits Window {
         if CurrentDisplayedScreen.id == RemoteScreenID.HDR_DVD: HDRDVDScreen {}
         if CurrentDisplayedScreen.id == RemoteScreenID.HDR_PLAY: HDRPlayScreen {}
         if CurrentDisplayedScreen.id == RemoteScreenID.HDR_ALL_BUTTONS: HDRAllButtonsScreen {}
-
-        if CurrentDisplayedScreen.id == RemoteScreenID.YOUVIEW_HOME: YouViewHomeScreen {}
-        if CurrentDisplayedScreen.id == RemoteScreenID.YOUVIEW_RECORD: YouViewRecordScreen {}
-        if CurrentDisplayedScreen.id == RemoteScreenID.YOUVIEW_PLAY: YouViewPlayScreen {}
-        if CurrentDisplayedScreen.id == RemoteScreenID.YOUVIEW_ALL_BUTTONS: YouViewAllButtonsScreen {}
 
 
         UINavPanel {
