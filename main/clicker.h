@@ -13,6 +13,8 @@
 namespace Clicker
 {
     constexpr gpio_num_t GPIO_NUM_CLICKER = GPIO_NUM_15;
+    constexpr uint32_t CLICKER_INACTIVE = 0;
+    constexpr uint32_t CLICKER_ACTIVE = 1;
     bool initialised = false;
 
     void init()
@@ -26,13 +28,14 @@ namespace Clicker
         gpio_config_t gpio_clicker_config = {
             .pin_bit_mask = 1ull << GPIO_NUM_CLICKER,
             .mode = GPIO_MODE_OUTPUT,
-            .pull_up_en = GPIO_PULLUP_ENABLE,
-            .pull_down_en = GPIO_PULLDOWN_DISABLE,
+            .pull_up_en = GPIO_PULLUP_DISABLE,
+            .pull_down_en = GPIO_PULLDOWN_ENABLE,
             .intr_type = GPIO_INTR_DISABLE,
         };
 
         gpio_config(&gpio_clicker_config);
-        gpio_set_level(GPIO_NUM_CLICKER, 1);
+        gpio_hold_dis(GPIO_NUM_CLICKER);
+        gpio_set_level(GPIO_NUM_CLICKER, CLICKER_INACTIVE);
 
         initialised = true;
     }
@@ -45,7 +48,7 @@ namespace Clicker
             return;
         }
 
-        gpio_set_level(GPIO_NUM_CLICKER, 0);
+        gpio_set_level(GPIO_NUM_CLICKER, CLICKER_ACTIVE);
     }
 
     void up()
@@ -56,7 +59,14 @@ namespace Clicker
             return;
         }
 
-        gpio_set_level(GPIO_NUM_CLICKER, 1);
+        gpio_set_level(GPIO_NUM_CLICKER, CLICKER_INACTIVE);
+    }
+
+    void sleep()
+    {
+        //prevent click on sleep/wakeup. needs gpio_hold_dis during init
+        gpio_set_level(GPIO_NUM_CLICKER, CLICKER_INACTIVE);
+        gpio_hold_en(GPIO_NUM_CLICKER);
     }
 }
 

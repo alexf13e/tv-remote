@@ -23,7 +23,7 @@
 #include "sleep_memory.h"
 #include "event_timers.h"
 #include "screen.h"
-
+#include "clicker.h"
 
 namespace Power
 {
@@ -82,6 +82,7 @@ namespace Power
 
         Timers::stop_all();
         Screen::destroy();
+        Clicker::sleep();
 
         io_expander->digitalWrite(EXIO_DISPLAY, 0); //turn the display backlight off to save power
         SleepMemory::save(); //save data which should be remembered through sleep
@@ -94,7 +95,6 @@ namespace Power
         ESP_ERROR_CHECK(esp_sleep_enable_ext0_wakeup(RTC_GPIO_NUM_MOTION_DETECT, 1));
         ESP_ERROR_CHECK(rtc_gpio_pulldown_en(RTC_GPIO_NUM_MOTION_DETECT));
         ESP_ERROR_CHECK(rtc_gpio_pullup_dis(RTC_GPIO_NUM_MOTION_DETECT));
-
 
         std::cout << "sleep time" << std::endl;
         esp_deep_sleep_start();
